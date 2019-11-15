@@ -41,3 +41,9 @@ primerInput$Primer_name <- gsub(pattern = " ", replacement = "", x = primerInput
 
 rm(GCF, GCR, Fwd, Rev, row, TmF, TmR)
 #write.csv(primerInput, "~/AA_Primer_evaluation/primerOutputUnique.csv")
+
+#n16S <- subset(primerInput, primerInput$Gen== "16S")
+#n18S <- subset(primerInput, primerInput$Gen== "18S")
+#n28S <- subset(primerInput, primerInput$Gen== "28S")
+#COI <-  subset(primerInput, primerInput$Gen== "COI")
+#plants <- subset(primerInput, primerInput$Target== "Viridiplantae")
