@@ -3,6 +3,7 @@ library(ggplot2)
 library(data.table)
 library(phyloseq)
 library(dplyr)
+library(plyr)
 library(vegan)
 library(gridExtra)
 library(grid)
@@ -10,13 +11,6 @@ library(lattice)
 #library("ranacapa")
 library("pheatmap")
 library("viridisLite")
-
-####Emanuel's function (don't work)
-#sumSeqByTax2 <- function (Phy, tax) {
-#  counts <- data.frame(cbind(asvCount=colSums(otu_table(Phy)), tax_table(Phy)))
-#  counts$asvCount <- as.numeric(as.character(counts$asvCount))
-#  tapply(counts$asvCount, counts[, tax], sum)
-#}
 
 ##Modification to make it work! 
 sumSeqByTax <- function(PS.l, rank) {
@@ -35,19 +29,8 @@ unique.taxa.cumsum <- function(ps.numord.l, rank){
   return(unique.taxonNa.cumsum)
 }
 
-#function for calculating relative amp efficiency for each taxon (Wrong! it can't be calculated for our results, at least not in this way)
-##Mod from Kelly et al. 2019
-EFFICIENCY <- function(Relative_abundance, Total_ASV, numberCycles, ...){
-  temp <- unlist(
-    (Total_ASV/Relative_abundance)^(1/numberCycles) - 1)
-  temp[which(is.infinite(temp))] <- NA
-  temp <- temp/(max(temp, na.rm=T))  #normalize to maximum, to create relative index of amp efficiency
-  temp[temp<=0] <- 0
-  as.numeric(temp)
-}
-
 if(!exists("primerInput")){
-    source("~/GitProjects/AA_Primer_Evaluation/R/General_Primer_information.R") ## Run the script at base directory of repository!   
+    source("~/GitProjects/AA_Primer_Evaluation/R/General_Primer_information.R") ##   
 }
 
 ###Create a single PS.l with all the information from Foxes and Raccoon
@@ -55,10 +38,8 @@ if(!exists("primerInput")){
 ###Load previously generated data from specific experiment
 
 GetFox <- TRUE
-
-GetRaccoon <- FALSE
-
-GetTest <- FALSE
+GetRaccoon <- TRUE
+#GetTest <- FALSE
 
 Indrun <- FALSE ##Make figures and analysis for Fox and Raccoon datasets separated
 
@@ -109,13 +90,8 @@ PS.l.f[sapply(PS.l.f, is.null)]<- NULL
 along<- names(PS.l.r)
 PS.l <- lapply(along, function(i) merge_phyloseq(PS.l.r[[i]], PS.l.f[[i]])) ##Merge all the information from both experiments
 names(PS.l) <- names(PS.l.r) ###Use the names from racconn list 
-#saveRDS(PS.l, file="/SAN/Victors_playground/Metabarcoding/AA_Fox/MergedPhyloSeqList.Rds") ###Just in case the merging doesn't work again! 
-
-#PS.l <- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Fox/MergedPhyloSeqList.Rds")
-
-PS.l <- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_HMHZ/")
-
-#PS.l[sapply(PS.l, is.null)]<- NULL
+#saveRDS(PS.l, file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds") ###Just in case the merging doesn't work again! 
+#PS.l <- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds")
 
 ###Merged rawcounts
 rawcounts <- plyr::join(rawcountsF, rawcountsR, by= "Primer_name")
@@ -128,24 +104,16 @@ rawcounts %>%
 rm(rawcountsF, rawcountsR, along)
  
 ####Data frames by different taxonomic rank count of ASVs
-##readNumByPhylum <- lapply(PS.l, sumSeqByTax, "phylum") Not working with new PS.l
+if(Indrun){
 readNumByPhylumF <- sumSeqByTax(PS.l = PS.l.f, rank = "phylum")
 readNumByPhylumR <- sumSeqByTax(PS.l = PS.l.r, rank = "phylum")
+}
 
 readNumByPhylum <- sumSeqByTax(PS.l = PS.l, rank = "phylum")
 readNumByGenus <- sumSeqByTax(PS.l = PS.l, rank = "genus")
 readNumByFamily <- sumSeqByTax(PS.l = PS.l, rank = "family")
 readNumByOrder <- sumSeqByTax(PS.l = PS.l, rank = "order")
 readNumBySpecies <- sumSeqByTax(PS.l = PS.l, rank = "species")
-
-#readNumByPhylumF<- lapply(getTaxonTable(MAF3), function (x) table(as.vector(x[, "phylum"])))
-#readNumByPhylumR<- lapply(getTaxonTable(MAR2), function (x) table(as.vector(x[, "phylum"])))
-# Then it is necessary to eliminate all empty primer pairs to make the rest of the code work (annoying)
-
-#Function is not working anymore :( find out why
-#readNumByGenus <- lapply(PS.l, sumSeqByTax, "genus") 
-#readNumByFam <- lapply(PS.l, sumSeqByTax, "family")
-#readNumbySpecies <-lapply(PS.l, sumSeqByTax, "species")
 
 ####
 if(Indrun){
@@ -275,6 +243,8 @@ for (i in 1: length(readNumByPhylum)) ### Start a loop: fro every element in the
   
 }   ### close loop
 
+rm(phyla)
+
 rownames(AbPhy) <- c(1:nrow(AbPhy)) ### change the rownames to consecutive numbers 
 AbPhy <- data.frame(Primer_name = AbPhy$Primer_name, Phyla = AbPhy$Phyla, ASV = AbPhy$ASV) ###change the order of the columns
 AbPhy$ASV <- as.numeric(AbPhy$ASV)
@@ -324,6 +294,8 @@ for (i in 1: length(readNumByGenus)) ### Start a loop: for every element in the 
   
 }  ### close loop
 
+rm(genus)
+
 rownames(AbGen) <- c(1:nrow(AbGen)) ### change the rownames to consecutive numbers 
 AbGen <- data.frame(Primer_name = AbGen$Primer_name, Genus = AbGen$Genus, ASV = AbGen$ASV) ###change the order of the columns
 
@@ -345,6 +317,9 @@ AbGen <- merge(AbGen, primerInput, by= "Primer_name") ###merge the selected info
 
 AbGen <- plyr::join(AbGen, rawcounts, by= "Primer_name")
 
+rm(Relative_abundance)
+
+###What are the most amplified taxa?
 TopPhylum <- data.frame() ###Create the data frame 
 
 for (i in 1: length(readNumByPhylum)) ### Start a loop: for every element in the list ...
@@ -443,6 +418,7 @@ TopByRank <- join(TopByRank, TopGen, by= "Primer_name")
 
 TopByRank<- TopByRank[c("Primer_name", "Phylum", "ASV_Phylum", "Order", "ASV_Order", "Family", "ASV_Family", "Genus", "ASV_Genus")]
 
+rm(top, TopPhylum, TopOrder, TopFam, TopGen)
 #write.csv(TopByRank, "~/AA_Primer_evaluation/Top_by_Rank_Primers.csv")
 
 #join(TopByRank, primerInput, by= "Primer_name")
@@ -581,7 +557,9 @@ PrimTaxRac <- as.data.frame(cbind(num.taxa.r, num.reads.r))
 rm(num.reads.r, num.taxa.r)
 }
 
-## All
+rm(MAF, MAR, PS.l.f, PS.l.r)
+
+## Cummulative curves by taxa with all information
 
 num.taxa <-sapply(c("species","genus", "family", "order", "phylum", "superkingdom"), function (rank){
   lapply(PS.l, function (x) 
@@ -632,9 +610,9 @@ cum.plot.all <- ggplot(cum.tax) +
 
 ###Amplicon size vs raw counts
 require(ggpubr)
-ggplot(AbPhy, aes(x = Expected, y = Total_reads), geom=c("point", "smooth")) +
+
+ampsiz1<- ggplot(AbPhy, aes(x = Expected, y = Total_reads), geom=c("point", "smooth")) +
   scale_x_continuous(name = "Expected amplicon size") +
-  #scale_y_continuous(name = "Sequencing reads") + #, limits=c(0.95, 1.60)) + ggtitle("Oocysts L/W ratio by group")+
   scale_y_log10(name = "log10 Total sequencing reads")+ 
   geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
   theme_bw() +
@@ -642,15 +620,13 @@ ggplot(AbPhy, aes(x = Expected, y = Total_reads), geom=c("point", "smooth")) +
   theme(legend.key.size = unit(3,"line")) +
   geom_smooth(method = "lm", se = FALSE, col = "red") +
   guides(colour = guide_legend(override.aes = list(size=10))) +
-  #geom_hline(yintercept=10000, linetype="dashed", color = "black") + 
   theme(text = element_text(size=20))+
-  labs(tag = "A)")#+
-  #stat_cor(label.x = 500, label.y = log10(3000000), aes(label= paste(..rr.label.., ..p.label.., sep= "~`,`~")))+
-  #stat_regline_equation(label.x = 500, label.y = log10(2200000))
+  labs(tag = "A)")+
+  stat_cor(label.x = 500, label.y = log10(3000000), aes(label= paste(..rr.label.., ..p.label.., sep= "~`,`~")))+
+  stat_regline_equation(label.x = 500, label.y = log10(2200000))
 
-ggplot(AbPhy, aes(x = Expected, y = Total_reads, color= Gen), geom=c("point", "smooth")) +
+ampsiz2 <-ggplot(AbPhy, aes(x = Expected, y = Total_reads, color= Gen), geom=c("point", "smooth")) +
      scale_x_continuous(name = "Expected amplicon size") +
-    #scale_y_continuous(name = "Sequencing reads") + #, limits=c(0.95, 1.60)) + ggtitle("Oocysts L/W ratio by group")+
      scale_y_log10(name = "log10 Total sequencing reads")+ 
      geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
      theme_bw() +
@@ -658,9 +634,12 @@ ggplot(AbPhy, aes(x = Expected, y = Total_reads, color= Gen), geom=c("point", "s
      theme(legend.key.size = unit(3,"line")) +
      geom_smooth(method = "lm", se = FALSE, col = "red") +
      guides(colour = guide_legend(override.aes = list(size=10))) +
-     #geom_hline(yintercept=10000, linetype="dashed", color = "black") + 
      theme(text = element_text(size=20))+
      labs(tag = "B)")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Reads_vs_Size.pdf", width = 8, height = 10)
+grid.arrange(ampsiz1, ampsiz2, nrow= 2, ncol= 1)
+dev.off()
 
 ######Group specific analysis####
 ####By marker 
@@ -685,7 +664,6 @@ cum.tax.comb18 <- sapply(c("species","genus", "family", "order", "phylum"), func
 })
 
 colnames(cum.tax.comb18) <- paste0("cum.", colnames(cum.tax.comb18))
-
 
 cum.tax.comb18 <- as.data.frame(cbind(1:nrow(cum.tax.comb18), cum.tax.comb18))
 #prnames28s <- names(ps.numord.l.28S) ## get names from the primers
@@ -719,13 +697,11 @@ Primtax.comb28 <- subset(PrimTax, Gen=="28S" | Gen== "18S")
 
 ps.numord.l.comb28 <- PS.l[c(Primtax.comb28$Primer_name)][order(Primtax.comb28$num.reads, decreasing=TRUE)]
 
-
 cum.tax.comb28 <- sapply(c("species","genus", "family", "order", "phylum"), function (rank){
   unique.taxa.cumsum(ps.numord.l.comb28, rank)
 })
 
 colnames(cum.tax.comb28) <- paste0("cum.", colnames(cum.tax.comb28))
-
 
 cum.tax.comb28 <- as.data.frame(cbind(1:nrow(cum.tax.comb28), cum.tax.comb28))
 #prnames28s <- names(ps.numord.l.28S) ## get names from the primers

@@ -39,7 +39,7 @@ primerInput <- merge(primerInput, output, by= "Primer_name", all= T)
 primerInput$X <- NULL
 primerInput$Primer_name <- gsub(pattern = " ", replacement = "", x = primerInput$Primer_name)
 
-rm(GCF, GCR, Fwd, Rev, row, TmF, TmR)
+rm(GCF, GCR, Fwd, Rev, row, TmF, TmR, output)
 #write.csv(primerInput, "~/AA_Primer_evaluation/primerOutputUnique.csv")
 
 #n16S <- subset(primerInput, primerInput$Gen== "16S")
