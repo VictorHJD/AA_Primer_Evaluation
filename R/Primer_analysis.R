@@ -42,6 +42,9 @@ GetRaccoon <- TRUE
 #GetTest <- FALSE
 
 Indrun <- FALSE ##Make figures and analysis for Fox and Raccoon datasets separated
+SSU_18S <- FALSE ## Analysis just with 18S primers
+SSU_LSU <- FALSE ## Analysis with 18S and 28S primers
+SSU_LSU_COI <- TRUE ## Analysis with 18S, 28S and COI primers
 
 if(GetFox){
 ####Fox data 
@@ -584,13 +587,17 @@ cum.tax <- sapply(c("species","genus", "family", "order", "phylum"), function (r
 colnames(cum.tax) <- paste0("cum.", colnames(cum.tax))
 
 cum.tax <- as.data.frame(cbind(1:nrow(cum.tax), cum.tax))
-prnames <- names(ps.numord.l) ## get names from the primers
-#cum.tax[2:42,1] <- prnames ## add primer names 
+#prnames <- names(ps.numord.l) ## get names from the primers
+#cum.tax[2:40,7] <- prnames ## add primer names 
+cum.tax[2:40,7] <- PrimTax$Gen[order(PrimTax$num.reads, decreasing=TRUE)]
 colnames(cum.tax)[1] <- "Primer_name"
+colnames(cum.tax)[7] <- "Gen"
 
 cum.plot.all <- ggplot(cum.tax) +
   geom_step(aes(Primer_name, cum.species), color="red") +
   geom_text(aes(20, 4800, label="Species"), color="red")+ 
+  geom_point(aes(Primer_name, cum.species, colour = Gen, size= 2))+
+  scale_color_manual(values = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"))+
   geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
   geom_text(aes(20, 2600, label="Genera"), color="#0D0887FF") +
   geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
@@ -608,10 +615,22 @@ cum.plot.all <- ggplot(cum.tax) +
   theme(panel.grid.minor = element_blank(), axis.title.x = element_blank())+
   labs(tag = "A)")
 
+######Group specific analysis####
+####By marker 
+###First merge PrimTax with primerInput
+PrimTax$Primer_name <- gsub(pattern = " ", replacement = "", x = PrimTax$Primer_name) ### check if the primer names have extra spaces
+intersect(PrimTax$Primer_name, primerInput$Primer_name) 
+#setdiff(PrimTax$Primer_name, primerInput$Primer_name)
+
+library(plyr)
+PrimTax <-join(PrimTax, primerInput) ###merge the selected information with the origial data frame created 
+PrimTax$X<-  NULL
+
+
 ###Amplicon size vs raw counts
 require(ggpubr)
 
-ampsiz1<- ggplot(AbPhy, aes(x = Expected, y = Total_reads), geom=c("point", "smooth")) +
+ampsiz1<- ggplot(PrimTax, aes(x = Expected, y = num.reads), geom=c("point", "smooth")) +
   scale_x_continuous(name = "Expected amplicon size") +
   scale_y_log10(name = "log10 Total sequencing reads")+ 
   geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
@@ -625,32 +644,21 @@ ampsiz1<- ggplot(AbPhy, aes(x = Expected, y = Total_reads), geom=c("point", "smo
   stat_cor(label.x = 500, label.y = log10(3000000), aes(label= paste(..rr.label.., ..p.label.., sep= "~`,`~")))+
   stat_regline_equation(label.x = 500, label.y = log10(2200000))
 
-ampsiz2 <-ggplot(AbPhy, aes(x = Expected, y = Total_reads, color= Gen), geom=c("point", "smooth")) +
-     scale_x_continuous(name = "Expected amplicon size") +
-     scale_y_log10(name = "log10 Total sequencing reads")+ 
-     geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
-     theme_bw() +
-     theme(legend.text=element_text(size=20)) +
-     theme(legend.key.size = unit(3,"line")) +
-     geom_smooth(method = "lm", se = FALSE, col = "red") +
-     guides(colour = guide_legend(override.aes = list(size=10))) +
-     theme(text = element_text(size=20))+
-     labs(tag = "B)")
+ampsiz2 <-ggplot(PrimTax, aes(x = Expected, y =num.reads, color= Gen), geom=c("point", "smooth")) +
+  scale_x_continuous(name = "Expected amplicon size") +
+  scale_y_log10(name = "log10 Total sequencing reads")+ 
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
+  theme_bw() +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.key.size = unit(3,"line")) +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  guides(colour = guide_legend(override.aes = list(size=10))) +
+  theme(text = element_text(size=20))+
+  labs(tag = "B)")
 
 pdf(file = "~/AA_Primer_evaluation/Figures/Reads_vs_Size.pdf", width = 8, height = 10)
 grid.arrange(ampsiz1, ampsiz2, nrow= 2, ncol= 1)
 dev.off()
-
-######Group specific analysis####
-####By marker 
-###First merge PrimTax with primerInput
-PrimTax$Primer_name <- gsub(pattern = " ", replacement = "", x = PrimTax$Primer_name) ### check if the primer names have extra spaces
-intersect(PrimTax$Primer_name, primerInput$Primer_name) 
-#setdiff(PrimTax$Primer_name, primerInput$Primer_name)
-
-library(plyr)
-PrimTax <-join(PrimTax, primerInput) ###merge the selected information with the origial data frame created 
-PrimTax$X<-  NULL
 
 ####Just 18S
 if(SSU_18S){
@@ -763,15 +771,15 @@ cum.plot.comb2 <- ggplot(cum.tax.comb2) +
   geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
   geom_text(aes(26, 43, label="Phyla"), color="#F89441FF") +
   scale_y_log10("Cummulative count of taxa") +
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
+  scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
   theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank())+
+  #theme(panel.grid.minor = element_blank(), axis.title.x = element_blank())+
   labs(tag = "C)")+
   coord_cartesian(ylim = c(20, 3800))
 
-grid.arrange(cum.plot.comb18, cum.plot.comb28, cum.plot.comb2, nrow= 1, ncol= 3,
-             bottom= textGrob("Number of primers considerd (starting with the one with highest read count)"))
+#grid.arrange(cum.plot.comb18, cum.plot.comb28, cum.plot.comb2, nrow= 1, ncol= 3,
+             #bottom= textGrob("Number of primers considerd (starting with the one with highest read count)"))
 }
 
 ####Parasites 18S+28S+COI
