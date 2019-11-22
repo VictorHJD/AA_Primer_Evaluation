@@ -577,6 +577,11 @@ PrimTax <- as.data.frame(cbind(num.taxa, num.reads))
 PrimTax <- as.data.frame(apply(PrimTax, 2, unlist))
 PrimTax[,8] <- row.names(PrimTax)  
 colnames(PrimTax)[8] <- "Primer_name"
+
+###First merge PrimTax with primerInput
+PrimTax$Primer_name <- gsub(pattern = " ", replacement = "", x = PrimTax$Primer_name) ### check if the primer names have extra spaces
+intersect(PrimTax$Primer_name, primerInput$Primer_name) 
+#setdiff(PrimTax$Primer_name, primerInput$Primer_name)
 PrimTax<- join(PrimTax, primerInput, by = "Primer_name")
 
 ps.numord.l <- PS.l[order(PrimTax$num.reads, decreasing=TRUE)]
@@ -613,16 +618,13 @@ cum.plot.all <- ggplot(cum.tax) +
   #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
   theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), legend.position = "none")+
+  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), legend.position = "none", text = element_text(size=20))+
   labs(tag = "A)")+
   coord_cartesian(ylim = c(20, 4000))
 
 ######Group specific analysis####
 ####By marker 
-###First merge PrimTax with primerInput
-PrimTax$Primer_name <- gsub(pattern = " ", replacement = "", x = PrimTax$Primer_name) ### check if the primer names have extra spaces
-intersect(PrimTax$Primer_name, primerInput$Primer_name) 
-#setdiff(PrimTax$Primer_name, primerInput$Primer_name)
+
 ###Amplicon size vs raw counts
 require(ggpubr)
 
@@ -692,7 +694,7 @@ cum.plot.comb18 <- ggplot(cum.tax.comb18) +
   #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
   theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank())+
+  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), text = element_text(size=20))+
   labs(tag = "B)")+
   coord_cartesian(ylim = c(20, 4000))
 }
@@ -730,7 +732,7 @@ cum.plot.comb28 <- ggplot(cum.tax.comb28) +
   #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
   theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank())+
+  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), text = element_text(size=20))+
   labs(tag = "C)")+
   coord_cartesian(ylim = c(20, 4000))
 
@@ -771,13 +773,14 @@ cum.plot.comb2 <- ggplot(cum.tax.comb2) +
   #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
   theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank())+
+  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), text = element_text(size=20))+
   labs(tag = "D)")+
   coord_cartesian(ylim = c(20, 4000))
 
 pdf(file = "~/AA_Primer_evaluation/Figures/Figure_1.pdf", width = 10, height = 8)
 grid.arrange(cum.plot.all, cum.plot.comb18, cum.plot.comb28, cum.plot.comb2, nrow= 2, ncol= 2,
-             bottom= textGrob("Number of primers considerd (starting with the one with highest read count)"))
+             bottom= textGrob("Number of primers considerd (starting with the one with highest read count)", 
+                              gp= gpar(fontsize= 20)))
 dev.off()
 
 }
@@ -842,14 +845,14 @@ paraprimer <- ggplot(Parasites.comb2, aes(Primer_name, color=Gen, fill=Gen))+
   scale_color_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF"))+
   scale_fill_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF")) +
   scale_x_discrete(name = "Primer combination")+
-  theme(legend.position = "none")+
+  theme(legend.position = "none", text = element_text(size=15))+
   labs(tag = "A)")
 
 Parasites <- Parasites.comb2$Genus
 Parasites <- as.data.frame(table(Parasites))
 Parasites <- Parasites[order(-Parasites$Freq),]
 
-###Add a bar plot (To improve)
+###Add a bar plot (Not necessary now... maybe supplementary)
 
 ggplot(Parasites, aes(reorder(Parasites, Freq), Freq))+
   geom_point()+
@@ -895,7 +898,7 @@ P.col$Primer_name <- rownames(P.col)
 P.col <- merge(P.col, Primtax.comb2, by="Primer_name", sort= F)
 
 col_groups <- P.col %>%
-  select("Primer_name", "Gen", "Region", "num.reads") ##Here It is possible to add the expected size 
+  select("Primer_name", "Gen", "Region") ##Here It is possible to add the expected size 
 
 row.names(col_groups)<- col_groups$Primer_name
 
@@ -915,8 +918,11 @@ paraheatmap <- pheatmap(P.intersection,
          show_colnames = F,
          main= "Redundant genus of parasites amplified")
 
-ggsave("~/AA_Primer_evaluation/Figures/Parasites_redundancy.pdf", plot = paraheatmap, dpi = 450, width = 14, height = 10)
+pdf(file = "~/AA_Primer_evaluation/Figures/Figure_2.pdf", width = 10, height = 8)
+paraheatmap
+dev.off()
 
+#ggsave("~/AA_Primer_evaluation/Figures/Parasites_redundancy.pdf", plot = paraheatmap, dpi = 450, width = 14, height = 10)
 
 ####Cummulative curve for parasites
 num.taxa.para <-sapply(c( "species","genus", "family", "order", "phylum", "superkingdom"), function (rank){
@@ -950,8 +956,6 @@ colnames(cum.tax.para)[7] <- "Gen"
 cum.plot.para <- ggplot(cum.tax.para) +
   geom_step(aes(Primer_name, cum.species), color="red") +
   geom_text(aes(26, 380, label="Species"), color="red") +
-  geom_point(aes(Primer_name, cum.species, colour = Gen, size= 2))+
-  scale_color_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF"))+
   geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
   geom_text(aes(26, 180, label="Genera"), color="#0D0887FF") +
   geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
@@ -965,12 +969,14 @@ cum.plot.para <- ggplot(cum.tax.para) +
   scale_y_log10("Cummulative count of taxa (Parasites)") +
   #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
+  geom_point(aes(Primer_name, cum.species, colour = Gen, size= 2))+
+  scale_color_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF"))+
   theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = 'none', axis.title.x = element_blank())+
+  theme(panel.grid.minor = element_blank(), legend.position = 'none', 
+        axis.title.x = element_blank(), text = element_text(size=20))+
   labs(tag = "A)")#+
   #coord_cartesian(ylim = c(20, 3800))
 #ggsave("~/AA_Primer_evaluation/Figures/Parasites_cummulative.pdf", plot = cum.plot.para, dpi = 450, width = 14, height = 10)
-
 
 ###Fungi 18s + 28S + COI
 
@@ -1030,10 +1036,12 @@ fungiprimer <-ggplot(Fungi.comb2, aes(Primer_name, color=Gen, fill=Gen))+
   scale_fill_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF")) +
   #scale_x_discrete(name = "Primer combination")
   theme(axis.title.y =element_blank(),
-        axis.text.y=element_blank())+
+        axis.text.y=element_blank(), text = element_text(size=15))+
   labs(tag = "B)")
 
-grid.arrange(paraprimer, fungiprimer, nrow= 1, ncol= 2)
+pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_2.pdf", width = 10, height = 10)
+grid.arrange(paraprimer, fungiprimer, nrow= 1, ncol= 2, widths= c(2,1))
+dev.off()
 
 Fungi <- Fungi.comb2$Genus
 Fungi <- as.data.frame(table(Fungi))
@@ -1060,10 +1068,6 @@ for (i in 1: length(F.comb2)) ### Start a loop: fro every element in the list ..
   Count.fungi.comb2 <- rbind(Count.fungi.comb2, cnt) ### Join all the "individual" data frames into the final data frame 
 } 
 
-PFPlot <- grid.arrange(paraprimer, fungiprimer, nrow= 1, ncol= 2) ##Parasites vs Fungi
-ggsave("~/AA_Primer_evaluation/Figures/Parasites_Fungi_Primers.pdf", plot = PFPlot, dpi = 450, width = 14, height = 10)
-
-
 ####compair all the primers for multiple intersections
 
 F.intersection <- sapply(seq_len(length(F.comb2)), function(x)
@@ -1084,7 +1088,7 @@ F.col$Primer_name <- rownames(F.col)
 F.col <- merge(F.col, Primtax.comb2, by="Primer_name", sort= F)
 
 col_groups <- F.col %>%
-  select("Primer_name", "Gen", "Region", "num.reads") ##"Expected"
+  select("Primer_name", "Gen", "Region") ##"Expected"
 
 row.names(col_groups)<- col_groups$Primer_name
 
@@ -1104,7 +1108,11 @@ fungiheatmap <- pheatmap(F.intersection,
          show_colnames = F,
          main= "Redundant genus of Fungi amplified")
 
-ggsave("~/AA_Primer_evaluation/Figures/Fungi_redundancy.pdf", plot = fungiheatmap, dpi = 450, width = 14, height = 10)
+pdf(file = "~/AA_Primer_evaluation/Figures/Figure_3.pdf", width = 10, height = 8)
+fungiheatmap
+dev.off()
+
+#ggsave("~/AA_Primer_evaluation/Figures/Fungi_redundancy.pdf", plot = fungiheatmap, dpi = 450, width = 14, height = 10)
 
 ####Cummulative curve for fungi
 num.taxa.fungi <-sapply(c("species","genus", "family", "order", "phylum", "superkingdom"), function (rank){
@@ -1155,7 +1163,8 @@ cum.plot.fungi <- ggplot(cum.tax.fungi) +
   #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
   theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = 'none', axis.title.x = element_blank())+
+  theme(panel.grid.minor = element_blank(), legend.position = 'none', 
+        axis.title.x = element_blank(), text = element_text(size=20))+
   labs(tag = "B)")#+
 
 CummParaFung <- grid.arrange(cum.plot.para, cum.plot.fungi, nrow= 1, ncol= 2,  
@@ -1163,6 +1172,85 @@ CummParaFung <- grid.arrange(cum.plot.para, cum.plot.fungi, nrow= 1, ncol= 2,
  ###Put parasites and fungi together 
 ggsave("~/AA_Primer_evaluation/Figures/ParaFung_cummulative.pdf", plot = CummParaFung, dpi = 450, width = 14, height = 10)
 
+###Other eukaryotic elements ("Diet" and passing material)
+PM.diet.comb3 <- lapply(ps.numord.l, function (x) {
+  subset_taxa(x, !(superkingdom%in%c("Bacteria")))
+})
 
+PM.diet.comb3 <- lapply(PM.diet.comb3, function (x) {
+  subset_taxa(x, !(phylum%in%c("Ascomycota", "Basidiomycota", "Zygomycota", 
+                             "Mucoromycota", "Zoopagomycota", "Blastocladiomycota", 
+                             "Cryptomycota", "Microsporidia", "Nematoda",
+                             "Apicomplexa", "Platyhelminthes")))
+})
 
+###Not working, removing NAs is making the tax_glom bug... find a solution 
+PG.diet.comb3 <- lapply(PM.diet.comb3, function (x) {
+  tax_glom(x, "genus", NArm = T)
+})
 
+lapply(PG.diet.comb3, function (x) {
+  table(tax_table(x)[,5])
+}) 
+
+mat.diet.comb3 <- lapply(PG.diet.comb3, function (x) {
+  as.matrix(tax_table(x))
+}) 
+
+D.comb3 <- lapply(PG.diet.comb3, function (y) {
+  make.names(tax_table(y)[,5])
+}) 
+
+Diet.comb3 <- data.frame() ###Create the data frame 
+
+for (i in 1: length(D.comb3)) ### Start a loop: fro every element in the list ...
+{ 
+  genus <- data.frame() #### make an individual data frame ...
+  
+  if(nrow(as.data.frame(D.comb3[[i]])) == 0) ### A tiny condition if the longitude of the list is = to 0 
+  {
+    genus[1,1] <- 0    ### Add a zero in the first column
+    genus[1,2] <- "NA" ### And a NA in the second column.
+  }else               ### For the rest of the elements: 
+  {
+    genus <- as.data.frame((D.comb3[[i]]))  ###Make a data frame with the data included in each element of the list 
+    genus[,2] <- rownames(genus) ### And use the rownames as information of the second column 
+  }
+  
+  genus[,3] <- names(D.comb3)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
+  colnames(genus) <- c("Genus", "Count", "Primer_name") ### change the names for the columns 
+  Diet.comb3 <- rbind(Diet.comb3, genus) ### Join all the "individual" data frames into the final data frame 
+  
+}  ### close loop
+
+Fungi.comb2 <- unique(Fungi.comb2[c("Genus", "Primer_name")]) ##Take unique combinations 
+Fungi.comb2 <- join(Fungi.comb2, Primtax.comb2) 
+
+fungiprimer <-ggplot(Fungi.comb2, aes(Primer_name, color=Gen, fill=Gen))+
+  geom_bar()+
+  coord_flip()+
+  theme_classic()+
+  scale_y_continuous(name = "Number of Fungi\n genera amplified")+
+  scale_color_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF"))+
+  scale_fill_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF")) +
+  #scale_x_discrete(name = "Primer combination")
+  theme(axis.title.y =element_blank(),
+        axis.text.y=element_blank(), text = element_text(size=15))+
+  labs(tag = "B)")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_2.pdf", width = 10, height = 10)
+grid.arrange(paraprimer, fungiprimer, nrow= 1, ncol= 2, widths= c(2,1))
+dev.off()
+
+Fungi <- Fungi.comb2$Genus
+Fungi <- as.data.frame(table(Fungi))
+Fungi <- Fungi[order(-Fungi$Freq),]
+
+### plot (To improve) 
+
+ggplot(Fungi, aes(reorder(Fungi, Freq), Freq))+
+  geom_point()+
+  coord_flip()+
+  theme_classic()+
+  scale_y_continuous(name = "Number of primer pairs")+
+  scale_x_discrete(name = "Fungi genera")
