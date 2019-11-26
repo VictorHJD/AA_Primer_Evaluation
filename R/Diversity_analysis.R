@@ -93,7 +93,7 @@ for (i in 1:length(PS.l.rar)) {
 dev.off()
 
 ###Composition plots by primer pair 
-ggplot(data=AbGen, aes(x= Primer_name, y= Relative_abundance, fill= Genus)) +
+ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyla)) +
   geom_bar(aes(), stat="identity", position="stack") +
   scale_colour_brewer(palette = "Set1") +
   theme_bw() +
