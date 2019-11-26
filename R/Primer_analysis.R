@@ -252,9 +252,9 @@ rownames(AbPhy) <- c(1:nrow(AbPhy)) ### change the rownames to consecutive numbe
 AbPhy <- data.frame(Primer_name = AbPhy$Primer_name, Phyla = AbPhy$Phyla, ASV = AbPhy$ASV) ###change the order of the columns
 AbPhy$ASV <- as.numeric(AbPhy$ASV)
 
-AbPhy %>%
-  group_by(Primer_name) %>% 
-  mutate(Total_ASV = sum(ASV)) -> AbPhy ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+Total_ASV<- aggregate(AbPhy$ASV, by=list(AbPhy$Primer_name), FUN= sum)  ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+colnames(Total_ASV) <- c("Primer_name", "Total_ASV")
+AbPhy <- join(AbPhy, Total_ASV, by= "Primer_name")
 
 Relative_abundance = AbPhy$ASV/AbPhy$Total_ASV ### create a vector with the result of the operation 
 
@@ -270,9 +270,9 @@ AbPhy$Primer_name <- gsub(pattern = "-", replacement = "_", x = AbPhy$Primer_nam
 #setdiff(AbPhyF$Primer_name, primers$Primer_name)
 #setdiff(primers$Primer_name, AbPhyF$Primer_name)
 
-AbPhy <- merge(AbPhy, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
+#AbPhy <- merge(AbPhy, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
 
-AbPhy <- plyr::join(AbPhy, rawcounts, by= "Primer_name")
+#AbPhy <- plyr::join(AbPhy, rawcounts, by= "Primer_name")
 
 ###What about genus level?
 AbGen <- data.frame() ###Create the data frame 
@@ -302,9 +302,9 @@ rm(genus)
 rownames(AbGen) <- c(1:nrow(AbGen)) ### change the rownames to consecutive numbers 
 AbGen <- data.frame(Primer_name = AbGen$Primer_name, Genus = AbGen$Genus, ASV = AbGen$ASV) ###change the order of the columns
 
-AbGen %>%
-  group_by(Primer_name) %>% 
-  mutate(Total_ASV = sum(ASV)) -> AbGen ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+Total_ASV<- aggregate(AbGen$ASV, by=list(AbGen$Primer_name), FUN= sum)  ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+colnames(Total_ASV) <- c("Primer_name", "Total_ASV")
+AbGen <- join(AbGen, Total_ASV, by= "Primer_name")
 
 Relative_abundance = AbGen$ASV/AbGen$Total_ASV ### create a vector with the result of the operation 
 
@@ -316,11 +316,11 @@ AbGen$Primer_name <- gsub(pattern = " ", replacement = "", x = AbGen$Primer_name
 
 AbGen$Primer_name <- gsub(pattern = "-", replacement = "_", x = AbGen$Primer_name)
 
-AbGen <- merge(AbGen, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
+#AbGen <- merge(AbGen, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
 
-AbGen <- plyr::join(AbGen, rawcounts, by= "Primer_name")
+#AbGen <- plyr::join(AbGen, rawcounts, by= "Primer_name")
 
-rm(Relative_abundance)
+rm(Relative_abundance, Total_ASV)
 
 ###What are the most amplified taxa?
 TopPhylum <- data.frame() ###Create the data frame 
