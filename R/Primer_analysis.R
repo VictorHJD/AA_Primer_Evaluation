@@ -798,9 +798,9 @@ PG.para.comb2 <- lapply(PM.para.comb2, function (x) {
   tax_glom(x, "genus", NArm = TRUE)
 })
 
-lapply(PG.para.comb2, function (x) {
-  table(tax_table(x)[,5])
-}) 
+#lapply(PG.para.comb2, function (x) {
+#  table(tax_table(x)[,5])
+#}) 
 
 
 mat.para.comb2 <- lapply(PG.para.comb2, function (x) {
@@ -922,8 +922,6 @@ pdf(file = "~/AA_Primer_evaluation/Figures/Figure_2.pdf", width = 10, height = 8
 paraheatmap
 dev.off()
 
-#ggsave("~/AA_Primer_evaluation/Figures/Parasites_redundancy.pdf", plot = paraheatmap, dpi = 450, width = 14, height = 10)
-
 ####Cummulative curve for parasites
 num.taxa.para <-sapply(c( "species","genus", "family", "order", "phylum", "superkingdom"), function (rank){
   lapply(PM.para.comb2, function (x) 
@@ -989,9 +987,9 @@ PG.fungi.comb2 <- lapply(PM.fungi.comb2, function (x) {
   tax_glom(x, "genus", NArm = TRUE)
 })
 
-lapply(PG.fungi.comb2, function (x) {
-  table(tax_table(x)[,5])
-}) 
+#lapply(PG.fungi.comb2, function (x) {
+#  table(tax_table(x)[,5])
+#}) 
 
 mat.fungi.comb2 <- lapply(PG.fungi.comb2, function (x) {
   as.matrix(tax_table(x))
@@ -1038,9 +1036,9 @@ fungiprimer <-ggplot(Fungi.comb2, aes(Primer_name, color=Gen, fill=Gen))+
         axis.text.y=element_blank(), text = element_text(size=15))+
   labs(tag = "B)")
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_2.pdf", width = 10, height = 10)
-grid.arrange(paraprimer, fungiprimer, nrow= 1, ncol= 2, widths= c(2,1))
-dev.off()
+#pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_2.pdf", width = 10, height = 10)
+#grid.arrange(paraprimer, fungiprimer, nrow= 1, ncol= 2, widths= c(2,1))
+#dev.off()
 
 Fungi <- Fungi.comb2$Genus
 Fungi <- as.data.frame(table(Fungi))
@@ -1167,8 +1165,8 @@ cum.plot.fungi <- ggplot(cum.tax.fungi) +
 CummParaFung <- grid.arrange(cum.plot.para, cum.plot.fungi, nrow= 1, ncol= 2,  
              bottom= textGrob("Number of primers considerd (starting with the one with highest read count)", 
                               gp= gpar(fontsize= 20)))
- ###Put parasites and fungi together 
-ggsave("~/AA_Primer_evaluation/Figures/ParaFung_cummulative.pdf", plot = CummParaFung, dpi = 450, width = 14, height = 10)
+###Put parasites and fungi together 
+#ggsave("~/AA_Primer_evaluation/Figures/ParaFung_cummulative.pdf", plot = CummParaFung, dpi = 450, width = 14, height = 10)
 
 ###Other eukaryotic elements ("Diet" and passing material)
 ##Working approach 
@@ -1178,7 +1176,7 @@ PM.diet.comb3 <- lapply(ps.numord.l, function (x) {
                              "Rotifera", "Tardigrada"))
 })
 
-##Also working approach to select primers but 
+##Also working approach to select primers but it doesn't eliminate bacterial ASVs
 ###Take just eukariotes 
 #PM.diet.comb3 <- lapply(PM.diet.comb3, function (x) {
 #  subset_taxa(x, superkingdom%in%"Eukaryota")
@@ -1189,7 +1187,7 @@ PM.diet.comb3 <- lapply(ps.numord.l, function (x) {
 #  subset_taxa(x, !(phylum%in%c("Ascomycota", "Basidiomycota", "Zygomycota", 
 #                             "Mucoromycota", "Zoopagomycota", "Blastocladiomycota", 
 #                             "Cryptomycota", "Microsporidia", "Nematoda",
-#                             "Apicomplexa", "Platyhelminthes", "NA")))
+#                             "Apicomplexa", "Platyhelminthes")))
 #})
 
 ###Not working to genus leve, removing NAs is making the tax_glom bug... Solution tax_glom to family :S 
@@ -1246,7 +1244,7 @@ dietprimer <-ggplot(Diet.comb3, aes(Primer_name, color=Gen, fill=Gen))+
   theme(text = element_text(size=15))+
   labs(tag = "C)")
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_3.pdf", width = 10, height = 20)
+pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_2.pdf", width = 10, height = 20)
 grid.arrange(paraprimer, fungiprimer, dietprimer, widths= c(2,1), layout_matrix= rbind(c(1,2), c(3,3)))
 dev.off()
 
