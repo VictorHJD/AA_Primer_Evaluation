@@ -659,6 +659,72 @@ pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_1.pdf", width = 8, heig
 grid.arrange(ampsiz1, ampsiz2, nrow= 2, ncol= 1)
 dev.off()
 
+##Correlation with obtained amplicon size
+
+ampsiz3<- ggplot(PrimTax, aes(x = Obtained, y = num.reads), geom=c("point", "smooth")) +
+  scale_x_continuous(name = "Obtained amplicon size") +
+  scale_y_log10(name = "log10 Total sequencing reads")+ 
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
+  theme_bw() +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.key.size = unit(3,"line")) +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  guides(colour = guide_legend(override.aes = list(size=10))) +
+  theme(text = element_text(size=20),legend.position = "none")+
+  labs(tag = "A)")+
+  stat_cor(label.x = 400, label.y = log10(3000000), aes(label= paste(..rr.label.., ..p.label.., sep= "~`,`~")))+
+  stat_regline_equation(label.x = 400, label.y = log10(2200000))
+
+ampsiz4 <-ggplot(PrimTax, aes(x = Obtained, y =num.reads, color= Gen), geom=c("point", "smooth")) +
+  scale_x_continuous(name = "Obtained amplicon size") +
+  scale_y_log10(name = "log10 Total sequencing reads")+
+  scale_color_manual(values = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"))+ 
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
+  theme_bw() +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.key.size = unit(2,"line")) +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  guides(colour = guide_legend(override.aes = list(size=10))) +
+  theme(text = element_text(size=20))+
+  labs(tag = "B)")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_1.2.pdf", width = 8, height = 10)
+grid.arrange(ampsiz3, ampsiz4, nrow= 2, ncol= 1)
+dev.off()
+
+##Correlation between obtained and expected amplicon size
+
+ampsiz5 <-ggplot(PrimTax, aes(x = Obtained, y = Expected), geom=c("point", "smooth")) +
+  scale_x_continuous(name = "Obtained amplicon size") +
+  scale_y_continuous(name = "Expected amplicon size")+ 
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
+  theme_bw() +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.key.size = unit(3,"line")) +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  guides(colour = guide_legend(override.aes = list(size=10))) +
+  theme(text = element_text(size=20),legend.position = "none")+
+  labs(tag = "A)")+
+  stat_cor(label.x = 400, label.y = 650, aes(label= paste(..rr.label.., ..p.label.., sep= "~`,`~")))+
+  stat_regline_equation(label.x = 400, label.y = 600)
+
+ampsiz6 <-ggplot(PrimTax, aes(x = Obtained, y =Expected, color= Gen), geom=c("point", "smooth")) +
+  scale_x_continuous(name = "Obtained amplicon size") +
+  scale_y_continuous(name = "Expected amplicon size")+
+  scale_color_manual(values = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"))+ 
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
+  theme_bw() +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.key.size = unit(2,"line")) +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  guides(colour = guide_legend(override.aes = list(size=10))) +
+  theme(text = element_text(size=20))+
+  labs(tag = "B)")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_1.3.pdf", width = 8, height = 10)
+grid.arrange(ampsiz5, ampsiz6, nrow= 2, ncol= 1)
+dev.off()
+
 ####Just 18S
 if(SSU_18S){
 Primtax.comb18 <- subset(PrimTax, Gen== "18S")
