@@ -356,6 +356,13 @@ grid.arrange(a2, b2, c2, d2, e2, widths = c(1, 1, 1), heights= c(2,2), layout_ma
                                                                        c(2, 4, 5)))
 dev.off()
 
+##Bray-Curtis dissimilarity estimation
+
+foo.matrix<- as.matrix(foo)
+foo.braycurt<- vegdist(foo.matrix, method = "bray")
+as.matrix(foo.braycurt)
+fviz_dist(foo.braycurt, lab_size = 8,  gradient = list(low = "#FC4E07", high = "#00AFBB"))
+
 ###Composition plots by primer pair 
 ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyla)) +
   geom_bar(aes(), stat="identity", position="stack") +
