@@ -361,17 +361,19 @@ dev.off()
 foo.matrix<- as.matrix(foo)
 foo.braycurt<- vegdist(foo.matrix, method = "bray")
 as.matrix(foo.braycurt)
-fviz_dist(foo.braycurt, lab_size = 8,  gradient = list(low = "#FC4E07", high = "#00AFBB"))
+BC <- fviz_dist(foo.braycurt, lab_size = 8,  gradient = list(low = "#FC4E07", high = "#00AFBB")) +
+  labs(tag = "A)", fill= "Bray-Curtis\ndissimilarity")
 
 ###Composition plots by primer pair 
-ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyla)) +
-  geom_bar(aes(), stat="identity", position="stack") +
-  scale_colour_brewer(palette = "Set1") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+Comp <- ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyla)) +
+        geom_bar(aes(), stat="identity", position="stack") +
+        scale_colour_brewer(palette = "Set1") +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
   #scale_fill_manual(values = c("darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey", "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey")) +
   #facet_wrap(~ AbyPp$Target_gene) +
-  theme(legend.position="none") + guides(fill=guide_legend(nrow=50)) 
+        theme(legend.position="none") + guides(fill=guide_legend(nrow=50)) +
+        labs(tag = "B)")
 
 ###Let's do it just for 18S primers
 
