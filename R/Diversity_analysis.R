@@ -372,3 +372,56 @@ ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyla)) +
   #scale_fill_manual(values = c("darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey", "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey")) +
   #facet_wrap(~ AbyPp$Target_gene) +
   theme(legend.position="none") + guides(fill=guide_legend(nrow=50)) 
+
+###Let's do it just for 18S primers
+
+foo.18S<- foo.primer[foo.primer$Gen == "18S",]
+
+foo.18S2<- foo.18S[,1:48]
+
+foo.18S2.pca<- PCA(foo.18S2, graph = T)
+foo.18S2.eig<- get_eigenvalue(foo.18S2.pca)
+fviz_eig(foo.18S2.pca, addlabels = TRUE, ylim = c(0, 50))
+
+fviz_pca_ind(foo.18S2.pca, pointsize = "cos2", 
+             pointshape = 21, fill = "#E7B800",
+             repel = TRUE) # Avoid text overlapping (slow if many points)
+
+a18<- fviz_pca_ind(foo.18S2.pca,
+                  pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
+                  pointshape = 21,
+                  geom.ind = "point", # show points only (but not "text")
+                  col.ind = foo.18S$Region, # color by region
+                  fill.ind =  foo.18S$Region,
+                  palette ="Set1",
+                  alpha.ind = 0.5,
+                  addEllipses = F, # Concentration ellipses
+                  legend.title = "Region")+
+  labs(tag = "A)")
+
+b18<- fviz_pca_ind(foo.18S2.pca,
+                  pointsize = log10(foo.18S$Total_reads), 
+                  geom.ind = "point", # show points only (but not "text")
+                  col.ind = foo.18S$Total_reads, # color by groups
+                  gradient.cols = c("blue", "red"),
+                  alpha.ind = 0.7,
+                  addEllipses = F, # Concentration ellipses
+                  legend.title = "Sequencing reads")+
+  labs(tag = "B)")
+
+c18<- fviz_contrib(foo.18S2.pca, choice = "ind", axes = 1:2, fill = "#440154FF", color = "#440154FF")+
+  labs(tag = "C)") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1))
+
+d18<- fviz_pca_var(foo.18S2.pca, col.var = "cos2", select.var = list(contrib = 15),
+                  gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+                  repel = TRUE )+ # Avoid text overlapping
+  labs(tag = "D)")
+
+e18<- fviz_contrib(foo.18S2.pca, choice = "var", axes = 1:2, top = 25)+
+  labs(tag = "E)")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_10.pdf", width = 16, height = 8)
+grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 3, 5),
+                                                                            c(2, 4, 5)))
+dev.off()
