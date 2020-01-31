@@ -7,12 +7,21 @@ library(data.table)
 library(parallel)
 library(microbiome)
 library(tidyverse)
+library(plyr)
 library(gridExtra)
 library(grid)
 library(vegan)
 library("FactoMineR")
 library("factoextra")
 library("corrplot")
+
+##Functions
+sumSeqByTax <- function(PS.l, rank) {
+  lapply(PS.l, function(x){ 
+    counts <- data.frame(cbind(asvCount=colSums(otu_table(x)), tax_table(x)))
+    counts$asvCount <- as.numeric(as.character(counts$asvCount))
+    tapply(counts$asvCount, counts[, rank], sum)})
+}
 
 if(!exists("primerInput")){
   source("~/GitProjects/AA_Primer_Evaluation/R/General_Primer_information.R") ##   
@@ -21,6 +30,17 @@ if(!exists("primerInput")){
 if(!exists("PS.l")){
   PS.l<- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds") ##   
 }
+
+###Raw counts by amplicon
+rawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
+  data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
+})))
+
+rawcounts[,2] <- rownames(rawcounts)
+rownames(rawcounts) <- c(1:nrow(rawcounts))
+colnames(rawcounts) <- c("Reads","Primer_name")
+rawcounts <- data.frame(Primer_name = rawcounts$Primer_name, Reads = rawcounts$Reads) 
+rawcounts$Primer_name <- gsub(".asvCount", "\\1", rawcounts$Primer_name)
 
 ###Rarefaction curves by amplicon 
 ###Summary by amplicon
@@ -53,9 +73,31 @@ rarecurv.l <- lapply(PS.l, function (x) {
 #rarecurv.l
 #dev.off()
 
+## Eliminate samples with no counts for each primer
+##Check when each marker reached the species saturation (from rarecurve!) for now just eliminate 0
+PS.l.High <- lapply(PS.l, function (x) {
+  prune_samples(sample_sums(x)>0, x)
+})
+
 ###Rarefied data
-PS.l.rar <- lapply(PS.l, function (x) {
-  rarefy_even_depth(x, rngseed=1, sample.size=0.3*mean(sample_sums(x)), replace=F)
+##Each amplicon has their own depth... so rarefy to the max count sum.
+PS.l.rar <- lapply(PS.l.High, function (x) {
+  rarefy_even_depth(x, rngseed=1234, sample.size=max(sample_sums(x)), replace=F)
+})
+
+rawcounts <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
+  data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
+})))
+
+rawcounts[,2] <- rownames(rawcounts)
+rownames(rawcounts) <- c(1:nrow(rawcounts))
+colnames(rawcounts) <- c("Reads","Primer_name")
+rawcounts <- data.frame(Primer_name = rawcounts$Primer_name, Reads = rawcounts$Reads) 
+rawcounts$Primer_name <- gsub(".asvCount", "\\1", rawcounts$Primer_name)
+
+##Normalize data 
+PS.l.Nor <- lapply(PS.l, function (x) {
+  transform_sample_counts(x, function(i) i/sum(i))
 })
 
 ##Alpha diversity 
@@ -99,9 +141,66 @@ dev.off()
 ##Variables= Taxa 
 ##Individuals= Primer combinations 
 ## Put all the infromation in the right format
-foo<- AbPhy[,1:3]
-foo<- reshape(foo, v.names = "ASV", timevar = "Phyla", idvar = "Primer_name",direction = "wide")
-colnames(foo) <- gsub("ASV.", "\\1", colnames(foo)) ##Remove "ASV"
+
+readNumByPhylum <- sumSeqByTax(PS.l = PS.l.rar, rank = "phylum")
+
+AbPhy <- data.frame() ###Create the data frame 
+
+for (i in 1: length(readNumByPhylum)) ### Start a loop: fro every element in the list ...
+{ 
+  phyla <- data.frame() #### make an individual data frame ...
+  
+  if(nrow(as.data.frame(readNumByPhylum[[i]])) == 0) ### A tiny condition if the longitude of the list is = to 0 
+  {
+    phyla[1,1] <- 0    ### Add a zero in the first column
+    phyla[1,2] <- "NA" ### And a NA in the second column.
+  }else               ### For the rest of the elements: 
+  {
+    phyla <- as.data.frame((readNumByPhylum[[i]]))  ###Make a data frame with the data included in each element of the list 
+    phyla[,2] <- rownames(phyla) ### And use the rownames as information of the second column 
+  }
+  
+  phyla[,3] <- names(readNumByPhylum)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
+  colnames(phyla) <- c("ASV", "Phyla", "Primer_name") ### change the names for the columns 
+  AbPhy <- rbind(AbPhy, phyla) ### Join all the "individual" data frames into the final data frame 
+  
+}   ### close loop
+
+rownames(AbPhy) <- c(1:nrow(AbPhy)) ### change the rownames to consecutive numbers 
+AbPhy <- data.frame(Primer_name = AbPhy$Primer_name, Phyla = AbPhy$Phyla, ASV = AbPhy$ASV) ###change the order of the columns
+AbPhy$ASV <- as.numeric(AbPhy$ASV)
+
+AbPhy %>%
+  group_by(Primer_name) %>% 
+  mutate(Total_ASV = sum(ASV)) -> AbPhy ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+
+##This value represent the relative abundance respect to the total amount of reads
+Relative_abundance = AbPhy$ASV/AbPhy$Total_ASV ### create a vector with the result of the operation 
+
+AbPhy[,5] <- Relative_abundance ### And put it in the same order in the colum 5
+
+colnames(AbPhy)[5] <- "Relative_abundance" ### Change the name of the column 
+
+AbPhy$Primer_name <- gsub(pattern = " ", replacement = "", x = AbPhy$Primer_name) ### check if the primer names have extra spaces
+
+AbPhy$Primer_name <- gsub(pattern = "-", replacement = "_", x = AbPhy$Primer_name)
+
+AbPhy <- merge(AbPhy, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
+
+AbPhy <- plyr::join(AbPhy, rawcounts, by= "Primer_name")
+
+##Create a REAL relative abundance value respect the total amount of reads per amplicon
+Rel_abund_amp = AbPhy$ASV/AbPhy$Reads ### create a vector with the result of the operation 
+
+AbPhy[,24] <- Rel_abund_amp ### And put it in the same order in the colum 24
+
+colnames(AbPhy)[24] <- "Rel_abund_amp" ### Change the name of the column 
+
+
+##Prepair matrix for PCA analysis
+foo<- AbPhy%>%select(1,2,24)
+foo<- reshape(foo, v.names = "Rel_abund_amp", timevar = "Phyla", idvar = "Primer_name",direction = "wide")
+colnames(foo) <- gsub("Rel_abund_amp.", "\\1", colnames(foo)) ##Remove "Rel_abund_amp"
 ##Transform NA to 0
 foo[is.na(foo)]<- 0
 rownames(foo)<-foo[,1]
@@ -144,9 +243,9 @@ a<- fviz_pca_ind(foo.pca,
 
 ###Color them by sequencing reads
 b<- fviz_pca_ind(foo.pca,
-             pointsize = log10(foo.primer$Total_reads), 
+             pointsize = log10(foo.primer$Reads), 
              geom.ind = "point", # show points only (but not "text")
-             col.ind = foo.primer$Total_reads, # color by groups
+             col.ind = foo.primer$Reads, # color by groups
              gradient.cols = c("blue", "red"),
              alpha.ind = 0.7,
              addEllipses = F, # Concentration ellipses
@@ -154,11 +253,12 @@ b<- fviz_pca_ind(foo.pca,
   labs(tag = "B)")
 
 c<- fviz_contrib(foo.pca, choice = "ind", axes = 1:2, top = 10,
-             fill = c("pink", "#21908CFF", "#21908CFF", "#440154FF", "pink",
-                      "pink", "pink", "pink", "#440154FF", "#440154FF"),
-             color = c("pink", "#21908CFF", "#21908CFF", "#440154FF", "pink",
-                       "pink", "pink", "pink", "#440154FF", "#440154FF"))+
-  labs(tag = "C)")
+             fill = c("#440154FF", "#440154FF", "#440154FF", "pink", "pink", "#440154FF", "pink", 
+                      "pink", "pink","#21908CFF"),
+             color =  c("#440154FF", "#440154FF", "#440154FF", "pink", "pink", "#440154FF", "pink", 
+                        "pink", "pink","#21908CFF"))+
+  labs(tag = "C)")+
+  theme(axis.text.x = element_text(angle=90))
 
 ##Variable results
 foo.var <- get_pca_var(foo.pca)
@@ -188,7 +288,7 @@ foo.euk<- foo.primer[foo.primer$Gen != "16S",]
 foo.bac<- foo.primer[foo.primer$Gen == "16S",]
 
 ###Let's do a PCA for Eukaryotes 
-foo.euk2<- foo.euk[,1:48]
+foo.euk2<- foo.euk[,1:21]
 
 foo.euk2.pca<- PCA(foo.euk2, graph = T)
 foo.euk2.eig<- get_eigenvalue(foo.euk2.pca)
@@ -211,9 +311,9 @@ aE<- fviz_pca_ind(foo.euk2.pca,
   labs(tag = "A)")
 
 bE<- fviz_pca_ind(foo.euk2.pca,
-                 pointsize = log10(foo.euk$Total_reads), 
+                 pointsize = log10(foo.euk$Reads), 
                  geom.ind = "point", # show points only (but not "text")
-                 col.ind = foo.euk$Total_reads, # color by groups
+                 col.ind = foo.euk$Reads, # color by groups
                  gradient.cols = c("blue", "red"),
                  alpha.ind = 0.7,
                  addEllipses = F, # Concentration ellipses
@@ -221,10 +321,10 @@ bE<- fviz_pca_ind(foo.euk2.pca,
   labs(tag = "B)")
 
 cE<- fviz_contrib(foo.euk2.pca, choice = "ind", axes = 1:2, top = 10,
-                 fill = c("#21908CFF", "#21908CFF", "#440154FF", "#440154FF", "#440154FF",
-                          "#440154FF", "#440154FF","#440154FF", "#440154FF", "#D0FF14"),
-                 color = c("#21908CFF", "#21908CFF", "#440154FF", "#440154FF", "#440154FF",
-                           "#440154FF", "#440154FF","#440154FF", "#440154FF", "#D0FF14"))+
+                 fill = c("#440154FF", "#440154FF", "#440154FF", "#440154FF",
+                          "#440154FF", "#440154FF","#440154FF", "#440154FF", "#21908CFF", "#440154FF"),
+                 color = c("#440154FF", "#440154FF", "#440154FF", "#440154FF",
+                           "#440154FF", "#440154FF","#440154FF", "#440154FF", "#21908CFF", "#440154FF"))+
   labs(tag = "C)") +
   theme(axis.text.x = element_text(angle=90))
 
@@ -242,7 +342,7 @@ grid.arrange(aE, bE, cE, dE, eE, widths = c(1, 1, 1), layout_matrix = rbind(c(1,
 dev.off()
 
 ###Now do if for Prokaryotes 
-foo.bac2<- foo.bac[,1:48]
+foo.bac2<- foo.bac[,1:21]
 
 foo.bac2.pca<- PCA(foo.bac2, graph = T)
 foo.bac2.eig<- get_eigenvalue(foo.bac2.pca)
@@ -265,9 +365,9 @@ aB<- fviz_pca_ind(foo.bac2.pca,
   labs(tag = "A)")
 
 bB<- fviz_pca_ind(foo.bac2.pca,
-                  pointsize = log10(foo.bac$Total_reads), 
+                  pointsize = log10(foo.bac$Reads), 
                   geom.ind = "point", # show points only (but not "text")
-                  col.ind = foo.bac$Total_reads, # color by groups
+                  col.ind = foo.bac$Reads, # color by groups
                   gradient.cols = c("blue", "red"),
                   alpha.ind = 0.7,
                   addEllipses = F, # Concentration ellipses
@@ -277,7 +377,7 @@ bB<- fviz_pca_ind(foo.bac2.pca,
 cB<- fviz_contrib(foo.bac2.pca, choice = "ind", axes = 1:2, fill = "pink", color = "pink")+
   labs(tag = "C)")
 
-dB<- fviz_pca_var(foo.bac2.pca, col.var = "cos2", select.var = list(contrib = 15),
+dB<- fviz_pca_var(foo.bac2.pca, col.var = "cos2", select.var = list(contrib = 10),
                   gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
                   repel = TRUE )+ # Avoid text overlapping
   labs(tag = "D)")
@@ -370,16 +470,20 @@ Comp <- ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyl
         scale_colour_brewer(palette = "Set1") +
         theme_bw() +
         theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+        labs(tag = "B)") #+
   #scale_fill_manual(values = c("darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey", "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey")) +
   #facet_wrap(~ AbyPp$Target_gene) +
-        theme(legend.position="none") + guides(fill=guide_legend(nrow=50)) +
-        labs(tag = "B)")
+        #theme(legend.position="none") + guides(fill=guide_legend(nrow=50)) +
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_11.pdf", width = 12, height = 16)
+grid.arrange(BC, Comp, nrow= 2, ncol= 1)
+dev.off()  
 
 ###Let's do it just for 18S primers
 
 foo.18S<- foo.primer[foo.primer$Gen == "18S",]
 
-foo.18S2<- foo.18S[,1:48]
+foo.18S2<- foo.18S[,1:21]
 
 foo.18S2.pca<- PCA(foo.18S2, graph = T)
 foo.18S2.eig<- get_eigenvalue(foo.18S2.pca)
@@ -402,9 +506,9 @@ a18<- fviz_pca_ind(foo.18S2.pca,
   labs(tag = "A)")
 
 b18<- fviz_pca_ind(foo.18S2.pca,
-                  pointsize = log10(foo.18S$Total_reads), 
+                  pointsize = log10(foo.18S$Reads), 
                   geom.ind = "point", # show points only (but not "text")
-                  col.ind = foo.18S$Total_reads, # color by groups
+                  col.ind = foo.18S$Reads, # color by groups
                   gradient.cols = c("blue", "red"),
                   alpha.ind = 0.7,
                   addEllipses = F, # Concentration ellipses
