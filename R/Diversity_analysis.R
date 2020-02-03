@@ -80,9 +80,14 @@ PS.l.High <- lapply(PS.l, function (x) {
 })
 
 ###Rarefied data
-##Each amplicon has their own depth... so rarefy to the max count sum.
+##Each amplicon has their own depth... so rarefy to the max count sum (option 1) or ... 
+#PS.l.rar <- lapply(PS.l.High, function (x) {
+#  rarefy_even_depth(x, rngseed=1234, sample.size= max(sample_sums(x)), replace=F) #
+#})
+
+##... to the total sum of reads by ASV by amplicon (option 2)
 PS.l.rar <- lapply(PS.l.High, function (x) {
-  rarefy_even_depth(x, rngseed=1234, sample.size=max(sample_sums(x)), replace=F)
+  rarefy_even_depth(x, rngseed=1234, sample.size= rowSums(otu_table(x)), replace=F) #max(sample_sums(x))
 })
 
 rawcounts <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
@@ -252,11 +257,12 @@ b<- fviz_pca_ind(foo.pca,
              legend.title = "Sequencing reads")+
   labs(tag = "B)")
 
+##Color need to be changed manually according to righ order, annoying but let's find a solution later:S 
 c<- fviz_contrib(foo.pca, choice = "ind", axes = 1:2, top = 10,
-             fill = c("#440154FF", "#440154FF", "#440154FF", "pink", "pink", "#440154FF", "pink", 
-                      "pink", "pink","#21908CFF"),
-             color =  c("#440154FF", "#440154FF", "#440154FF", "pink", "pink", "#440154FF", "pink", 
-                        "pink", "pink","#21908CFF"))+
+             fill = c("pink", "pink", "pink", "#21908CFF", "pink", "pink", 
+                      "#440154FF", "#440154FF", "#440154FF", "#440154FF"), 
+             color =  c("pink", "pink", "pink", "#21908CFF", "pink", "pink", 
+                        "#440154FF", "#440154FF", "#440154FF", "#440154FF")) +
   labs(tag = "C)")+
   theme(axis.text.x = element_text(angle=90))
 
@@ -288,7 +294,8 @@ foo.euk<- foo.primer[foo.primer$Gen != "16S",]
 foo.bac<- foo.primer[foo.primer$Gen == "16S",]
 
 ###Let's do a PCA for Eukaryotes 
-foo.euk2<- foo.euk[,1:21]
+#foo.euk2<- foo.euk[,1:21] ##Rarefaction option 1 
+foo.euk2<- foo.euk[,1:45] ##Rarefaction option 2
 
 foo.euk2.pca<- PCA(foo.euk2, graph = T)
 foo.euk2.eig<- get_eigenvalue(foo.euk2.pca)
@@ -321,14 +328,14 @@ bE<- fviz_pca_ind(foo.euk2.pca,
   labs(tag = "B)")
 
 cE<- fviz_contrib(foo.euk2.pca, choice = "ind", axes = 1:2, top = 10,
-                 fill = c("#440154FF", "#440154FF", "#440154FF", "#440154FF",
-                          "#440154FF", "#440154FF","#440154FF", "#440154FF", "#21908CFF", "#440154FF"),
-                 color = c("#440154FF", "#440154FF", "#440154FF", "#440154FF",
-                           "#440154FF", "#440154FF","#440154FF", "#440154FF", "#21908CFF", "#440154FF"))+
+                 fill = c("#21908CFF", "#440154FF", "#440154FF", "#FDE725FF", "#440154FF",
+                          "#E3DAC9", "#FDE725FF","#440154FF", "#440154FF",  "#440154FF"),
+                 color = c("#21908CFF", "#440154FF", "#440154FF", "#FDE725FF", "#440154FF",
+                           "#E3DAC9", "#FDE725FF","#440154FF", "#440154FF",  "#440154FF"))+
   labs(tag = "C)") +
   theme(axis.text.x = element_text(angle=90))
 
-dE<- fviz_pca_var(foo.euk2.pca, col.var = "cos2", select.var = list(contrib = 10),
+dE<- fviz_pca_var(foo.euk2.pca, col.var = "cos2", select.var = list(contrib = 15),
                  gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
                  repel = TRUE )+ # Avoid text overlapping
   labs(tag = "D)")
@@ -342,7 +349,8 @@ grid.arrange(aE, bE, cE, dE, eE, widths = c(1, 1, 1), layout_matrix = rbind(c(1,
 dev.off()
 
 ###Now do if for Prokaryotes 
-foo.bac2<- foo.bac[,1:21]
+#foo.bac2<- foo.bac[,1:21] ##Rarefaction option 1
+foo.bac2<- foo.bac[,1:45] ##Rarefaction option 2
 
 foo.bac2.pca<- PCA(foo.bac2, graph = T)
 foo.bac2.eig<- get_eigenvalue(foo.bac2.pca)
@@ -375,7 +383,8 @@ bB<- fviz_pca_ind(foo.bac2.pca,
   labs(tag = "B)")
 
 cB<- fviz_contrib(foo.bac2.pca, choice = "ind", axes = 1:2, fill = "pink", color = "pink")+
-  labs(tag = "C)")
+  labs(tag = "C)")+
+  theme(axis.text.x = element_text(angle=90))
 
 dB<- fviz_pca_var(foo.bac2.pca, col.var = "cos2", select.var = list(contrib = 10),
                   gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
@@ -390,70 +399,128 @@ grid.arrange(aB, bB, cB, dB, eB, widths = c(1, 1, 1), layout_matrix = rbind(c(1,
                                                                             c(2, 4, 5)))
 dev.off()
 
-###Eliminating the highly dominant primers 
-foo2<- foo[-c(7,13,18),]
-foo.primer2<- foo.primer[-c(7,13,18),]
+###Eliminating the highly dominant primers, this plot is usful just when non-rarefied data is used 
+#foo2<- foo[-c(7,13,18),]
+#foo.primer2<- foo.primer[-c(7,13,18),]
 
-foo.pca2<- PCA(foo2, graph = T)
-foo.eig2<- get_eigenvalue(foo.pca2)
-fviz_eig(foo.pca2, addlabels = TRUE, ylim = c(0, 25))
+#foo.pca2<- PCA(foo2, graph = T)
+#foo.eig2<- get_eigenvalue(foo.pca2)
+#fviz_eig(foo.pca2, addlabels = TRUE, ylim = c(0, 25))
 
-fviz_pca_ind(foo.pca2, pointsize = "cos2", 
-             pointshape = 21, fill = "#E7B800",
-             repel = TRUE) # Avoid text overlapping (slow if many points)
+#fviz_pca_ind(foo.pca2, pointsize = "cos2", 
+#             pointshape = 21, fill = "#E7B800",
+#             repel = TRUE) # Avoid text overlapping (slow if many points)
 
 ###Color them by gene
-a2<- fviz_pca_ind(foo.pca2,
-                 pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
-                 pointshape = 21,
-                 geom.ind = "point", # show points only (but not "text")
-                 col.ind = foo.primer2$Gen, # color by groups
-                 fill.ind =  foo.primer2$Gen,
-                 palette = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"),
-                 alpha.ind = 0.5,
-                 addEllipses = F, # Concentration ellipses
-                 legend.title = "Gen")+
-  labs(tag = "A)")
+#a2<- fviz_pca_ind(foo.pca2,
+#                 pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
+#                 pointshape = 21,
+#                 geom.ind = "point", # show points only (but not "text")
+#                 col.ind = foo.primer2$Gen, # color by groups
+#                 fill.ind =  foo.primer2$Gen,
+#                 palette = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"),
+#                 alpha.ind = 0.5,
+#                 addEllipses = F, # Concentration ellipses
+#                 legend.title = "Gen")+
+#  labs(tag = "A)")
 
 ###Color them by sequencing reads
-b2<- fviz_pca_ind(foo.pca2,
-                 pointsize = log10(foo.primer2$Total_reads), 
-                 geom.ind = "point", # show points only (but not "text")
-                 col.ind = foo.primer2$Total_reads, # color by groups
-                 gradient.cols = c("blue", "red"),
-                 alpha.ind = 0.7,
-                 addEllipses = F, # Concentration ellipses
-                 legend.title = "Sequencing reads")+
-  labs(tag = "B)")
+#b2<- fviz_pca_ind(foo.pca2,
+#                 pointsize = log10(foo.primer2$Total_reads), 
+#                 geom.ind = "point", # show points only (but not "text")
+#                 col.ind = foo.primer2$Total_reads, # color by groups
+#                 gradient.cols = c("blue", "red"),
+#                 alpha.ind = 0.7,
+#                 addEllipses = F, # Concentration ellipses
+#                 legend.title = "Sequencing reads")+
+#  labs(tag = "B)")
 
-c2<- fviz_contrib(foo.pca2, choice = "ind", axes = 1:2, top = 10,
-                 fill = c("#440154FF", "pink", "pink", "pink", "pink",
-                          "#440154FF", "#440154FF", "#440154FF", "#440154FF", "#440154FF"),
-                 color = c("#440154FF", "pink", "pink", "pink", "pink",
-                           "#440154FF", "#440154FF", "#440154FF", "#440154FF", "#440154FF"))+
-  labs(tag = "C)")+
-  theme(axis.text.x = element_text(angle=90))
+#c2<- fviz_contrib(foo.pca2, choice = "ind", axes = 1:2, top = 10,
+#                 fill = c("#440154FF", "pink", "pink", "pink", "pink",
+#                          "#440154FF", "#440154FF", "#440154FF", "#440154FF", "#440154FF"),
+#                 color = c("#440154FF", "pink", "pink", "pink", "pink",
+#                           "#440154FF", "#440154FF", "#440154FF", "#440154FF", "#440154FF"))+
+#  labs(tag = "C)")+
+#  theme(axis.text.x = element_text(angle=90))
 
 ##Variable results
-foo.var2 <- get_pca_var(foo.pca2)
+#foo.var2 <- get_pca_var(foo.pca2)
 
 ###PCA variables
 #fviz_pca_var(foo.pca, col.var = "black")
-d2<- fviz_pca_var(foo.pca2, col.var = "cos2", select.var =  list(contrib = 10), ##top ten taxa contributing
-                 gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
-                 repel = TRUE )+ # Avoid text overlapping
-  labs(tag = "D)")
+#d2<- fviz_pca_var(foo.pca2, col.var = "cos2", select.var =  list(contrib = 10), ##top ten taxa contributing
+#                 gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+#                 repel = TRUE )+ # Avoid text overlapping
+#  labs(tag = "D)")
 
 ###Visualize quality of representation 
-corrplot(na.omit(foo.var2$cos2), is.corr=FALSE) #Alternative
+#corrplot(na.omit(foo.var2$cos2), is.corr=FALSE) #Alternative
 
 ##Plot contribution
-e2<- fviz_contrib(foo.pca2, choice = "var", axes = 1:2, top = 25)+
+#e2<- fviz_contrib(foo.pca2, choice = "var", axes = 1:2, top = 25)+
+#  labs(tag = "E)")
+
+#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_9.pdf", width = 16, height = 8)
+#grid.arrange(a2, b2, c2, d2, e2, widths = c(1, 1, 1), heights= c(2,2), layout_matrix = rbind(c(1, 3, 5),
+#                                                                       c(2, 4, 5)))
+#dev.off()
+
+###Let's do it just for 18S primers
+
+foo.18S<- foo.primer[foo.primer$Gen == "18S",]
+
+#foo.18S2<- foo.18S[,1:21] ##Rarefaction option 1
+foo.18S2<- foo.18S[,1:45] ##Rarefaction option 2
+
+foo.18S2.pca<- PCA(foo.18S2, graph = T)
+foo.18S2.eig<- get_eigenvalue(foo.18S2.pca)
+fviz_eig(foo.18S2.pca, addlabels = TRUE, ylim = c(0, 50))
+
+fviz_pca_ind(foo.18S2.pca, pointsize = "cos2", 
+             pointshape = 21, fill = "#E7B800",
+             repel = TRUE) # Avoid text overlapping (slow if many points)
+
+a18<- fviz_pca_ind(foo.18S2.pca,
+                   pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
+                   pointshape = 21,
+                   geom.ind = "point", # show points only (but not "text")
+                   col.ind = foo.18S$Region, # color by region
+                   fill.ind =  foo.18S$Region,
+                   palette ="Set1",
+                   alpha.ind = 0.5,
+                   addEllipses = F, # Concentration ellipses
+                   legend.title = "Region")+
+  labs(tag = "A)")
+
+b18<- fviz_pca_ind(foo.18S2.pca,
+                   pointsize = log10(foo.18S$Reads), 
+                   geom.ind = "point", # show points only (but not "text")
+                   col.ind = foo.18S$Reads, # color by groups
+                   gradient.cols = c("blue", "red"),
+                   alpha.ind = 0.7,
+                   addEllipses = F, # Concentration ellipses
+                   legend.title = "Sequencing reads")+
+  labs(tag = "B)")
+
+c18<- fviz_contrib(foo.18S2.pca, choice = "ind", axes = 1:2, fill = "#440154FF", color = "#440154FF")+
+  labs(tag = "C)") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1))
+
+d18<- fviz_pca_var(foo.18S2.pca, col.var = "cos2", select.var = list(contrib = 10),
+                   gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+                   repel = TRUE )+ # Avoid text overlapping
+  labs(tag = "D)")
+
+e18<- fviz_contrib(foo.18S2.pca, choice = "var", axes = 1:2, top = 25)+
   labs(tag = "E)")
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_9.pdf", width = 16, height = 8)
-grid.arrange(a2, b2, c2, d2, e2, widths = c(1, 1, 1), heights= c(2,2), layout_matrix = rbind(c(1, 3, 5),
-                                                                       c(2, 4, 5)))
+##Variable results
+#foo.var18 <- get_pca_var(foo.18S2.pca)
+#corrplot(na.omit(foo.var18$cos2), is.corr=FALSE) #Alternative
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_10.pdf", width = 16, height = 8)
+grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 3, 5),
+                                                                                 c(2, 4, 5)))
 dev.off()
 
 ##Bray-Curtis dissimilarity estimation
@@ -461,8 +528,49 @@ dev.off()
 foo.matrix<- as.matrix(foo)
 foo.braycurt<- vegdist(foo.matrix, method = "bray")
 as.matrix(foo.braycurt)
+
+##plot heatmap of Bray-Curtis dissimilarity with factoextra
 BC <- fviz_dist(foo.braycurt, lab_size = 8,  gradient = list(low = "#FC4E07", high = "#00AFBB")) +
   labs(tag = "A)", fill= "Bray-Curtis\ndissimilarity")
+
+###Using pheatmap to include annotations 
+foo.clust <- hclust(dist(foo.braycurt), method = "complete") ##Dendogram
+require(dendextend)
+as.dendrogram(foo.clust) %>%
+  plot(horiz = TRUE)
+
+foo.col <- cutree(tree = foo.clust, k = 2)
+foo.col  <- data.frame(cluster = ifelse(test = foo.col  == 1, yes = "cluster 1", no = "cluster 2"))
+foo.col$Primer_name <- rownames(foo.col)
+
+foo.col <- merge(foo.col, primerInput, by="Primer_name", sort= F)
+
+col_groups <- foo.col %>%
+  select("Primer_name", "Gen", "Region") ##Here It is possible to add the expected size 
+
+row.names(col_groups)<- col_groups$Primer_name
+
+col_groups$Primer_name<- NULL
+
+colour_groups <- list( Gen= c("12S"= "#E3DAC9", "16S"= "pink","18S"= "#440154FF", "28S"= "#21908CFF", 
+                              "COI"= "#FDE725FF", "ITS"= "#C46210", "rbcL"= "#D0FF14"))
+require(pheatmap)
+require(viridis)
+BCheatmap <- pheatmap(foo.braycurt, 
+                        color = plasma(100),
+                        border_color = NA,
+                        annotation_col = col_groups, 
+                        #annotation_row = col_groups,
+                        annotation_colors = colour_groups,
+                        #cutree_rows = 2,
+                        #cutree_cols = 2,
+                        show_rownames = F,
+                        show_colnames = F,
+                        main= "Bray-Curtis dissimilarity among primers")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_12.pdf", width = 10, height = 8)
+BCheatmap
+dev.off()
 
 ###Composition plots by primer pair 
 Comp <- ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyla)) +
@@ -478,56 +586,3 @@ Comp <- ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyl
 pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_11.pdf", width = 12, height = 16)
 grid.arrange(BC, Comp, nrow= 2, ncol= 1)
 dev.off()  
-
-###Let's do it just for 18S primers
-
-foo.18S<- foo.primer[foo.primer$Gen == "18S",]
-
-foo.18S2<- foo.18S[,1:21]
-
-foo.18S2.pca<- PCA(foo.18S2, graph = T)
-foo.18S2.eig<- get_eigenvalue(foo.18S2.pca)
-fviz_eig(foo.18S2.pca, addlabels = TRUE, ylim = c(0, 50))
-
-fviz_pca_ind(foo.18S2.pca, pointsize = "cos2", 
-             pointshape = 21, fill = "#E7B800",
-             repel = TRUE) # Avoid text overlapping (slow if many points)
-
-a18<- fviz_pca_ind(foo.18S2.pca,
-                  pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
-                  pointshape = 21,
-                  geom.ind = "point", # show points only (but not "text")
-                  col.ind = foo.18S$Region, # color by region
-                  fill.ind =  foo.18S$Region,
-                  palette ="Set1",
-                  alpha.ind = 0.5,
-                  addEllipses = F, # Concentration ellipses
-                  legend.title = "Region")+
-  labs(tag = "A)")
-
-b18<- fviz_pca_ind(foo.18S2.pca,
-                  pointsize = log10(foo.18S$Reads), 
-                  geom.ind = "point", # show points only (but not "text")
-                  col.ind = foo.18S$Reads, # color by groups
-                  gradient.cols = c("blue", "red"),
-                  alpha.ind = 0.7,
-                  addEllipses = F, # Concentration ellipses
-                  legend.title = "Sequencing reads")+
-  labs(tag = "B)")
-
-c18<- fviz_contrib(foo.18S2.pca, choice = "ind", axes = 1:2, fill = "#440154FF", color = "#440154FF")+
-  labs(tag = "C)") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 1))
-
-d18<- fviz_pca_var(foo.18S2.pca, col.var = "cos2", select.var = list(contrib = 15),
-                  gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
-                  repel = TRUE )+ # Avoid text overlapping
-  labs(tag = "D)")
-
-e18<- fviz_contrib(foo.18S2.pca, choice = "var", axes = 1:2, top = 25)+
-  labs(tag = "E)")
-
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_10.pdf", width = 16, height = 8)
-grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 3, 5),
-                                                                            c(2, 4, 5)))
-dev.off()
