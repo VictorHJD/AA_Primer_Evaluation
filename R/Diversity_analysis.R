@@ -530,8 +530,8 @@ foo.braycurt<- vegdist(foo.matrix, method = "bray")
 as.matrix(foo.braycurt)
 
 ##plot heatmap of Bray-Curtis dissimilarity with factoextra
-BC <- fviz_dist(foo.braycurt, lab_size = 8,  gradient = list(low = "#FC4E07", high = "#00AFBB")) +
-  labs(tag = "A)", fill= "Bray-Curtis\ndissimilarity")
+#BC <- fviz_dist(foo.braycurt, lab_size = 8,  gradient = list(low = "#FC4E07", high = "#00AFBB")) +
+#  labs(tag = "A)", fill= "Bray-Curtis\ndissimilarity")
 
 ###Using pheatmap to include annotations 
 foo.clust <- hclust(dist(foo.braycurt), method = "complete") ##Dendogram
@@ -573,16 +573,32 @@ BCheatmap
 dev.off()
 
 ###Composition plots by primer pair 
-Comp <- ggplot(data=AbPhy, aes(x= Primer_name, y= Relative_abundance, fill= Phyla)) +
-        geom_bar(aes(), stat="identity", position="stack") +
-        scale_colour_brewer(palette = "Set1") +
+AbPhy%>%
+  group_by(Primer_name) %>%
+  mutate(Main_taxa= Rel_abund_amp>= 0.05) %>%
+  mutate(Phyla= case_when(Main_taxa== FALSE ~ "Other taxa", TRUE ~ as.character(.$Phyla))) -> CompPhy
+
+Comp <- ggplot(data=CompPhy, aes(x= Primer_name, y= Rel_abund_amp, fill= Phyla)) +
+        scale_fill_manual(values = c("#9e0142", "#d53e4f", "#f46d43", "#bf812d", "#fee08b", "#ffffbf", "#e6f598",
+          "#a6d96a", "#66c2a5", "#3288bd", "#5e4fa2", "#006837","#969696", "#7f3b08", "#01665e", "#053061")) +
+        geom_bar(aes(), stat="identity", position="fill") +
         theme_bw() +
         theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
-        labs(tag = "B)") #+
-  #scale_fill_manual(values = c("darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey", "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1", "darkorange1", "cyan1", "royalblue4", "darksalmon", "darkblue", "royalblue4", "dodgerblue3", "steelblue1", "lightskyblue", "darkseagreen", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1", "brown1", "darkorange1", "cyan1", "darkgrey")) +
-  #facet_wrap(~ AbyPp$Target_gene) +
-        #theme(legend.position="none") + guides(fill=guide_legend(nrow=50)) +
+        labs(x = "Primer name", y= "Relative abundance")
+
 
 pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_11.pdf", width = 12, height = 16)
 grid.arrange(BC, Comp, nrow= 2, ncol= 1)
 dev.off()  
+
+## Plot composition 
+
+PS.l.phylum  <- lapply(PS.l.rar, function (x) {
+  tax_glom(x, taxrank="phylum", NArm=FALSE) 
+})
+
+lapply(PS.l.phylum, function (x) {
+  plot_bar(x, fill="phylum") 
+})
+
+
