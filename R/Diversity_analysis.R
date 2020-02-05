@@ -31,6 +31,19 @@ if(!exists("PS.l")){
   PS.l<- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds") ##   
 }
 
+##Change names in the phyloseq list for short names
+originalnames<- as.data.frame(names(PS.l))
+colnames(originalnames)<- "Primer_name"
+
+primerInput%>%
+  select(1,15) -> shortnames
+
+join(originalnames, shortnames, by= "Primer_name") -> shortnames
+
+names(PS.l)<- as.character(shortnames$Primer_comb_ID) 
+
+rm(originalnames, shortnames)
+
 ###Raw counts by amplicon
 rawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
   data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
@@ -38,9 +51,9 @@ rawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
 
 rawcounts[,2] <- rownames(rawcounts)
 rownames(rawcounts) <- c(1:nrow(rawcounts))
-colnames(rawcounts) <- c("Reads","Primer_name")
-rawcounts <- data.frame(Primer_name = rawcounts$Primer_name, Reads = rawcounts$Reads) 
-rawcounts$Primer_name <- gsub(".asvCount", "\\1", rawcounts$Primer_name)
+colnames(rawcounts) <- c("Reads","Primer_comb_ID")
+rawcounts <- data.frame(Primer_comb_ID = rawcounts$Primer_comb_ID, Reads = rawcounts$Reads) 
+rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
 
 ###Rarefaction curves by amplicon 
 ###Summary by amplicon
@@ -49,7 +62,7 @@ s.list <- lapply(PS.l, function (x) {
 })
 
 ###Distribution of reads by amplicon
-pdf("~/AA_Primer_evaluation/Figures/Supplementary_3.pdf", 
+pdf("~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_1.pdf", 
     width=8, height=10, onefile=T)
 for(i in 1:length(PS.l)) {
   y<- names(PS.l)
@@ -68,7 +81,7 @@ rarecurv.l <- lapply(PS.l, function (x) {
                    label = F)
 })
 
-#pdf("~/AA_HMHZ/Primers/RareCurv_by_amplicon.pdf", 
+#pdf("~/AA_HMHZ/Primers/Supplementary_2.pdf", 
 #    width=8, height=10, onefile=T)
 #rarecurv.l
 #dev.off()
@@ -80,14 +93,9 @@ PS.l.High <- lapply(PS.l, function (x) {
 })
 
 ###Rarefied data
-##Each amplicon has their own depth... so rarefy to the max count sum (option 1) or ... 
-#PS.l.rar <- lapply(PS.l.High, function (x) {
-#  rarefy_even_depth(x, rngseed=1234, sample.size= max(sample_sums(x)), replace=F) #
-#})
-
-##... to the total sum of reads by ASV by amplicon (option 2)
+##Each amplicon has their own depth, so rarefy to the total sum of reads by ASV by amplicon 
 PS.l.rar <- lapply(PS.l.High, function (x) {
-  rarefy_even_depth(x, rngseed=1234, sample.size= rowSums(otu_table(x)), replace=F) #max(sample_sums(x))
+  rarefy_even_depth(x, rngseed=1234, sample.size= rowSums(otu_table(x)), replace=F) #mean(sample_sums(x))
 })
 
 rawcounts <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
@@ -96,41 +104,27 @@ rawcounts <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
 
 rawcounts[,2] <- rownames(rawcounts)
 rownames(rawcounts) <- c(1:nrow(rawcounts))
-colnames(rawcounts) <- c("Reads","Primer_name")
-rawcounts <- data.frame(Primer_name = rawcounts$Primer_name, Reads = rawcounts$Reads) 
-rawcounts$Primer_name <- gsub(".asvCount", "\\1", rawcounts$Primer_name)
-
-##Normalize data 
-PS.l.Nor <- lapply(PS.l, function (x) {
-  transform_sample_counts(x, function(i) i/sum(i))
-})
+colnames(rawcounts) <- c("Reads","Primer_comb_ID")
+rawcounts <- data.frame("Primer_comb_ID" = rawcounts$Primer_comb_ID, Reads = rawcounts$Reads) 
+rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
 
 ##Alpha diversity 
-
 alphaDiv <- data.frame()
-
 for (i in 1:length(PS.l.rar)){
-  
   a <- data.frame()
-  
   b <- data.frame(estimate_richness(PS.l.rar[[i]], measures = c("Observed","Chao1", "Shannon")))
-  
   a<-colMeans(b)
-  
   alphaDiv<- rbind(alphaDiv, a)
 }
-
 alphaDiv[,5] <- names(PS.l.rar)
+colnames(alphaDiv) <- c("Observed","Chao1","se_Chao1", "Shannon", "Primer_comb_ID")
 
-colnames(alphaDiv) <- c("Observed","Chao1","se_Chao1", "Shannon", "Primer_name")
-
-
-##Beta diversity
+##Beta diversity by marker considering each sample individually
 ord.l <-lapply(PS.l.rar, function (x) {
   ordinate(x, method="PCoA", distance="bray")
 })
 
-pdf("~/AA_Primer_evaluation/Figures/Supplementary_4.pdf", 
+pdf("~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_3.pdf", 
     width=10, height=10, onefile=T)
 for (i in 1:length(PS.l.rar)) {
   x<- names(PS.l.rar)
@@ -166,17 +160,17 @@ for (i in 1: length(readNumByPhylum)) ### Start a loop: fro every element in the
   }
   
   phyla[,3] <- names(readNumByPhylum)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
-  colnames(phyla) <- c("ASV", "Phyla", "Primer_name") ### change the names for the columns 
+  colnames(phyla) <- c("ASV", "Phyla", "Primer_comb_ID") ### change the names for the columns 
   AbPhy <- rbind(AbPhy, phyla) ### Join all the "individual" data frames into the final data frame 
   
 }   ### close loop
 
 rownames(AbPhy) <- c(1:nrow(AbPhy)) ### change the rownames to consecutive numbers 
-AbPhy <- data.frame(Primer_name = AbPhy$Primer_name, Phyla = AbPhy$Phyla, ASV = AbPhy$ASV) ###change the order of the columns
+AbPhy <- data.frame(Primer_comb_ID = AbPhy$Primer_comb_ID, Phyla = AbPhy$Phyla, ASV = AbPhy$ASV) ###change the order of the columns
 AbPhy$ASV <- as.numeric(AbPhy$ASV)
 
 AbPhy %>%
-  group_by(Primer_name) %>% 
+  group_by(Primer_comb_ID) %>% 
   mutate(Total_ASV = sum(ASV)) -> AbPhy ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
 
 ##This value represent the relative abundance respect to the total amount of reads
@@ -186,44 +180,91 @@ AbPhy[,5] <- Relative_abundance ### And put it in the same order in the colum 5
 
 colnames(AbPhy)[5] <- "Relative_abundance" ### Change the name of the column 
 
-AbPhy$Primer_name <- gsub(pattern = " ", replacement = "", x = AbPhy$Primer_name) ### check if the primer names have extra spaces
+AbPhy$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbPhy$Primer_comb_ID) ### check if the primer names have extra spaces
 
-AbPhy$Primer_name <- gsub(pattern = "-", replacement = "_", x = AbPhy$Primer_name)
+AbPhy$Primer_comb_ID <- gsub(pattern = "-", replacement = "_", x = AbPhy$Primer_comb_ID)
 
-AbPhy <- merge(AbPhy, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
+AbPhy <- merge(AbPhy, primerInput, by= "Primer_comb_ID") ###merge the selected information with the origial data frame created 
 
-AbPhy <- plyr::join(AbPhy, rawcounts, by= "Primer_name")
+AbPhy <- plyr::join(AbPhy, rawcounts, by= "Primer_comb_ID")
 
 ##Create a REAL relative abundance value respect the total amount of reads per amplicon
 Rel_abund_amp = AbPhy$ASV/AbPhy$Reads ### create a vector with the result of the operation 
 
-AbPhy[,24] <- Rel_abund_amp ### And put it in the same order in the colum 24
+AbPhy[,25] <- Rel_abund_amp ### And put it in the same order in the colum 25
 
-colnames(AbPhy)[24] <- "Rel_abund_amp" ### Change the name of the column 
-
+colnames(AbPhy)[25] <- "Rel_abund_amp" ### Change the name of the column 
 
 ##Prepair matrix for PCA analysis
-foo<- AbPhy%>%select(1,2,24)
-foo<- reshape(foo, v.names = "Rel_abund_amp", timevar = "Phyla", idvar = "Primer_name",direction = "wide")
+foo<- AbPhy%>%select(1,2,25)
+foo<- reshape(foo, v.names = "Rel_abund_amp", timevar = "Phyla", idvar = "Primer_comb_ID",direction = "wide")
 colnames(foo) <- gsub("Rel_abund_amp.", "\\1", colnames(foo)) ##Remove "Rel_abund_amp"
 ##Transform NA to 0
 foo[is.na(foo)]<- 0
 rownames(foo)<-foo[,1]
 
 ##Merge with primer information 
-foo.primer<-join(foo, primerInput, by= "Primer_name")
+foo.primer<-join(foo, primerInput, by= "Primer_comb_ID")
 rownames(foo.primer)<-foo.primer[,1]
 
 ##Add rawcounts
 rawcounts<- as.data.frame(rawcounts)
 rownames(rawcounts)<-rawcounts[,1]
 
-foo.primer<-join(foo.primer, rawcounts, by= "Primer_name")
+foo.primer<-join(foo.primer, rawcounts, by= "Primer_comb_ID")
 rownames(foo.primer)<- rownames(foo)
 
 foo[,1]<- NULL
 foo.primer[,1]<- NULL
 
+######### Bray-Curtis dissimilarity estimation (Figure 2) ########
+foo.matrix<- as.matrix(foo)
+foo.braycurt<- vegdist(foo.matrix, method = "bray")
+as.matrix(foo.braycurt)
+
+###Using pheatmap to include annotations 
+foo.clust <- hclust(dist(foo.braycurt), method = "complete") ##Dendogram
+require(dendextend)
+as.dendrogram(foo.clust) %>%
+  plot(horiz = TRUE)
+
+foo.col <- cutree(tree = foo.clust, k = 2)
+foo.col  <- data.frame(cluster = ifelse(test = foo.col  == 1, yes = "cluster 1", no = "cluster 2"))
+foo.col$Primer_comb_ID <- rownames(foo.col)
+
+foo.col <- merge(foo.col, primerInput, by="Primer_comb_ID", sort= F)
+
+col_groups <- foo.col %>%
+  select("Primer_comb_ID", "Gen", "Region") ##Here It is possible to add the expected size 
+
+row.names(col_groups)<- col_groups$Primer_comb_ID
+
+col_groups$Primer_comb_ID<- NULL
+
+colour_groups <- list( Gen= c("12S"= "#E3DAC9", "16S"= "pink","18S"= "#440154FF", "28S"= "#21908CFF", 
+                              "COI"= "#FDE725FF", "ITS"= "#C46210", "rbcL"= "#D0FF14"),
+                       Region= c("V1-V2"= "#8DD3C7", "V3-V4"= "#FFFFB3", "V4"= "#BEBADA", "V4-V5"= "#FB8072", "V6-V7"= "#80B1D3",
+                                 "V6-V8"="#FDB462", "V7-V8"= "#B3DE69", "V8-V9"= "#FCCDE5", "V9"= "#D9D9D9",
+                                 "D2"="#D95F02", "D3"= "#7570B3", "Folmer"= "#E7298A", "ITS1"= "#A6761D", "Chloroplast"= "#66A61E", "Mitochondrial"= "#E6AB02"))
+require(pheatmap)
+require(viridis)
+BCheatmap <- pheatmap(foo.braycurt, 
+                      color = plasma(100),
+                      border_color = NA,
+                      annotation_col = col_groups, 
+                      #annotation_row = col_groups,
+                      annotation_colors = colour_groups,
+                      #cutree_rows = 2,
+                      #cutree_cols = 2,
+                      show_rownames = F,
+                      show_colnames = F,
+                      main= "Bray-Curtis dissimilarity among primers")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_2.pdf", width = 10, height = 8)
+BCheatmap
+dev.off()
+
+####PCA and composition plots (Figure 3 and supplementary)####
 ##Let's do a PCA of individuals
 foo.pca<- PCA(foo, graph = T)
 foo.eig<- get_eigenvalue(foo.pca)
@@ -238,10 +279,10 @@ a<- fviz_pca_ind(foo.pca,
              pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
              pointshape = 21,
              geom.ind = "point", # show points only (but not "text")
-             col.ind = foo.primer$Gen, # color by groups
+             col.ind = "black", # color by groups
              fill.ind =  foo.primer$Gen,
              palette = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"),
-             alpha.ind = 0.5,
+             alpha.ind = 0.9,
              addEllipses = F, # Concentration ellipses
              legend.title = "Gen")+
   labs(tag = "A)")
@@ -266,27 +307,19 @@ c<- fviz_contrib(foo.pca, choice = "ind", axes = 1:2, top = 10,
   labs(tag = "C)")+
   theme(axis.text.x = element_text(angle=90))
 
-##Variable results
-foo.var <- get_pca_var(foo.pca)
-
 ###PCA variables
-#fviz_pca_var(foo.pca, col.var = "black")
 d<- fviz_pca_var(foo.pca, col.var = "cos2", select.var =  list(contrib = 10), ##top ten taxa contributing
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
              repel = TRUE )+ # Avoid text overlapping
   labs(tag = "D)")
 
-###Visualize quality of representation 
-corrplot(foo.var$cos2, is.corr=FALSE) #Alternative
+###Visualize quality of representation in each dimension
+##Variable results
+#foo.var <- get_pca_var(foo.pca)
+#corrplot(foo.var$cos2, is.corr=FALSE) #Alternative
 
 ##Plot contribution
-e<- fviz_contrib(foo.pca, choice = "var", axes = 1:2, top = 25)+
-  labs(tag = "E)")
-
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_6.pdf", width = 16, height = 8)
-grid.arrange(a, b, c, d, e, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 3, 5),
-                                                                      c(2, 4, 5)))
-dev.off()
+#fviz_contrib(foo.pca, choice = "var", axes = 1:2, top = 25)
 
 ###Clear difference between Bacterial and Eukaryotic... Let's split them
 
@@ -294,8 +327,7 @@ foo.euk<- foo.primer[foo.primer$Gen != "16S",]
 foo.bac<- foo.primer[foo.primer$Gen == "16S",]
 
 ###Let's do a PCA for Eukaryotes 
-#foo.euk2<- foo.euk[,1:21] ##Rarefaction option 1 
-foo.euk2<- foo.euk[,1:45] ##Rarefaction option 2
+foo.euk2<- foo.euk[,1:45]
 
 foo.euk2.pca<- PCA(foo.euk2, graph = T)
 foo.euk2.eig<- get_eigenvalue(foo.euk2.pca)
@@ -309,10 +341,9 @@ aE<- fviz_pca_ind(foo.euk2.pca,
                  pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
                  pointshape = 21,
                  geom.ind = "point", # show points only (but not "text")
-                 col.ind = foo.euk$Gen, # color by groups
+                 col.ind = "black", # color by groups
                  fill.ind =  foo.euk$Gen,
                  palette = c("#E3DAC9","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"),
-                 alpha.ind = 0.5,
                  addEllipses = F, # Concentration ellipses
                  legend.title = "Gen")+
   labs(tag = "A)")
@@ -340,17 +371,8 @@ dE<- fviz_pca_var(foo.euk2.pca, col.var = "cos2", select.var = list(contrib = 15
                  repel = TRUE )+ # Avoid text overlapping
   labs(tag = "D)")
 
-eE<- fviz_contrib(foo.euk2.pca, choice = "var", axes = 1:2, top = 25)+
-  labs(tag = "E)")
-
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_7.pdf", width = 16, height = 8)
-grid.arrange(aE, bE, cE, dE, eE, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 3, 5),
-                                                                       c(2, 4, 5)))
-dev.off()
-
 ###Now do if for Prokaryotes 
-#foo.bac2<- foo.bac[,1:21] ##Rarefaction option 1
-foo.bac2<- foo.bac[,1:45] ##Rarefaction option 2
+foo.bac2<- foo.bac[,1:45]
 
 foo.bac2.pca<- PCA(foo.bac2, graph = T)
 foo.bac2.eig<- get_eigenvalue(foo.bac2.pca)
@@ -364,10 +386,10 @@ aB<- fviz_pca_ind(foo.bac2.pca,
                   pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
                   pointshape = 21,
                   geom.ind = "point", # show points only (but not "text")
-                  col.ind = foo.bac$Region, # color by region
+                  col.ind = "black", # color by region
                   fill.ind =  foo.bac$Region,
-                  palette ="Set1",
-                  alpha.ind = 0.5,
+                  palette ="Set3",
+                  alpha.ind = 0.9,
                   addEllipses = F, # Concentration ellipses
                   legend.title = "Region")+
   labs(tag = "A)")
@@ -391,86 +413,11 @@ dB<- fviz_pca_var(foo.bac2.pca, col.var = "cos2", select.var = list(contrib = 10
                   repel = TRUE )+ # Avoid text overlapping
   labs(tag = "D)")
 
-eB<- fviz_contrib(foo.bac2.pca, choice = "var", axes = 1:2, top = 25)+
-  labs(tag = "E)")
-
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_8.pdf", width = 16, height = 8)
-grid.arrange(aB, bB, cB, dB, eB, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 3, 5),
-                                                                            c(2, 4, 5)))
-dev.off()
-
-###Eliminating the highly dominant primers, this plot is usful just when non-rarefied data is used 
-#foo2<- foo[-c(7,13,18),]
-#foo.primer2<- foo.primer[-c(7,13,18),]
-
-#foo.pca2<- PCA(foo2, graph = T)
-#foo.eig2<- get_eigenvalue(foo.pca2)
-#fviz_eig(foo.pca2, addlabels = TRUE, ylim = c(0, 25))
-
-#fviz_pca_ind(foo.pca2, pointsize = "cos2", 
-#             pointshape = 21, fill = "#E7B800",
-#             repel = TRUE) # Avoid text overlapping (slow if many points)
-
-###Color them by gene
-#a2<- fviz_pca_ind(foo.pca2,
-#                 pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
-#                 pointshape = 21,
-#                 geom.ind = "point", # show points only (but not "text")
-#                 col.ind = foo.primer2$Gen, # color by groups
-#                 fill.ind =  foo.primer2$Gen,
-#                 palette = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"),
-#                 alpha.ind = 0.5,
-#                 addEllipses = F, # Concentration ellipses
-#                 legend.title = "Gen")+
-#  labs(tag = "A)")
-
-###Color them by sequencing reads
-#b2<- fviz_pca_ind(foo.pca2,
-#                 pointsize = log10(foo.primer2$Total_reads), 
-#                 geom.ind = "point", # show points only (but not "text")
-#                 col.ind = foo.primer2$Total_reads, # color by groups
-#                 gradient.cols = c("blue", "red"),
-#                 alpha.ind = 0.7,
-#                 addEllipses = F, # Concentration ellipses
-#                 legend.title = "Sequencing reads")+
-#  labs(tag = "B)")
-
-#c2<- fviz_contrib(foo.pca2, choice = "ind", axes = 1:2, top = 10,
-#                 fill = c("#440154FF", "pink", "pink", "pink", "pink",
-#                          "#440154FF", "#440154FF", "#440154FF", "#440154FF", "#440154FF"),
-#                 color = c("#440154FF", "pink", "pink", "pink", "pink",
-#                           "#440154FF", "#440154FF", "#440154FF", "#440154FF", "#440154FF"))+
-#  labs(tag = "C)")+
-#  theme(axis.text.x = element_text(angle=90))
-
-##Variable results
-#foo.var2 <- get_pca_var(foo.pca2)
-
-###PCA variables
-#fviz_pca_var(foo.pca, col.var = "black")
-#d2<- fviz_pca_var(foo.pca2, col.var = "cos2", select.var =  list(contrib = 10), ##top ten taxa contributing
-#                 gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
-#                 repel = TRUE )+ # Avoid text overlapping
-#  labs(tag = "D)")
-
-###Visualize quality of representation 
-#corrplot(na.omit(foo.var2$cos2), is.corr=FALSE) #Alternative
-
-##Plot contribution
-#e2<- fviz_contrib(foo.pca2, choice = "var", axes = 1:2, top = 25)+
-#  labs(tag = "E)")
-
-#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_9.pdf", width = 16, height = 8)
-#grid.arrange(a2, b2, c2, d2, e2, widths = c(1, 1, 1), heights= c(2,2), layout_matrix = rbind(c(1, 3, 5),
-#                                                                       c(2, 4, 5)))
-#dev.off()
-
 ###Let's do it just for 18S primers
 
 foo.18S<- foo.primer[foo.primer$Gen == "18S",]
 
-#foo.18S2<- foo.18S[,1:21] ##Rarefaction option 1
-foo.18S2<- foo.18S[,1:45] ##Rarefaction option 2
+foo.18S2<- foo.18S[,1:45] 
 
 foo.18S2.pca<- PCA(foo.18S2, graph = T)
 foo.18S2.eig<- get_eigenvalue(foo.18S2.pca)
@@ -484,10 +431,9 @@ a18<- fviz_pca_ind(foo.18S2.pca,
                    pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
                    pointshape = 21,
                    geom.ind = "point", # show points only (but not "text")
-                   col.ind = foo.18S$Region, # color by region
+                   col.ind = "black", # color by region
                    fill.ind =  foo.18S$Region,
-                   palette ="Set1",
-                   alpha.ind = 0.5,
+                   palette ="Set3",
                    addEllipses = F, # Concentration ellipses
                    legend.title = "Region")+
   labs(tag = "A)")
@@ -511,94 +457,69 @@ d18<- fviz_pca_var(foo.18S2.pca, col.var = "cos2", select.var = list(contrib = 1
                    repel = TRUE )+ # Avoid text overlapping
   labs(tag = "D)")
 
-e18<- fviz_contrib(foo.18S2.pca, choice = "var", axes = 1:2, top = 25)+
-  labs(tag = "E)")
-
 ##Variable results
 #foo.var18 <- get_pca_var(foo.18S2.pca)
 #corrplot(na.omit(foo.var18$cos2), is.corr=FALSE) #Alternative
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_10.pdf", width = 16, height = 8)
-grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 3, 5),
-                                                                                 c(2, 4, 5)))
-dev.off()
-
-##Bray-Curtis dissimilarity estimation
-
-foo.matrix<- as.matrix(foo)
-foo.braycurt<- vegdist(foo.matrix, method = "bray")
-as.matrix(foo.braycurt)
-
-##plot heatmap of Bray-Curtis dissimilarity with factoextra
-#BC <- fviz_dist(foo.braycurt, lab_size = 8,  gradient = list(low = "#FC4E07", high = "#00AFBB")) +
-#  labs(tag = "A)", fill= "Bray-Curtis\ndissimilarity")
-
-###Using pheatmap to include annotations 
-foo.clust <- hclust(dist(foo.braycurt), method = "complete") ##Dendogram
-require(dendextend)
-as.dendrogram(foo.clust) %>%
-  plot(horiz = TRUE)
-
-foo.col <- cutree(tree = foo.clust, k = 2)
-foo.col  <- data.frame(cluster = ifelse(test = foo.col  == 1, yes = "cluster 1", no = "cluster 2"))
-foo.col$Primer_name <- rownames(foo.col)
-
-foo.col <- merge(foo.col, primerInput, by="Primer_name", sort= F)
-
-col_groups <- foo.col %>%
-  select("Primer_name", "Gen", "Region") ##Here It is possible to add the expected size 
-
-row.names(col_groups)<- col_groups$Primer_name
-
-col_groups$Primer_name<- NULL
-
-colour_groups <- list( Gen= c("12S"= "#E3DAC9", "16S"= "pink","18S"= "#440154FF", "28S"= "#21908CFF", 
-                              "COI"= "#FDE725FF", "ITS"= "#C46210", "rbcL"= "#D0FF14"))
-require(pheatmap)
-require(viridis)
-BCheatmap <- pheatmap(foo.braycurt, 
-                        color = plasma(100),
-                        border_color = NA,
-                        annotation_col = col_groups, 
-                        #annotation_row = col_groups,
-                        annotation_colors = colour_groups,
-                        #cutree_rows = 2,
-                        #cutree_cols = 2,
-                        show_rownames = F,
-                        show_colnames = F,
-                        main= "Bray-Curtis dissimilarity among primers")
-
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_12.pdf", width = 10, height = 8)
-BCheatmap
-dev.off()
-
 ###Composition plots by primer pair 
 AbPhy%>%
-  group_by(Primer_name) %>%
+  group_by(Primer_comb_ID) %>%
   mutate(Main_taxa= Rel_abund_amp>= 0.05) %>%
-  mutate(Phyla= case_when(Main_taxa== FALSE ~ "Other taxa", TRUE ~ as.character(.$Phyla))) -> CompPhy
+  mutate(Phyla= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$Phyla))) %>%
+  arrange(Primer_comb_ID, desc(Phyla))-> CompPhy
 
-Comp <- ggplot(data=CompPhy, aes(x= Primer_name, y= Rel_abund_amp, fill= Phyla)) +
-        scale_fill_manual(values = c("#9e0142", "#d53e4f", "#f46d43", "#bf812d", "#fee08b", "#ffffbf", "#e6f598",
-          "#a6d96a", "#66c2a5", "#3288bd", "#5e4fa2", "#006837","#969696", "#7f3b08", "#01665e", "#053061")) +
+e <- ggplot(data=CompPhy, aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+        scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
+                                     "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061","#969696"))+
         geom_bar(aes(), stat="identity", position="fill") +
         theme_bw() +
         theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
-        labs(x = "Primer name", y= "Relative abundance")
+        labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+        guides(fill= guide_legend(nrow = 8))
 
+eB <- ggplot(data=subset(CompPhy, Gen=="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+  scale_fill_manual(values = c("#33A02C","#CAB2D6","#6A3D9A","#01665e","#969696"))+
+  geom_bar(aes(), stat="identity", position="fill") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+  labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_11.pdf", width = 12, height = 16)
-grid.arrange(BC, Comp, nrow= 2, ncol= 1)
-dev.off()  
+eE <- ggplot(data=subset(CompPhy, Gen!="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+  scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
+                               "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061","#969696"))+
+  geom_bar(aes(), stat="identity", position="fill") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+  labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+  guides(fill= guide_legend(nrow = 8))
 
-## Plot composition 
+e18 <- ggplot(data=subset(CompPhy, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+        scale_fill_manual(values = c("#1F78B4","#B2DF8A","#FB9A99","#E31A1C","#FDBF6F",
+                               "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061","#969696"))+
+        geom_bar(aes(), stat="identity", position="fill") +
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+        labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+        guides(fill= guide_legend(nrow = 8))
 
-PS.l.phylum  <- lapply(PS.l.rar, function (x) {
-  tax_glom(x, taxrank="phylum", NArm=FALSE) 
-})
+###Compile and save all the figures
 
-lapply(PS.l.phylum, function (x) {
-  plot_bar(x, fill="phylum") 
-})
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_4.pdf", width = 16, height = 8)
+grid.arrange(a, b, c, d, e, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
+                                                                       c(4, 5, 5)))
+dev.off()
 
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_5.pdf", width = 16, height = 8)
+grid.arrange(aE, bE, cE, dE, eE, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
+                                                                            c(4, 5, 5)))
+dev.off()
 
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_6.pdf", width = 16, height = 8)
+grid.arrange(aB, bB, cB, dB, eB, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
+                                                                            c(4, 5, 5)))
+dev.off()
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_3.pdf", width = 16, height = 8)
+grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
+                                                                                 c(4, 5, 5)))
+dev.off()
