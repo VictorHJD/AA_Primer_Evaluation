@@ -2,13 +2,13 @@ library(MultiAmplicon)
 library(ggplot2)
 library(data.table)
 library(phyloseq)
+library(tidyverse)
 library(dplyr)
 library(plyr)
 library(vegan)
 library(gridExtra)
 library(grid)
 library(lattice)
-#library("ranacapa")
 library("pheatmap")
 library("viridisLite")
 
@@ -93,135 +93,39 @@ PS.l.f[sapply(PS.l.f, is.null)]<- NULL
 along<- names(PS.l.r)
 PS.l <- lapply(along, function(i) merge_phyloseq(PS.l.r[[i]], PS.l.f[[i]])) ##Merge all the information from both experiments
 names(PS.l) <- names(PS.l.r) ###Use the names from racconn list 
+
+##Change names in the phyloseq list for short names
+originalnames<- as.data.frame(names(PS.l))
+colnames(originalnames)<- "Primer_name"
+
+primerInput%>%
+  select(1,15) -> shortnames
+
+join(originalnames, shortnames, by= "Primer_name") -> shortnames
+
+names(PS.l)<- as.character(shortnames$Primer_comb_ID) 
+
+rm(originalnames, shortnames)
+
 #saveRDS(PS.l, file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds") ###Just in case the merging doesn't work again! 
 #PS.l <- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds")
 
-###Merged rawcounts
-rawcounts <- plyr::join(rawcountsF, rawcountsR, by= "Primer_name")
-colnames(rawcounts)<- c("Primer_name", "Raw_counts_Fox", "Raw_counts_Racc")
+###Merged seq reads counts
+seqcounts <- plyr::join(rawcountsF, rawcountsR, by= "Primer_name")
+colnames(seqcounts)<- c("Primer_name", "Raw_counts_Fox", "Raw_counts_Racc")
 
-rawcounts %>%
+seqcounts %>%
   rowwise() %>%
-  mutate(Total_reads = sum(Raw_counts_Fox, Raw_counts_Racc)) -> rawcounts
+  mutate(Total_reads = sum(Raw_counts_Fox, Raw_counts_Racc)) -> seqcounts
 
 rm(rawcountsF, rawcountsR, along)
  
 ####Data frames by different taxonomic rank count of ASVs
-if(Indrun){
-readNumByPhylumF <- sumSeqByTax(PS.l = PS.l.f, rank = "phylum")
-readNumByPhylumR <- sumSeqByTax(PS.l = PS.l.r, rank = "phylum")
-}
-
 readNumByPhylum <- sumSeqByTax(PS.l = PS.l, rank = "phylum")
 readNumByGenus <- sumSeqByTax(PS.l = PS.l, rank = "genus")
 readNumByFamily <- sumSeqByTax(PS.l = PS.l, rank = "family")
 readNumByOrder <- sumSeqByTax(PS.l = PS.l, rank = "order")
 readNumBySpecies <- sumSeqByTax(PS.l = PS.l, rank = "species")
-
-####
-if(Indrun){
-AbPhyF <- data.frame() ###Create the data frame 
-
-for (i in 1: length(readNumByPhylumF)) ### Start a loop: fro every element in the list ...
-{ 
-  phyla <- data.frame() #### make an individual data frame ...
-  
-  if(nrow(as.data.frame(readNumByPhylumF[[i]])) == 0) ### A tiny condition if the longitude of the list is = to 0 
-  {
-    phyla[1,1] <- 0    ### Add a zero in the first column
-    phyla[1,2] <- "NA" ### And a NA in the second column.
-  }else               ### For the rest of the elements: 
-  {
-    phyla <- as.data.frame((readNumByPhylumF[[i]]))  ###Make a data frame with the data included in each element of the list 
-    phyla[,2] <- rownames(phyla) ### And use the rownames as information of the second column 
-  }
-  
-  phyla[,3] <- names(readNumByPhylumF)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
-  colnames(phyla) <- c("ASV", "Phyla", "Primer_name") ### change the names for the columns 
-  AbPhyF <- rbind(AbPhyF, phyla) ### Join all the "individual" data frames into the final data frame 
-  
-}  ### close loop
-
-rownames(AbPhyF) <- c(1:nrow(AbPhyF)) ### change the rownames to consecutive numbers 
-AbPhyF <- data.frame(Primer_name = AbPhyF$Primer_name, Phyla = AbPhyF$Phyla, ASV = AbPhyF$ASV) ###change the order of the columns
-
-AbPhyF %>%
-  group_by(Primer_name) %>% 
-  mutate(Total_ASV = sum(ASV)) -> AbPhyF ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
-
-Relative_abundance = AbPhyF$ASV/AbPhyF$Total_ASV ### create a vector with the result of the operation 
-
-AbPhyF[,5] <- Relative_abundance ### And put it in the same order in the colum 5
-
-colnames(AbPhyF)[5] <- "Relative_abundance" ### Change the name of the column 
-
-AbPhyF$Primer_name <- gsub(pattern = " ", replacement = "", x = AbPhyF$Primer_name) ### check if the primer names have extra spaces
-
-AbPhyF$Primer_name <- gsub(pattern = "-", replacement = "_", x = AbPhyF$Primer_name)
-
-
-#intersect(AbPhyF$Primer_name, primers$Primer_name)
-#setdiff(AbPhyF$Primer_name, primers$Primer_name)
-#setdiff(primers$Primer_name, AbPhyF$Primer_name)
-
-AbPhyF <- merge(AbPhyF, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
-
-AbPhyF <- plyr::join(AbPhyF, rawcountsF, by= "Primer_name")
-
-AbPhyF$numberCycles <- rep(35,nrow(AbPhyF))
-}
-
-###
-if(Indrun){
-AbPhyR <- data.frame() ###Create the data frame 
-
-for (i in 1: length(readNumByPhylumR)) ### Start a loop: fro every element in the list ...
-{ 
-  phyla <- data.frame() #### make an individual data frame ...
-  
-  if(nrow(as.data.frame(readNumByPhylumR[[i]])) == 0) ### A tiny condition if the longitude of the list is = to 0 
-  {
-    phyla[1,1] <- 0    ### Add a zero in the first column
-    phyla[1,2] <- "NA" ### And a NA in the second column.
-  }else               ### For the rest of the elements: 
-  {
-    phyla <- as.data.frame((readNumByPhylumR[[i]]))  ###Make a data frame with the data included in each element of the list 
-    phyla[,2] <- rownames(phyla) ### And use the rownames as information of the second column 
-  }
-  
-  phyla[,3] <- names(readNumByPhylumR)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
-  colnames(phyla) <- c("ASV", "Phyla", "Primer_name") ### change the names for the columns 
-  AbPhyR <- rbind(AbPhyR, phyla) ### Join all the "individual" data frames into the final data frame 
-  
-}  ### close loop
-
-rownames(AbPhyR) <- c(1:nrow(AbPhyR)) ### change the rownames to consecutive numbers 
-AbPhyR <- data.frame(Primer_name = AbPhyR$Primer_name, Phyla = AbPhyR$Phyla, ASV = AbPhyR$ASV) ###change the order of the columns
-
-AbPhyR %>%
-  group_by(Primer_name) %>% 
-  mutate(Total_ASV = sum(ASV)) -> AbPhyR ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
-
-Relative_abundance = AbPhyR$ASV/AbPhyR$Total_ASV ### create a vector with the result of the operation 
-
-AbPhyR[,5] <- Relative_abundance ### And put it in the same order in the colum 5
-
-colnames(AbPhyR)[5] <- "Relative_abundance" ### Change the name of the column 
-
-AbPhyR$Primer_name <- gsub(pattern = " ", replacement = "", x = AbPhyR$Primer_name) ### check if the primer names have extra spaces
-
-AbPhyR$Primer_name <- gsub(pattern = "-", replacement = "_", x = AbPhyR$Primer_name)
-
-#intersect(AbPhyF$Primer_name, primers$Primer_name)
-#setdiff(AbPhyF$Primer_name, primers$Primer_name)
-#setdiff(primers$Primer_name, AbPhyF$Primer_name)
-
-AbPhyR <- merge(AbPhyR, primerInput, by= "Primer_name") ###merge the selected information with the origial data frame created 
-
-AbPhyR <- plyr::join(AbPhyR, rawcountsR, by= "Primer_name")
-
-AbPhyR$numberCycles <- rep(35,nrow(AbPhyR))
-}
 
 ####All primers both datasets 
 AbPhy <- data.frame() ###Create the data frame 
@@ -426,202 +330,6 @@ rm(top, TopPhylum, TopOrder, TopFam, TopGen)
 
 #join(TopByRank, primerInput, by= "Primer_name")
 
-###Cumulative graph
-###Fox
-
-if(Indrun){
-num.taxa.f <-sapply(c("species","genus", "family", "order", "class", "phylum", "superkingdom"), function (rank){
-  lapply(PS.l.f, function (x) 
-    length(get_taxa_unique(x, taxonomic.rank = rank)))
-})
-
-num.reads.f <- unlist(lapply(PS.l.f, function (x) 
-  sum(otu_table(x))))
-
-PrimTaxFox <- as.data.frame(cbind(num.taxa.f, num.reads.f))
-
-rm(num.reads.f, num.taxa.f)
-
-PrimTaxFox <- as.data.frame(apply(PrimTaxFox, 2, unlist))
-PrimTaxFox[,9] <- row.names(PrimTaxFox)  
-colnames(PrimTaxFox)[9] <- "Primer_name"
-
-ps.numord.l <- PS.l.f[order(PrimTaxFox$num.reads, decreasing=TRUE)]
-
-###To get the total unique taxa "identified" in the mix 
-cum.tax.fox <- sapply(c("species","genus", "family", "class", "order", "phylum", "superkingdom"), function (rank){
-  unique.taxa.cumsum(ps.numord.l, rank)
-})
-
-total.fox <- cum.tax.fox[42,1:7] ## save the totals 
-PrimTaxFox <- rbind(PrimTaxFox, total.fox)
-PrimTaxFox[42,8]<- NA
-PrimTaxFox[42,9]<- "Total"
-
-##Estimate taxonomic coverage by primer pair as total species detected by primer divided with the number of unique species identified by all primers
-Taxonomic_coverage = (PrimTaxFox$species/PrimTaxFox[42,1])*100 ### create a vector with the result of the operation 
-
-PrimTaxFox[,10] <- Taxonomic_coverage ### And put it in the same order in the colum 10
-
-colnames(PrimTaxFox)[10] <- "Taxonomic_coverage" ### Change the name of the column
-
-##Estimate "taxonomic resolution" by primer pair as total species detected divided by the number of total genus (this definition is not correct)
-Taxonomic_resolution = (PrimTaxFox$species/PrimTaxFox$genus)*100
-PrimTaxFox[,11] <- Taxonomic_resolution ### And put it in the same order in the colum 11
-colnames(PrimTaxFox)[11] <- "Taxonomic_resolution" ### Change the name of the column
-
-###Linear model
-
-summary(lm(formula= Taxonomic_coverage~num.reads.f, data = PrimTaxFox))
-
-ggplot(PrimTaxFox, aes(x=num.reads.f, y=Taxonomic_coverage, color=Taxonomic_resolution)) + 
-  geom_point()+
-  theme_classic()+
-  #geom_hline(yintercept=50, linetype="dashed", color = "red")+
-  scale_color_gradient(low="red", high="blue", name= "Taxonomic\nResolution")+
-  xlab("Number of reads per primer pair")+
-  ylab("Taxonomic coverage")+
-  scale_x_log10()+
-  ylim(0,20)+
-  geom_smooth()
-
-summary(lm(formula= Taxonomic_resolution~num.reads.f, data = PrimTaxFox))
-
-ggplot(PrimTaxFox, aes(x=num.reads.f, y=Taxonomic_resolution, color=Taxonomic_coverage)) + 
-  geom_point()+
-  theme_classic()+
-  #geom_hline(yintercept=50, linetype="dashed", color = "red")+
-  scale_color_gradient(low="red", high="blue", name= "Taxonomic\nCoverage")+
-  xlab("Number of reads per primer pair")+
-  ylab("Taxonomic resolution")+
-  scale_x_log10()+
-  ylim(0,250)+
-  geom_smooth()
-
-summary(lm(formula= PrimTaxFox$Taxonomic_coverage~Taxonomic_resolution, data = PrimTaxFox))
-
-ggplot(PrimTaxFox, aes(x=Taxonomic_coverage, y=Taxonomic_resolution, color=num.reads.f)) + 
-  geom_point()+
-  theme_classic()+
-  #geom_hline(yintercept=50, linetype="dashed", color = "red")+
-  scale_color_gradient(low="red", high="blue", name= "Number of\nreads")+
-  xlab("Taxonomic coverage")+
-  ylab("Taxonomic resolution")+
-  ylim(0,250)+
-  xlim(0,17)+
-  geom_smooth(method = lm)
- 
-ggplot(PrimTaxFox, aes(x=reorder(Primer_name, -num.reads.f), y=num.reads.f))+
-  geom_point()+ 
-  theme_classic()+
-  theme(axis.text.x = element_text(angle = 90, vjust = 1))+
-  xlab("Primer name")+
-  ylab("Number of reads")
-  #scale_y_log10()
-
-colnames(cum.tax.fox) <- paste0("cum.", colnames(cum.tax.fox))
-
-cum.tax.fox <- as.data.frame(cbind(1:nrow(cum.tax.fox), cum.tax.fox))
-prnames <- names(ps.numord.l) ## get names from the primers
-#cum.tax[2:42,1] <- prnames ## add primer names 
-colnames(cum.tax.fox)[1] <- "Primer_name"
-
-cum.plot.fox <- ggplot(cum.tax.fox) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(20, 2500, label="Species"), color="red") +
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(20, 2100, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(20, 850, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(20, 350, label="Orders"), color="#CC4678FF") +
-  geom_step(aes(Primer_name, cum.class), color="#F89441FF") +
-  geom_text(aes(20, 150, label="Classes"), color="#F89441FF") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F0F921FF") +
-  geom_text(aes(20, 53, label="Phyla"), color="#F0F921FF") +
-  scale_y_log10("Cummulative count of taxa") +
-  scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank())
-}
-##Raccoon
-if(Indrun){
-num.taxa.r <-sapply(c("species","genus", "family", "order", "class", "phylum", "superkingdom"), function (rank){
-  lapply(PS.l.r, function (x) 
-    length(get_taxa_unique(x, taxonomic.rank = rank)))
-})
-
-num.reads.r <- unlist(lapply(PS.l.r, function (x) 
-  sum(otu_table(x))))
-
-PrimTaxRac <- as.data.frame(cbind(num.taxa.r, num.reads.r))
-
-rm(num.reads.r, num.taxa.r)
-}
-
-rm(MAF, MAR, PS.l.f, PS.l.r)
-
-## Cummulative curves by taxa with all information
-
-num.taxa <-sapply(c("species","genus", "family", "order", "phylum", "superkingdom"), function (rank){
-  lapply(PS.l, function (x) 
-    length(get_taxa_unique(x, taxonomic.rank = rank)))
-})
-
-num.reads <- unlist(lapply(PS.l, function (x) 
-  sum(otu_table(x))))
-
-PrimTax <- as.data.frame(cbind(num.taxa, num.reads))
-
-PrimTax <- as.data.frame(apply(PrimTax, 2, unlist))
-PrimTax[,8] <- row.names(PrimTax)  
-colnames(PrimTax)[8] <- "Primer_name"
-
-###First merge PrimTax with primerInput
-PrimTax$Primer_name <- gsub(pattern = " ", replacement = "", x = PrimTax$Primer_name) ### check if the primer names have extra spaces
-intersect(PrimTax$Primer_name, primerInput$Primer_name) 
-#setdiff(PrimTax$Primer_name, primerInput$Primer_name)
-PrimTax<- join(PrimTax, primerInput, by = "Primer_name")
-
-ps.numord.l <- PS.l[order(PrimTax$num.reads, decreasing=TRUE)]
-
-cum.tax <- sapply(c("species","genus", "family", "order", "phylum"), function (rank){
-  unique.taxa.cumsum(ps.numord.l, rank)
-})
-
-colnames(cum.tax) <- paste0("cum.", colnames(cum.tax))
-
-cum.tax <- as.data.frame(cbind(1:nrow(cum.tax), cum.tax))
-#prnames <- names(ps.numord.l) ## get names from the primers
-#cum.tax[2:40,7] <- prnames ## add primer names 
-cum.tax[2:40,7] <- PrimTax$Gen[order(PrimTax$num.reads, decreasing=TRUE)]
-colnames(cum.tax)[1] <- "Primer_name"
-colnames(cum.tax)[7] <- "Gen"
-
-cum.plot.all <- ggplot(cum.tax) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(20, 4800, label="Species"), color="red")+ 
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(20, 2600, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(20, 1200, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(20, 500, label="Orders"), color="#CC4678FF") +
-  #geom_step(aes(Primer_name, cum.class), color="#F89441FF") +
-  #geom_text(aes(20, 200, label="Classes"), color="#F89441FF") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(20, 60, label="Phyla"), color="#F89441FF") +
-  geom_point(aes(Primer_name, cum.species, colour = Gen, size= 2))+
-  scale_color_manual(values = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"))+
-  scale_y_log10("Cummulative count of taxa") +
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), legend.position = "none", text = element_text(size=20))+
-  labs(tag = "A)")+
-  coord_cartesian(ylim = c(20, 4000))
-
 ######Group specific analysis####
 ####By marker 
 
@@ -725,131 +433,11 @@ pdf(file = "~/AA_Primer_evaluation/Figures/Supplementary_1.3.pdf", width = 8, he
 grid.arrange(ampsiz5, ampsiz6, nrow= 2, ncol= 1)
 dev.off()
 
-####Just 18S
-if(SSU_18S){
-Primtax.comb18 <- subset(PrimTax, Gen== "18S")
+###Redundancy for parasites, fungi and diet
 
-ps.numord.l.comb18 <- PS.l[c(Primtax.comb18$Primer_name)][order(Primtax.comb18$num.reads, decreasing=TRUE)]
-
-
-cum.tax.comb18 <- sapply(c("species","genus", "family", "order", "phylum"), function (rank){
-  unique.taxa.cumsum(ps.numord.l.comb18, rank)
-})
-
-colnames(cum.tax.comb18) <- paste0("cum.", colnames(cum.tax.comb18))
-
-cum.tax.comb18 <- as.data.frame(cbind(1:nrow(cum.tax.comb18), cum.tax.comb18))
-#prnames28s <- names(ps.numord.l.28S) ## get names from the primers
-#cum.tax.18S[2:22,1] <- prnames18s ## add primer names 
-colnames(cum.tax.comb18)[1] <- "Primer_name"
-
-cum.plot.comb18 <- ggplot(cum.tax.comb18) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(20, 2200, label="Species"), color="red")+ 
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(20, 1600, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(20, 840, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(20, 380, label="Orders"), color="#CC4678FF") +
-  #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  #geom_text(aes(20, 135, label="Classes"), color="#F0F921FF") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(20, 40, label="Phyla"), color="#F89441FF") +
-  scale_y_log10("Cummulative count of taxa") +
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), text = element_text(size=20))+
-  labs(tag = "B)")+
-  coord_cartesian(ylim = c(20, 4000))
-}
-####18S and 28S
-if(SSU_LSU){
-Primtax.comb28 <- subset(PrimTax, Gen=="28S" | Gen== "18S")
-
-ps.numord.l.comb28 <- PS.l[c(Primtax.comb28$Primer_name)][order(Primtax.comb28$num.reads, decreasing=TRUE)]
-
-cum.tax.comb28 <- sapply(c("species","genus", "family", "order", "phylum"), function (rank){
-  unique.taxa.cumsum(ps.numord.l.comb28, rank)
-})
-
-colnames(cum.tax.comb28) <- paste0("cum.", colnames(cum.tax.comb28))
-
-cum.tax.comb28 <- as.data.frame(cbind(1:nrow(cum.tax.comb28), cum.tax.comb28))
-#prnames28s <- names(ps.numord.l.28S) ## get names from the primers
-#cum.tax.18S[2:22,1] <- prnames18s ## add primer names 
-colnames(cum.tax.comb28)[1] <- "Primer_name"
-
-cum.plot.comb28 <- ggplot(cum.tax.comb28) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(22, 3300, label="Species"), color="red")+ 
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(22, 2000, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(22, 1000, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(22, 420, label="Orders"), color="#CC4678FF") +
-  #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  #geom_text(aes(20, 135, label="Classes"), color="#F0F921FF") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(22, 42, label="Phyla"), color="#F89441FF") +
-  scale_y_log10("Cummulative count of taxa") +
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), text = element_text(size=20))+
-  labs(tag = "C)")+
-  coord_cartesian(ylim = c(20, 4000))
-
-}
-####28S, 18S, COI####
-if(SSU_LSU_COI){
 Primtax.comb2 <- subset(PrimTax, Gen=="28S" | Gen== "18S" | Gen== "COI")
 
 ps.numord.l.comb2 <- PS.l[c(Primtax.comb2$Primer_name)][order(Primtax.comb2$num.reads, decreasing=TRUE)]
-
-
-cum.tax.comb2 <- sapply(c("species","genus", "family", "order", "phylum"), function (rank){
-  unique.taxa.cumsum(ps.numord.l.comb2, rank)
-})
-
-colnames(cum.tax.comb2) <- paste0("cum.", colnames(cum.tax.comb2))
-
-
-cum.tax.comb2 <- as.data.frame(cbind(1:nrow(cum.tax.comb2), cum.tax.comb2))
-#prnames28s <- names(ps.numord.l.28S) ## get names from the primers
-#cum.tax.18S[2:22,1] <- prnames18s ## add primer names 
-colnames(cum.tax.comb2)[1] <- "Primer_name"
-
-cum.plot.comb2 <- ggplot(cum.tax.comb2) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(26, 3800, label="Species"), color="red")+ 
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(26, 2200, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(26, 1100, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(26, 450, label="Orders"), color="#CC4678FF") +
-  #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  #geom_text(aes(20, 135, label="Classes"), color="#F0F921FF") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(26, 43, label="Phyla"), color="#F89441FF") +
-  scale_y_log10("Cummulative count of taxa") +
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), text = element_text(size=20))+
-  labs(tag = "D)")+
-  coord_cartesian(ylim = c(20, 4000))
-
-pdf(file = "~/AA_Primer_evaluation/Figures/Figure_1.pdf", width = 10, height = 8)
-grid.arrange(cum.plot.all, cum.plot.comb18, cum.plot.comb28, cum.plot.comb2, nrow= 2, ncol= 2,
-             bottom= textGrob("Number of primers considerd (starting with the one with highest read count)", 
-                              gp= gpar(fontsize= 20)))
-dev.off()
-
-}
 
 ####Parasites 18S+28S+COI
 ps.numord.l.comb2[["ZBJ_ArtF1c_67_F.ZBJ_ArtR2c_67_R"]]<- NULL ### No parasites or fungi 
@@ -1017,30 +605,6 @@ cum.tax.para[2:28,7] <- PrimTax.para$Gen ## add marker amplified
 colnames(cum.tax.para)[1] <- "Primer_name"
 colnames(cum.tax.para)[7] <- "Gen"
 
-cum.plot.para <- ggplot(cum.tax.para) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(26, 380, label="Species"), color="red") +
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(26, 180, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(26, 110, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(26, 30, label="Orders"), color="#CC4678FF") +
-  #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  #geom_text(aes(20, 10, label="Classes"), color="#F0F921FF") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(26, 4, label="Phyla"), color="#F89441FF") +
-  scale_y_log10("Cummulative count of taxa (Parasites)") +
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  geom_point(aes(Primer_name, cum.species, colour = Gen, size= 2))+
-  scale_color_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF"))+
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = 'none', 
-        axis.title.x = element_blank(), text = element_text(size=20))+
-  labs(tag = "A)")#+
-  #coord_cartesian(ylim = c(20, 3800))
-
 ###Fungi 18s + 28S + COI
 
 PM.fungi.comb2 <- lapply(ps.numord.l.comb2, function (x) {
@@ -1204,35 +768,6 @@ cum.tax.fungi <- as.data.frame(cbind(1:nrow(cum.tax.fungi), cum.tax.fungi))
 cum.tax.fungi[2:28,7] <- PrimTax.fungi$Gen ## add marker amplified 
 colnames(cum.tax.fungi)[1] <- "Primer_name"
 colnames(cum.tax.fungi)[7] <- "Gen"
-
-cum.plot.fungi <- ggplot(cum.tax.fungi) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(26, 2000, label="Species"), color="red") +
-  geom_point(aes(Primer_name, cum.species, colour = Gen, size= 2))+
-  scale_color_manual(values = c("#440154FF", "#21908CFF", "#FDE725FF"))+
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(26, 1000, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(26, 440, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(26, 160, label="Orders"), color="#CC4678FF") +
-  #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  #geom_text(aes(20, 50, label="Classes"), color="") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(26, 8, label="Phyla"), color="#F89441FF") +
-  scale_y_log10("Cummulative count of taxa (Fungi)") +
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = 'none', 
-        axis.title.x = element_blank(), text = element_text(size=20))+
-  labs(tag = "B)")#+
-
-CummParaFung <- grid.arrange(cum.plot.para, cum.plot.fungi, nrow= 1, ncol= 2,  
-             bottom= textGrob("Number of primers considerd (starting with the one with highest read count)", 
-                              gp= gpar(fontsize= 20)))
-###Put parasites and fungi together 
-#ggsave("~/AA_Primer_evaluation/Figures/ParaFung_cummulative.pdf", plot = CummParaFung, dpi = 450, width = 14, height = 10)
 
 ###Other eukaryotic elements ("Diet" and passing material)
 ##Working approach 
@@ -1408,32 +943,3 @@ cum.tax.diet[2:40,7] <- PrimTax.diet$Gen ## add marker amplified
 colnames(cum.tax.diet)[1] <- "Primer_name"
 colnames(cum.tax.diet)[7] <- "Gen"
 
-cum.plot.diet <- ggplot(cum.tax.diet) +
-  geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(35, 1200, label="Species"), color="red") +
-  geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(35, 700, label="Genera"), color="#0D0887FF") +
-  geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(35, 400, label="Families"), color="#7E03A8FF") +
-  geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(35, 160, label="Orders"), color="#CC4678FF") +
-  #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  #geom_text(aes(20, 50, label="Classes"), color="") +
-  geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(35, 15, label="Phyla"), color="#F89441FF") +
-  scale_y_log10("Cummulative count of taxa \n (non fungi or parasite)") +
-  geom_point(aes(Primer_name, cum.species, colour = Gen, size= 2))+
-  scale_color_manual(values = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"))+
-  #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
-  annotation_logticks(sides="l") +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = 'none', 
-        axis.title.x = element_blank(), text = element_text(size=20))+
-  labs(tag = "C)")#+
-
-###Put together with parasites and fungi
-pdf(file = "~/AA_Primer_evaluation/Figures/Figure_5.pdf", width = 18, height = 10)
-grid.arrange(cum.plot.para, cum.plot.fungi, cum.plot.diet, nrow= 1, ncol= 3,  
-                             bottom= textGrob("Number of primers considerd (starting with the one with highest read count)", 
-                                              gp= gpar(fontsize= 20)))
-dev.off()

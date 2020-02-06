@@ -31,29 +31,16 @@ if(!exists("PS.l")){
   PS.l<- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds") ##   
 }
 
-##Change names in the phyloseq list for short names
-originalnames<- as.data.frame(names(PS.l))
-colnames(originalnames)<- "Primer_name"
-
-primerInput%>%
-  select(1,15) -> shortnames
-
-join(originalnames, shortnames, by= "Primer_name") -> shortnames
-
-names(PS.l)<- as.character(shortnames$Primer_comb_ID) 
-
-rm(originalnames, shortnames)
-
-###Raw counts by amplicon
-rawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
+###Non rarefied raw counts by amplicon
+seqrawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
   data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
 })))
 
-rawcounts[,2] <- rownames(rawcounts)
-rownames(rawcounts) <- c(1:nrow(rawcounts))
-colnames(rawcounts) <- c("Reads","Primer_comb_ID")
-rawcounts <- data.frame(Primer_comb_ID = rawcounts$Primer_comb_ID, Reads = rawcounts$Reads) 
-rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
+seqrawcounts[,2] <- rownames(seqrawcounts)
+rownames(seqrawcounts) <- c(1:nrow(seqrawcounts))
+colnames(seqrawcounts) <- c("Reads_non_rare","Primer_comb_ID")
+seqrawcounts <- data.frame(Primer_comb_ID = seqrawcounts$Primer_comb_ID, Reads_non_rare = seqrawcounts$Reads_non_rare) 
+seqrawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", seqrawcounts$Primer_comb_ID)
 
 ###Rarefaction curves by amplicon 
 ###Summary by amplicon
@@ -98,6 +85,7 @@ PS.l.rar <- lapply(PS.l.High, function (x) {
   rarefy_even_depth(x, rngseed=1234, sample.size= rowSums(otu_table(x)), replace=F) #mean(sample_sums(x))
 })
 
+### Rarefied sequence counts
 rawcounts <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
   data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
 })))
@@ -295,7 +283,7 @@ b<- fviz_pca_ind(foo.pca,
              gradient.cols = c("blue", "red"),
              alpha.ind = 0.7,
              addEllipses = F, # Concentration ellipses
-             legend.title = "Sequencing reads")+
+             legend.title = "Sequencing \nreads")+
   labs(tag = "B)")
 
 ##Color need to be changed manually according to righ order, annoying but let's find a solution later:S 
@@ -355,7 +343,7 @@ bE<- fviz_pca_ind(foo.euk2.pca,
                  gradient.cols = c("blue", "red"),
                  alpha.ind = 0.7,
                  addEllipses = F, # Concentration ellipses
-                 legend.title = "Sequencing reads")+
+                 legend.title = "Sequencing \nreads")+
   labs(tag = "B)")
 
 cE<- fviz_contrib(foo.euk2.pca, choice = "ind", axes = 1:2, top = 10,
@@ -388,7 +376,7 @@ aB<- fviz_pca_ind(foo.bac2.pca,
                   geom.ind = "point", # show points only (but not "text")
                   col.ind = "black", # color by region
                   fill.ind =  foo.bac$Region,
-                  palette ="Set3",
+                  palette = c("#E6AB02", "#8DD3C7", "#FFFFB3", "#80B1D3"),
                   alpha.ind = 0.9,
                   addEllipses = F, # Concentration ellipses
                   legend.title = "Region")+
@@ -401,7 +389,7 @@ bB<- fviz_pca_ind(foo.bac2.pca,
                   gradient.cols = c("blue", "red"),
                   alpha.ind = 0.7,
                   addEllipses = F, # Concentration ellipses
-                  legend.title = "Sequencing reads")+
+                  legend.title = "Sequencing \nreads")+
   labs(tag = "B)")
 
 cB<- fviz_contrib(foo.bac2.pca, choice = "ind", axes = 1:2, fill = "pink", color = "pink")+
@@ -433,7 +421,7 @@ a18<- fviz_pca_ind(foo.18S2.pca,
                    geom.ind = "point", # show points only (but not "text")
                    col.ind = "black", # color by region
                    fill.ind =  foo.18S$Region,
-                   palette ="Set3",
+                   palette = c("#8DD3C7", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5", "#D9D9D9"),
                    addEllipses = F, # Concentration ellipses
                    legend.title = "Region")+
   labs(tag = "A)")
@@ -445,7 +433,7 @@ b18<- fviz_pca_ind(foo.18S2.pca,
                    gradient.cols = c("blue", "red"),
                    alpha.ind = 0.7,
                    addEllipses = F, # Concentration ellipses
-                   legend.title = "Sequencing reads")+
+                   legend.title = "Sequencing \nreads")+
   labs(tag = "B)")
 
 c18<- fviz_contrib(foo.18S2.pca, choice = "ind", axes = 1:2, fill = "#440154FF", color = "#440154FF")+
@@ -504,22 +492,18 @@ e18 <- ggplot(data=subset(CompPhy, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_ab
 
 ###Compile and save all the figures
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_4.pdf", width = 16, height = 8)
-grid.arrange(a, b, c, d, e, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
-                                                                       c(4, 5, 5)))
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_4.pdf", width = 10, height = 15)
+grid.arrange(a, b, c, d, e, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_5.pdf", width = 16, height = 8)
-grid.arrange(aE, bE, cE, dE, eE, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
-                                                                            c(4, 5, 5)))
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_5.pdf", width = 10, height = 15)
+grid.arrange(aE, bE, cE, dE, eE, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_6.pdf", width = 16, height = 8)
-grid.arrange(aB, bB, cB, dB, eB, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
-                                                                            c(4, 5, 5)))
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_6.pdf", width = 10, height = 15)
+grid.arrange(aB, bB, cB, dB, eB, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_3.pdf", width = 16, height = 8)
-grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1, 1), layout_matrix = rbind(c(1, 2, 3),
-                                                                                 c(4, 5, 5)))
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_3.pdf", width = 10, height = 15)
+grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
