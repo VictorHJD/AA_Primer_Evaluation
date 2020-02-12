@@ -285,9 +285,9 @@ cd <- grid.arrange(c,d, nrow= 1, ncol= 2,
                    bottom= textGrob("Number of primers considerd (starting with the one with highest read count)", 
                                     gp= gpar(fontsize= 20)))
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_1.pdf", width = 12, height = 15)
-grid.arrange(ab, cd, nrow= 2, ncol= 1)
-dev.off()
+#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_1.pdf", width = 12, height = 15)
+#grid.arrange(ab, cd, nrow= 2, ncol= 1)
+#dev.off()
 
 ####Just 18S
 if(SSU_18S){
@@ -414,3 +414,11 @@ if(SSU_LSU_COI){
   dev.off()
   
 }
+
+rm(a,b,ab,c,cd,d, 
+   cum.tax, cum.tax.diet, cum.tax.fungi, cum.tax.para,
+   num.taxa, num.taxa.diet, num.taxa.fungi, num.taxa.para,
+   PrimTax, Primtax.comb2, PrimTax.diet, PrimTax.fungi, PrimTax.para,
+   num.reads, num.reads.diet, num.reads.fungi, num.reads.para,
+   PM.diet.comb3, PM.fungi.comb2, PM.para.comb2,
+   ps.numord.l, ps.numord.l.comb2, ps.numord.l.diet, ps.numord.l.fungi, ps.numord.l.para, markers)

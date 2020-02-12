@@ -31,6 +31,13 @@ if(!exists("PS.l")){
   PS.l<- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds") ##   
 }
 
+Distribution <- F ##Ploting distribution by amplicon 
+Rarefaction_curves <- F ##Ploting rarefaction curves by amplicon 
+Beta_diversity_plots<- F ##Ploting PCoA for each marke
+Phylum<- T ##Beta diversity analysis to phylum level
+Genus<- F ##Beta diversity analysis to genus level
+Figures<- F ##Activate to save new versions of the figures 
+
 ###Non rarefied raw counts by amplicon
 seqrawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
   data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
@@ -49,7 +56,8 @@ s.list <- lapply(PS.l, function (x) {
 })
 
 ###Distribution of reads by amplicon
-pdf("~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_1.pdf", 
+if(Distribution){
+  pdf("~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_1.pdf", 
     width=8, height=10, onefile=T)
 for(i in 1:length(PS.l)) {
   y<- names(PS.l)
@@ -61,9 +69,10 @@ for(i in 1:length(PS.l)) {
   plot(hist)
 }
 dev.off()
-
+}
 ###Rarefaction curves 
-rarecurv.l <- lapply(PS.l, function (x) {
+if(Rarefaction_curves){
+  rarecurv.l <- lapply(PS.l, function (x) {
   vegan::rarecurve(otu_table(x),
                    label = F)
 })
@@ -72,7 +81,7 @@ rarecurv.l <- lapply(PS.l, function (x) {
 #    width=8, height=10, onefile=T)
 #rarecurv.l
 #dev.off()
-
+}
 ## Eliminate samples with no counts for each primer
 ##Check when each marker reached the species saturation (from rarecurve!) for now just eliminate 0
 PS.l.High <- lapply(PS.l, function (x) {
@@ -112,7 +121,8 @@ ord.l <-lapply(PS.l.rar, function (x) {
   ordinate(x, method="PCoA", distance="bray")
 })
 
-pdf("~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_3.pdf", 
+if(Beta_diversity_plots){
+  pdf("~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_3.pdf", 
     width=10, height=10, onefile=T)
 for (i in 1:length(PS.l.rar)) {
   x<- names(PS.l.rar)
@@ -123,12 +133,12 @@ for (i in 1:length(PS.l.rar)) {
   print(pca)
 }
 dev.off()
-
-###"Beta diverisity" without considering individual samples 
+}
+###Beta diverisity without considering individual samples but considering each primer combination as an idividual community
 ##Variables= Taxa 
 ##Individuals= Primer combinations 
 ## Put all the infromation in the right format
-
+if(Phylum){
 readNumByPhylum <- sumSeqByTax(PS.l = PS.l.rar, rank = "phylum")
 
 AbPhy <- data.frame() ###Create the data frame 
@@ -190,6 +200,71 @@ colnames(foo) <- gsub("Rel_abund_amp.", "\\1", colnames(foo)) ##Remove "Rel_abun
 ##Transform NA to 0
 foo[is.na(foo)]<- 0
 rownames(foo)<-foo[,1]
+}
+
+if(Genus){
+  readNumByGenus <- sumSeqByTax(PS.l = PS.l.rar, rank = "genus")
+  
+  AbGen <- data.frame() ###Create the data frame 
+  
+  for (i in 1: length(readNumByGenus)) ### Start a loop: fro every element in the list ...
+  { 
+    genus <- data.frame() #### make an individual data frame ...
+    
+    if(nrow(as.data.frame(readNumByGenus[[i]])) == 0) ### A tiny condition if the longitude of the list is = to 0 
+    {
+      genus[1,1] <- 0    ### Add a zero in the first column
+      genus[1,2] <- "NA" ### And a NA in the second column.
+    }else               ### For the rest of the elements: 
+    {
+      genus <- as.data.frame((readNumByGenus[[i]]))  ###Make a data frame with the data included in each element of the list 
+      genus[,2] <- rownames(genus) ### And use the rownames as information of the second column 
+    }
+    
+    genus[,3] <- names(readNumByGenus)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
+    colnames(genus) <- c("ASV", "Genus", "Primer_comb_ID") ### change the names for the columns 
+    AbGen <- rbind(AbGen, genus) ### Join all the "individual" data frames into the final data frame 
+    
+  }   ### close loop
+  
+  rownames(AbGen) <- c(1:nrow(AbGen)) ### change the rownames to consecutive numbers 
+  AbGen <- data.frame(Primer_comb_ID = AbGen$Primer_comb_ID, Genus = AbGen$Genus, ASV = AbGen$ASV) ###change the order of the columns
+  AbGen$ASV <- as.numeric(AbGen$ASV)
+  
+  AbGen %>%
+    group_by(Primer_comb_ID) %>% 
+    mutate(Total_ASV = sum(ASV)) -> AbGen ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+  
+  ##This value represent the relative abundance respect to the total amount of reads
+  Relative_abundance = AbGen$ASV/AbGen$Total_ASV ### create a vector with the result of the operation 
+  
+  AbGen[,5] <- Relative_abundance ### And put it in the same order in the colum 5
+  
+  colnames(AbGen)[5] <- "Relative_abundance" ### Change the name of the column 
+  
+  AbGen$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbGen$Primer_comb_ID) ### check if the primer names have extra spaces
+  
+  AbGen$Primer_comb_ID <- gsub(pattern = "-", replacement = "_", x = AbGen$Primer_comb_ID)
+  
+  AbGen <- merge(AbGen, primerInput, by= "Primer_comb_ID") ###merge the selected information with the origial data frame created 
+  
+  AbGen <- plyr::join(AbGen, rawcounts, by= "Primer_comb_ID")
+  
+  ##Create a REAL relative abundance value respect the total amount of reads per amplicon
+  Rel_abund_amp = AbGen$ASV/AbGen$Reads ### create a vector with the result of the operation 
+  
+  AbGen[,25] <- Rel_abund_amp ### And put it in the same order in the colum 25
+  
+  colnames(AbGen)[25] <- "Rel_abund_amp" ### Change the name of the column 
+  
+  ##Prepair matrix for PCA analysis
+  foo<- AbGen%>%select(1,2,25)
+  foo<- reshape(foo, v.names = "Rel_abund_amp", timevar = "Genus", idvar = "Primer_comb_ID",direction = "wide")
+  colnames(foo) <- gsub("Rel_abund_amp.", "\\1", colnames(foo)) ##Remove "Rel_abund_amp"
+  ##Transform NA to 0
+  foo[is.na(foo)]<- 0
+  rownames(foo)<-foo[,1]
+}
 
 ##Merge with primer information 
 foo.primer<-join(foo, primerInput, by= "Primer_comb_ID")
@@ -315,7 +390,8 @@ foo.euk<- foo.primer[foo.primer$Gen != "16S",]
 foo.bac<- foo.primer[foo.primer$Gen == "16S",]
 
 ###Let's do a PCA for Eukaryotes 
-foo.euk2<- foo.euk[,1:45]
+if(Phylum){foo.euk2<- foo.euk[,1:45]}
+if(Genus){foo.euk2<- foo.euk[,1:2067]}
 
 foo.euk2.pca<- PCA(foo.euk2, graph = T)
 foo.euk2.eig<- get_eigenvalue(foo.euk2.pca)
@@ -360,7 +436,8 @@ dE<- fviz_pca_var(foo.euk2.pca, col.var = "cos2", select.var = list(contrib = 15
   labs(tag = "D)")
 
 ###Now do if for Prokaryotes 
-foo.bac2<- foo.bac[,1:45]
+if(Phylum){foo.bac2<- foo.bac[,1:45]}
+if(Genus){foo.bac2<- foo.bac[,1:2067]}
 
 foo.bac2.pca<- PCA(foo.bac2, graph = T)
 foo.bac2.eig<- get_eigenvalue(foo.bac2.pca)
@@ -405,7 +482,8 @@ dB<- fviz_pca_var(foo.bac2.pca, col.var = "cos2", select.var = list(contrib = 10
 
 foo.18S<- foo.primer[foo.primer$Gen == "18S",]
 
-foo.18S2<- foo.18S[,1:45] 
+if(Phylum){foo.18S2<- foo.18S[,1:45]}
+if(Genus){foo.18S2<- foo.18S[,1:2067]}
 
 foo.18S2.pca<- PCA(foo.18S2, graph = T)
 foo.18S2.eig<- get_eigenvalue(foo.18S2.pca)
@@ -450,7 +528,9 @@ d18<- fviz_pca_var(foo.18S2.pca, col.var = "cos2", select.var = list(contrib = 1
 #corrplot(na.omit(foo.var18$cos2), is.corr=FALSE) #Alternative
 
 ###Composition plots by primer pair 
-AbPhy%>%
+if(Phylum){
+  AbPhy%>%
+  select(1,2,14,25)%>%
   group_by(Primer_comb_ID) %>%
   mutate(Main_taxa= Rel_abund_amp>= 0.05) %>%
   mutate(Phyla= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$Phyla))) %>%
@@ -489,8 +569,50 @@ e18 <- ggplot(data=subset(CompPhy, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_ab
         theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
         labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
         guides(fill= guide_legend(nrow = 8))
+}
 
+if(Genus){
+  AbGen%>%
+    select(1,2,14,25)%>%
+    group_by(Primer_comb_ID) %>%
+    mutate(Main_taxa= Rel_abund_amp>= 0.1) %>%
+    mutate(Genus= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$Genus))) %>%
+    arrange(Primer_comb_ID, desc(Genus))-> CompGen
+  
+  e <- ggplot(data=CompGen, aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+    scale_fill_manual(values = viridis(20))+
+    geom_bar(aes(), stat="identity", position="fill") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+    labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+    guides(fill= guide_legend(nrow = 15))
+  
+  eB <- ggplot(data=subset(CompGen, Gen=="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+    scale_fill_manual(values = c("#33A02C","#CAB2D6","#6A3D9A","#01665e","#969696"))+
+    geom_bar(aes(), stat="identity", position="fill") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+    labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")
+  
+  eE <- ggplot(data=subset(CompGen, Gen!="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+    scale_fill_manual(values = viridis(18))+
+    geom_bar(aes(), stat="identity", position="fill") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+    labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+    guides(fill= guide_legend(nrow = 8))
+  
+  e18 <- ggplot(data=subset(CompGen, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+    scale_fill_manual(values = viridis(20))+
+    geom_bar(aes(), stat="identity", position="fill") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+    labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+    guides(fill= guide_legend(nrow = 8))
+}
 ###Compile and save all the figures
+
+if(Figures){
 
 pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_4.pdf", width = 10, height = 15)
 grid.arrange(a, b, c, d, e, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
@@ -507,3 +629,4 @@ dev.off()
 pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_3.pdf", width = 10, height = 15)
 grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
+}
