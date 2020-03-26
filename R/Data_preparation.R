@@ -84,17 +84,19 @@ join(originalnames, shortnames, by= "Primer_name") -> shortnames
 
 names(PS.l)<- as.character(shortnames$Primer_comb_ID) 
 
-rm(originalnames, shortnames)
-
 #saveRDS(PS.l, file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds") ###Just in case the merging doesn't work again! 
 #PS.l <- readRDS(file="/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/MergedPhyloSeqList.Rds")
 
 ###Merged seq reads counts
-#seqcounts <- plyr::join(rawcountsF, rawcountsR, by= "Primer_name")
-#colnames(seqcounts)<- c("Primer_name", "Raw_counts_Fox", "Raw_counts_Racc")
+seqcounts <- plyr::join(rawcountsF, rawcountsR, by= "Primer_name")
+colnames(seqcounts)<- c("Primer_name", "Raw_counts_Fox", "Raw_counts_Racc")
 
-#seqcounts %>%
-#  rowwise() %>%
-#  mutate(Total_reads = sum(Raw_counts_Fox, Raw_counts_Racc)) -> seqcounts
+seqcounts %>%
+  rowwise() %>%
+  mutate(Total_reads = sum(Raw_counts_Fox, Raw_counts_Racc))%>%
+  join(shortnames, by= "Primer_name")%>%
+  filter(complete.cases(Primer_comb_ID))->seqcounts
 
-rm(rawcountsF, rawcountsR, along)
+#write.csv(seqcounts, file = "~/AA_Primer_evaluation/Reads_per_Primer_Pair.csv")
+
+rm(rawcountsF, rawcountsR, along, originalnames, shortnames, seqcounts)
