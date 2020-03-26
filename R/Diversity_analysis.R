@@ -49,6 +49,9 @@ colnames(seqrawcounts) <- c("Reads_non_rare","Primer_comb_ID")
 seqrawcounts <- data.frame(Primer_comb_ID = seqrawcounts$Primer_comb_ID, Reads_non_rare = seqrawcounts$Reads_non_rare) 
 seqrawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", seqrawcounts$Primer_comb_ID)
 
+##Create a table with total number of ASVs per primer pair
+#write.csv(seqrawcounts, file = "~/AA_Primer_evaluation/ASVs_per_Primer_Pair.csv")
+
 ###Rarefaction curves by amplicon 
 ###Summary by amplicon
 s.list <- lapply(PS.l, function (x) {
