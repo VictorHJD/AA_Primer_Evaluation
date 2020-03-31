@@ -122,7 +122,7 @@ Euk_18S_01_Tax[is.na(Euk_18S_01_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_01_Tax%>%
   select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_01_BLAST, by= "gi")%>%
-  distinct(species, .keep_all= T)%>%
+  distinct(species, .keep_all= T)%>% ##Keep a single ocurrence of each species 
   select(-(X1))-> Euk_18S_01_Results
 
 hist(Euk_18S_01_Results$product_length)
@@ -620,13 +620,33 @@ ggplot(data=Relative_abundance_28S, aes(x= Primer_name,y= Rel_abund, fill= phylu
 ##Select Primer sequeces and Primer combination ID
 
 Primers %>%
-  filter(Gen%in% c("ITS", "rbcL"))-> Primers_plants
+  filter(Gen%in% c("ITS", "rbcL", "12S"))-> Primers_others
 
-Euk_rbcL_01<- search_primer_pair(name= as.character(Primers_plants[1,1]), forward = as.character(Primers_plants[1,2]), reverse = as.character(Primers_plants[1,3]), .parallel = T, num_aligns = 1000)
+Euk_12S_01<- search_primer_pair(name= as.character(Primers_others[1,1]), forward = as.character(Primers_others[1,2]), reverse = as.character(Primers_others[1,3]), .parallel = T, num_aligns = 1000)
+#saveRDS(Euk_12S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_12S_01.Rds")
+
+Euk_rbcL_01<- search_primer_pair(name= as.character(Primers_others[2,1]), forward = as.character(Primers_others[2,2]), reverse = as.character(Primers_others[2,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_rbcL_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_rbcL_01.Rds")
 
-Euk_ITS_01<- search_primer_pair(name= as.character(Primers_plants[2,1]), forward = as.character(Primers_plants[2,2]), reverse = as.character(Primers_plants[2,3]), .parallel = T, num_aligns = 1000)
+Euk_ITS_01<- search_primer_pair(name= as.character(Primers_others[3,1]), forward = as.character(Primers_others[3,2]), reverse = as.character(Primers_others[3,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_ITS_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
+
+###Euk_12S_01
+plot(Euk_12S_01, ranks= "phylum")
+Euk_12S_01_Tax<- Euk_12S_01$taxonomy ##Taxonomy information 
+Euk_12S_01_BLAST<- Euk_12S_01$BLAST_result #BLAST information
+Euk_12S_01_Tax[is.na(Euk_12S_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_12S_01_Tax%>%
+  select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  join(Euk_12S_01_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  select(-(X1))-> Euk_12S_01_Results
+hist(Euk_12S_01_Results$product_length)
+Euk_12S_01_RA<- data.frame(count(Euk_12S_01_Results$phylum))
+Euk_12S_01_RA%>%
+  mutate(Rel_abund= freq/sum(freq))%>%
+  mutate(Primer_name= "Euk_12S_01")->Euk_12S_01_RA
+colnames(Euk_12S_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_rbcL_01
 plot(Euk_rbcL_01, ranks= "phylum")
@@ -662,17 +682,18 @@ Euk_ITS_01_RA%>%
   mutate(Primer_name= "Euk_ITS_01")->Euk_ITS_01_RA
 colnames(Euk_ITS_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
-Relative_abundance_plants<- bind_rows(Euk_rbcL_01_RA, Euk_ITS_01_RA) ##Change everytime to add next primer information
+Relative_abundance_others<- bind_rows(Euk_12S_01_RA, Euk_rbcL_01_RA, Euk_ITS_01_RA) ##Change everytime to add next primer information
 
-Relative_abundance_plants%>%
+Relative_abundance_others%>%
   group_by(Primer_name)%>%
   mutate(Main_taxa= Rel_abund>= 0.05) %>%
   mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$phylum))) %>%
-  arrange(Primer_name, desc(phylum))->Relative_abundance_plants
+  arrange(Primer_name, desc(phylum))->Relative_abundance_others
 
-#RA_plants <- 
-ggplot(data=Relative_abundance_plants, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
-  scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
+#RA_others <- 
+ggplot(data=Relative_abundance_others, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
+  scale_fill_manual(values = c("#A6CEE3","#1F78B4",
+                               #"#B2DF8A", "#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
                                # "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061", "#c00000",
                                # "aquamarine","darkolivegreen","#FFDB77FF",
                                "lightgrey","#004CFFFF","#969696"))+
@@ -791,7 +812,7 @@ ggplot(data=Relative_abundance_COI, aes(x= Primer_name,y= Rel_abund, fill= phylu
 
 ##Merge all
 Relative_abundance<- bind_rows(Relative_abundance_18S, Relative_abundance_28S, 
-                               Relative_abundance_COI, Relative_abundance_plants)
+                               Relative_abundance_COI, Relative_abundance_others)
 
 #RA_Euk<-
 ggplot(data=Relative_abundance, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
@@ -809,3 +830,12 @@ ggplot(data=Relative_abundance, aes(x= Primer_name,y= Rel_abund, fill= phylum)) 
 #pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figure_3.pdf", width = 10, height = 8)
 #RA_Euk
 #dev.off()
+
+##16S primer pairs
+##Select Primer sequeces and Primer combination ID
+
+Primers %>%
+  filter(Gen== "16S")-> Primers_16S
+
+Euk_16S_01<- search_primer_pair(name= as.character(Primers_16S[1,1]), forward = as.character(Primers_16S[1,2]), reverse = as.character(Primers_16S[1,3]), .parallel = T, num_aligns = 1000)
+#saveRDS(Euk_16S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_16S_01.Rds")
