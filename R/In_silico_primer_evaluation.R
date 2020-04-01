@@ -1,4 +1,4 @@
-####In silico evaluation of primer used in Fox and Raccoon analysis
+####In silico evaluation using PrimerTree of primer used in Fox and Raccoon analysis
 ##Load Libraries
 library("doMC")
 library("primerTree")
