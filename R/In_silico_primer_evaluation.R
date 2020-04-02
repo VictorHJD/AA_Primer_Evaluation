@@ -12,6 +12,8 @@ library("dplyr")
 ##
 registerDoMC(15)
 
+RunBLAST <- F
+
 ##Data
 if(!exists("primerInput")){
   source("~/GitProjects/AA_Primer_Evaluation/R/General_Primer_information.R") ##   
@@ -35,6 +37,15 @@ seqcounts[,1]<-NULL
 seqcounts%>%
   select(c("Primer_comb_ID", "Seq_F", "Seq_R", "Gen"))-> Primers
 
+primerTreeObj<- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj", pattern = ".Rds", full.names = T)
+
+lapply(primerTreeObj, function(x) {
+  objname<- gsub("/home/victor/AA_Primer_evaluation/output/primerTreeObj/", "", x)
+  objname<- gsub(".Rds", "", basen)
+  tmp <- readRDS(x)
+  assign(objname, tmp, envir = .GlobalEnv)
+  })
+
 ##PrimerTree pipeline
 ##Considering just the first 1000 alignments
 ##For degenerated primers uo to 25 combinations are tested for now
@@ -42,6 +53,8 @@ seqcounts%>%
 
 Primers %>%
   filter(Gen== "18S")-> Primers_18S
+
+if(RunBLAST){
 
 Euk_18S_01<- search_primer_pair(name= as.character(Primers_18S[1,1]), as.character(Primers_18S[1,2]), as.character(Primers_18S[1,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_18S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_01.Rds")
@@ -105,13 +118,14 @@ Euk_18S_20<- search_primer_pair(name= as.character(Primers_18S[20,1]), as.charac
 
 Euk_18S_21<- search_primer_pair(name= as.character(Primers_18S[21,1]), as.character(Primers_18S[21,2]), as.character(Primers_18S[21,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_18S_21, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_21.Rds")
+}
 
 #Make a list of primerTree objects saved
 done18S <- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj/", pattern = "Euk_18S_")
 done18S<- lapply(done18S, function(x) gsub(".Rds", "", x))
 
 ##General overview of the results
-plot(Euk_18S_01, ranks= "phylum")
+#plot(Euk_18S_01, ranks= "phylum")
 
 ##Extract the relevant information
 Euk_18S_01_Tax<- Euk_18S_01$taxonomy ##Taxonomy information 
@@ -125,6 +139,7 @@ Euk_18S_01_Tax%>%
   distinct(species, .keep_all= T)%>% ##Keep a single ocurrence of each species 
   select(-(X1))-> Euk_18S_01_Results
 
+#write.csv(Euk_18S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_01_Results.csv")
 hist(Euk_18S_01_Results$product_length)
 
 Euk_18S_01_RA<- data.frame(count(Euk_18S_01_Results$phylum))
@@ -136,15 +151,16 @@ Euk_18S_01_RA%>%
 colnames(Euk_18S_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_02
-plot(Euk_18S_02, ranks= "phylum")
+#plot(Euk_18S_02, ranks= "phylum")
 Euk_18S_02_Tax<- Euk_18S_02$taxonomy ##Taxonomy information 
 Euk_18S_02_BLAST<- Euk_18S_02$BLAST_result #BLAST information
 Euk_18S_02_Tax[is.na(Euk_18S_02_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
 Euk_18S_02_Tax%>%
-  select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_02_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  select(-(X1))-> Euk_18S_02_Results
+  dplyr::select(-(X1))-> Euk_18S_02_Results
+#write.csv(Euk_18S_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_02_Results.csv")
 hist(Euk_18S_02_Results$product_length)
 Euk_18S_02_RA<- data.frame(count(Euk_18S_02_Results$phylum))
 Euk_18S_02_RA%>%
@@ -154,7 +170,7 @@ Euk_18S_02_RA%>%
 colnames(Euk_18S_02_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_03
-plot(Euk_18S_03, ranks= "phylum")
+#plot(Euk_18S_03, ranks= "phylum")
 Euk_18S_03_Tax<- Euk_18S_03$taxonomy ##Taxonomy information 
 Euk_18S_03_BLAST<- Euk_18S_03$BLAST_result #BLAST information
 Euk_18S_03_Tax[is.na(Euk_18S_03_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -163,6 +179,7 @@ Euk_18S_03_Tax%>%
   join(Euk_18S_03_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_03_Results
+#write.csv(Euk_18S_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_03_Results.csv")
 hist(Euk_18S_03_Results$product_length)
 Euk_18S_03_RA<- data.frame(count(Euk_18S_03_Results$phylum))
 Euk_18S_03_RA%>%
@@ -172,7 +189,7 @@ Euk_18S_03_RA%>%
 colnames(Euk_18S_03_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_04
-plot(Euk_18S_04, ranks= "phylum")
+#plot(Euk_18S_04, ranks= "phylum")
 Euk_18S_04_Tax<- Euk_18S_04$taxonomy ##Taxonomy information 
 Euk_18S_04_BLAST<- Euk_18S_04$BLAST_result #BLAST information
 Euk_18S_04_Tax[is.na(Euk_18S_04_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -181,6 +198,7 @@ Euk_18S_04_Tax%>%
   join(Euk_18S_04_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_04_Results
+#write.csv(Euk_18S_04_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_04_Results.csv")
 hist(Euk_18S_04_Results$product_length)
 Euk_18S_04_RA<- data.frame(count(Euk_18S_04_Results$phylum))
 Euk_18S_04_RA%>%
@@ -190,7 +208,7 @@ Euk_18S_04_RA%>%
 colnames(Euk_18S_04_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_05
-plot(Euk_18S_05, ranks= "phylum")
+#plot(Euk_18S_05, ranks= "phylum")
 Euk_18S_05_Tax<- Euk_18S_05$taxonomy ##Taxonomy information 
 Euk_18S_05_BLAST<- Euk_18S_05$BLAST_result #BLAST information
 Euk_18S_05_Tax[is.na(Euk_18S_05_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -199,6 +217,7 @@ Euk_18S_05_Tax%>%
   join(Euk_18S_05_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_05_Results
+#write.csv(Euk_18S_05_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_05_Results.csv")
 hist(Euk_18S_05_Results$product_length)
 Euk_18S_05_RA<- data.frame(count(Euk_18S_05_Results$phylum))
 Euk_18S_05_RA%>%
@@ -208,7 +227,7 @@ Euk_18S_05_RA%>%
 colnames(Euk_18S_05_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_06
-plot(Euk_18S_06, ranks= "phylum")
+#plot(Euk_18S_06, ranks= "phylum")
 Euk_18S_06_Tax<- Euk_18S_06$taxonomy ##Taxonomy information 
 Euk_18S_06_BLAST<- Euk_18S_06$BLAST_result #BLAST information
 Euk_18S_06_Tax[is.na(Euk_18S_06_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -217,6 +236,7 @@ Euk_18S_06_Tax%>%
   join(Euk_18S_06_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_06_Results
+#write.csv(Euk_18S_06_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_06_Results.csv")
 hist(Euk_18S_06_Results$product_length)
 Euk_18S_06_RA<- data.frame(count(Euk_18S_06_Results$phylum))
 Euk_18S_06_RA%>%
@@ -226,7 +246,7 @@ Euk_18S_06_RA%>%
 colnames(Euk_18S_06_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_07
-plot(Euk_18S_07, ranks= "phylum")
+#plot(Euk_18S_07, ranks= "phylum")
 Euk_18S_07_Tax<- Euk_18S_07$taxonomy ##Taxonomy information 
 Euk_18S_07_BLAST<- Euk_18S_07$BLAST_result #BLAST information
 Euk_18S_07_Tax[is.na(Euk_18S_07_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -235,6 +255,7 @@ Euk_18S_07_Tax%>%
   join(Euk_18S_07_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_07_Results
+#write.csv(Euk_18S_07_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_07_Results.csv")
 hist(Euk_18S_07_Results$product_length)
 Euk_18S_07_RA<- data.frame(count(Euk_18S_07_Results$phylum))
 Euk_18S_07_RA%>%
@@ -244,7 +265,7 @@ Euk_18S_07_RA%>%
 colnames(Euk_18S_07_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_08
-plot(Euk_18S_08, ranks= "phylum")
+#plot(Euk_18S_08, ranks= "phylum")
 Euk_18S_08_Tax<- Euk_18S_08$taxonomy ##Taxonomy information 
 Euk_18S_08_BLAST<- Euk_18S_08$BLAST_result #BLAST information
 Euk_18S_08_Tax[is.na(Euk_18S_08_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -253,6 +274,7 @@ Euk_18S_08_Tax%>%
   join(Euk_18S_08_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_08_Results
+#write.csv(Euk_18S_08_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_08_Results.csv")
 hist(Euk_18S_08_Results$product_length)
 Euk_18S_08_RA<- data.frame(count(Euk_18S_08_Results$phylum))
 Euk_18S_08_RA%>%
@@ -262,7 +284,7 @@ Euk_18S_08_RA%>%
 colnames(Euk_18S_08_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_09
-plot(Euk_18S_09, ranks= "phylum")
+#plot(Euk_18S_09, ranks= "phylum")
 Euk_18S_09_Tax<- Euk_18S_09$taxonomy ##Taxonomy information 
 Euk_18S_09_BLAST<- Euk_18S_09$BLAST_result #BLAST information
 Euk_18S_09_Tax[is.na(Euk_18S_09_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -271,6 +293,7 @@ Euk_18S_09_Tax%>%
   join(Euk_18S_09_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_09_Results
+#write.csv(Euk_18S_09_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_09_Results.csv")
 hist(Euk_18S_09_Results$product_length)
 Euk_18S_09_RA<- data.frame(count(Euk_18S_09_Results$phylum))
 Euk_18S_09_RA%>%
@@ -280,7 +303,7 @@ Euk_18S_09_RA%>%
 colnames(Euk_18S_09_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_10
-plot(Euk_18S_10, ranks= "phylum")
+#plot(Euk_18S_10, ranks= "phylum")
 Euk_18S_10_Tax<- Euk_18S_10$taxonomy ##Taxonomy information 
 Euk_18S_10_BLAST<- Euk_18S_10$BLAST_result #BLAST information
 Euk_18S_10_Tax[is.na(Euk_18S_10_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -289,6 +312,7 @@ Euk_18S_10_Tax%>%
   join(Euk_18S_10_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_10_Results
+#write.csv(Euk_18S_10_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_10_Results.csv")
 hist(Euk_18S_10_Results$product_length)
 Euk_18S_10_RA<- data.frame(count(Euk_18S_10_Results$phylum))
 Euk_18S_10_RA%>%
@@ -298,7 +322,7 @@ Euk_18S_10_RA%>%
 colnames(Euk_18S_10_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_11
-plot(Euk_18S_11, ranks= "phylum")
+#plot(Euk_18S_11, ranks= "phylum")
 Euk_18S_11_Tax<- Euk_18S_11$taxonomy ##Taxonomy information 
 Euk_18S_11_BLAST<- Euk_18S_11$BLAST_result #BLAST information
 Euk_18S_11_Tax[is.na(Euk_18S_11_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -307,6 +331,7 @@ Euk_18S_11_Tax%>%
   join(Euk_18S_11_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_11_Results
+#write.csv(Euk_18S_11_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_11_Results.csv")
 hist(Euk_18S_11_Results$product_length)
 Euk_18S_11_RA<- data.frame(count(Euk_18S_11_Results$phylum))
 Euk_18S_11_RA%>%
@@ -316,7 +341,7 @@ Euk_18S_11_RA%>%
 colnames(Euk_18S_11_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_12
-plot(Euk_18S_12, ranks= "phylum")
+#plot(Euk_18S_12, ranks= "phylum")
 Euk_18S_12_Tax<- Euk_18S_12$taxonomy ##Taxonomy information 
 Euk_18S_12_BLAST<- Euk_18S_12$BLAST_result #BLAST information
 Euk_18S_12_Tax[is.na(Euk_18S_12_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -325,6 +350,7 @@ Euk_18S_12_Tax%>%
   join(Euk_18S_12_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_12_Results
+#write.csv(Euk_18S_12_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_12_Results.csv")
 hist(Euk_18S_12_Results$product_length)
 Euk_18S_12_RA<- data.frame(count(Euk_18S_12_Results$phylum))
 Euk_18S_12_RA%>%
@@ -334,7 +360,7 @@ Euk_18S_12_RA%>%
 colnames(Euk_18S_12_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_13
-plot(Euk_18S_13, ranks= "phylum")
+#plot(Euk_18S_13, ranks= "phylum")
 Euk_18S_13_Tax<- Euk_18S_13$taxonomy ##Taxonomy information 
 Euk_18S_13_BLAST<- Euk_18S_13$BLAST_result #BLAST information
 Euk_18S_13_Tax[is.na(Euk_18S_13_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -343,6 +369,7 @@ Euk_18S_13_Tax%>%
   join(Euk_18S_13_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_13_Results
+#write.csv(Euk_18S_13_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_13_Results.csv")
 hist(Euk_18S_13_Results$product_length)
 Euk_18S_13_RA<- data.frame(count(Euk_18S_13_Results$phylum))
 Euk_18S_13_RA%>%
@@ -352,7 +379,7 @@ Euk_18S_13_RA%>%
 colnames(Euk_18S_13_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_14
-plot(Euk_18S_14, ranks= "phylum")
+#plot(Euk_18S_14, ranks= "phylum")
 Euk_18S_14_Tax<- Euk_18S_14$taxonomy ##Taxonomy information 
 Euk_18S_14_BLAST<- Euk_18S_14$BLAST_result #BLAST information
 Euk_18S_14_Tax[is.na(Euk_18S_14_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -361,6 +388,7 @@ Euk_18S_14_Tax%>%
   join(Euk_18S_14_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_14_Results
+#write.csv(Euk_18S_14_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_14_Results.csv")
 hist(Euk_18S_14_Results$product_length)
 Euk_18S_14_RA<- data.frame(count(Euk_18S_14_Results$phylum))
 Euk_18S_14_RA%>%
@@ -370,7 +398,7 @@ Euk_18S_14_RA%>%
 colnames(Euk_18S_14_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 ###Euk_18S_15
-plot(Euk_18S_15, ranks= "phylum")
+#plot(Euk_18S_15, ranks= "phylum")
 Euk_18S_15_Tax<- Euk_18S_15$taxonomy ##Taxonomy information 
 Euk_18S_15_BLAST<- Euk_18S_15$BLAST_result #BLAST information
 Euk_18S_15_Tax[is.na(Euk_18S_15_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -379,6 +407,7 @@ Euk_18S_15_Tax%>%
   join(Euk_18S_15_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_15_Results
+#write.csv(Euk_18S_15_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_15_Results.csv")
 hist(Euk_18S_15_Results$product_length)
 Euk_18S_15_RA<- data.frame(count(Euk_18S_15_Results$phylum))
 Euk_18S_15_RA%>%
@@ -397,6 +426,7 @@ Euk_18S_16_Tax%>%
   join(Euk_18S_16_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_16_Results
+#write.csv(Euk_18S_16_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_16_Results.csv")
 hist(Euk_18S_16_Results$product_length)
 Euk_18S_16_RA<- data.frame(count(Euk_18S_16_Results$phylum))
 Euk_18S_16_RA%>%
@@ -415,6 +445,7 @@ Euk_18S_17_Tax%>%
   join(Euk_18S_17_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_17_Results
+#write.csv(Euk_18S_17_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_17_Results.csv")
 hist(Euk_18S_17_Results$product_length)
 Euk_18S_17_RA<- data.frame(count(Euk_18S_17_Results$phylum))
 Euk_18S_17_RA%>%
@@ -433,6 +464,7 @@ Euk_18S_18_Tax%>%
   join(Euk_18S_18_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_18_Results
+#write.csv(Euk_18S_18_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_18_Results.csv")
 hist(Euk_18S_18_Results$product_length)
 Euk_18S_18_RA<- data.frame(count(Euk_18S_18_Results$phylum))
 Euk_18S_18_RA%>%
@@ -451,6 +483,7 @@ Euk_18S_19_Tax%>%
   join(Euk_18S_19_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_19_Results
+#write.csv(Euk_18S_19_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_19_Results.csv")
 hist(Euk_18S_19_Results$product_length)
 Euk_18S_19_RA<- data.frame(count(Euk_18S_19_Results$phylum))
 Euk_18S_19_RA%>%
@@ -469,6 +502,7 @@ Euk_18S_20_Tax%>%
   join(Euk_18S_20_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_20_Results
+#write.csv(Euk_18S_20_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_20_Results.csv")
 hist(Euk_18S_20_Results$product_length)
 Euk_18S_20_RA<- data.frame(count(Euk_18S_20_Results$phylum))
 Euk_18S_20_RA%>%
@@ -487,6 +521,7 @@ Euk_18S_21_Tax%>%
   join(Euk_18S_21_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_18S_21_Results
+#write.csv(Euk_18S_21_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_21_Results.csv")
 hist(Euk_18S_21_Results$product_length)
 Euk_18S_21_RA<- data.frame(count(Euk_18S_21_Results$phylum))
 Euk_18S_21_RA%>%
@@ -528,6 +563,7 @@ ggplot(data=Relative_abundance_18S, aes(x= Primer_name,y= Rel_abund, fill= phylu
 Primers %>%
   filter(Gen== "28S")-> Primers_28S
 
+if(RunBLAST){
 Euk_28S_01<- search_primer_pair(name= as.character(Primers_28S[1,1]), forward = as.character(Primers_28S[1,2]), reverse = as.character(Primers_28S[1,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_28S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_28S_01.Rds")
 
@@ -536,6 +572,7 @@ Euk_28S_02<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = 
 
 Euk_28S_03<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = as.character(Primers_28S[3,2]), reverse = as.character(Primers_28S[3,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_28S_03, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_28S_03.Rds")
+}
 
 #Make a list of primerTree objects saved
 done28S <- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj/", pattern = "Euk_28S_")
@@ -551,6 +588,7 @@ Euk_28S_01_Tax%>%
   join(Euk_28S_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_28S_01_Results
+#write.csv(Euk_28S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_01_Results.csv")
 hist(Euk_28S_01_Results$product_length)
 Euk_28S_01_RA<- data.frame(count(Euk_28S_01_Results$phylum))
 Euk_28S_01_RA%>%
@@ -568,6 +606,7 @@ Euk_28S_02_Tax%>%
   join(Euk_28S_02_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_28S_02_Results
+#write.csv(Euk_28S_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_02_Results.csv")
 hist(Euk_28S_02_Results$product_length)
 Euk_28S_02_RA<- data.frame(count(Euk_28S_02_Results$phylum))
 Euk_28S_02_RA%>%
@@ -585,6 +624,7 @@ Euk_28S_03_Tax%>%
   join(Euk_28S_03_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_28S_03_Results
+#write.csv(Euk_28S_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_03_Results.csv")
 hist(Euk_28S_03_Results$product_length)
 Euk_28S_03_RA<- data.frame(count(Euk_28S_03_Results$phylum))
 Euk_28S_03_RA%>%
@@ -622,6 +662,7 @@ ggplot(data=Relative_abundance_28S, aes(x= Primer_name,y= Rel_abund, fill= phylu
 Primers %>%
   filter(Gen%in% c("ITS", "rbcL", "12S"))-> Primers_others
 
+if(RunBLAST){
 Euk_12S_01<- search_primer_pair(name= as.character(Primers_others[1,1]), forward = as.character(Primers_others[1,2]), reverse = as.character(Primers_others[1,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_12S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_12S_01.Rds")
 
@@ -630,7 +671,7 @@ Euk_rbcL_01<- search_primer_pair(name= as.character(Primers_others[2,1]), forwar
 
 Euk_ITS_01<- search_primer_pair(name= as.character(Primers_others[3,1]), forward = as.character(Primers_others[3,2]), reverse = as.character(Primers_others[3,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_ITS_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
-
+}
 ###Euk_12S_01
 plot(Euk_12S_01, ranks= "phylum")
 Euk_12S_01_Tax<- Euk_12S_01$taxonomy ##Taxonomy information 
@@ -641,6 +682,7 @@ Euk_12S_01_Tax%>%
   join(Euk_12S_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_12S_01_Results
+#write.csv(Euk_12S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_12S_01_Results.csv")
 hist(Euk_12S_01_Results$product_length)
 Euk_12S_01_RA<- data.frame(count(Euk_12S_01_Results$phylum))
 Euk_12S_01_RA%>%
@@ -658,6 +700,7 @@ Euk_rbcL_01_Tax%>%
   join(Euk_rbcL_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_rbcL_01_Results
+#write.csv(Euk_rbcL_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_rbcL_01_Results.csv")
 hist(Euk_rbcL_01_Results$product_length)
 Euk_rbcL_01_RA<- data.frame(count(Euk_rbcL_01_Results$phylum))
 Euk_rbcL_01_RA%>%
@@ -675,6 +718,7 @@ Euk_ITS_01_Tax%>%
   join(Euk_ITS_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_ITS_01_Results
+#write.csv(Euk_ITS_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_ITS_01_Results.csv")
 hist(Euk_ITS_01_Results$product_length)
 Euk_ITS_01_RA<- data.frame(count(Euk_ITS_01_Results$phylum))
 Euk_ITS_01_RA%>%
@@ -709,6 +753,7 @@ ggplot(data=Relative_abundance_others, aes(x= Primer_name,y= Rel_abund, fill= ph
 Primers %>%
   filter(Gen== "COI")-> Primers_COI
 
+if(RunBLAST){
 Euk_COI_01<- search_primer_pair(name= as.character(Primers_COI[1,1]), forward = as.character(Primers_COI[1,2]), reverse = as.character(Primers_COI[1,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_COI_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_COI_01.Rds")
 
@@ -720,7 +765,7 @@ Euk_COI_03<- search_primer_pair(name= as.character(Primers_COI[3,1]), forward = 
 
 Euk_COI_04<- search_primer_pair(name= as.character(Primers_COI[4,1]), forward = as.character(Primers_COI[4,2]), reverse = as.character(Primers_COI[4,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_COI_04, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_COI_04.Rds")
-
+}
 ###Euk_COI_01
 plot(Euk_COI_01, ranks= "phylum")
 Euk_COI_01_Tax<- Euk_COI_01$taxonomy ##Taxonomy information 
@@ -731,6 +776,7 @@ Euk_COI_01_Tax%>%
   join(Euk_COI_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_COI_01_Results
+#write.csv(Euk_COI_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_01_Results.csv")
 hist(Euk_COI_01_Results$product_length)
 Euk_COI_01_RA<- data.frame(count(Euk_COI_01_Results$phylum))
 Euk_COI_01_RA%>%
@@ -748,6 +794,7 @@ Euk_COI_02_Tax%>%
   join(Euk_COI_02_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_COI_02_Results
+#write.csv(Euk_COI_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_02_Results.csv")
 hist(Euk_COI_02_Results$product_length)
 Euk_COI_02_RA<- data.frame(count(Euk_COI_02_Results$phylum))
 Euk_COI_02_RA%>%
@@ -765,6 +812,7 @@ Euk_COI_03_Tax%>%
   join(Euk_COI_03_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_COI_03_Results
+#write.csv(Euk_COI_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_03_Results.csv")
 hist(Euk_COI_03_Results$product_length)
 Euk_COI_03_RA<- data.frame(count(Euk_COI_03_Results$phylum))
 Euk_COI_03_RA%>%
@@ -782,6 +830,7 @@ Euk_COI_04_Tax%>%
   join(Euk_COI_04_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   select(-(X1))-> Euk_COI_04_Results
+#write.csv(Euk_COI_04_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_04_Results.csv")
 hist(Euk_COI_04_Results$product_length)
 Euk_COI_04_RA<- data.frame(count(Euk_COI_04_Results$phylum))
 Euk_COI_04_RA%>%
@@ -837,5 +886,7 @@ ggplot(data=Relative_abundance, aes(x= Primer_name,y= Rel_abund, fill= phylum)) 
 Primers %>%
   filter(Gen== "16S")-> Primers_16S
 
+if(RunBLAST){
 Euk_16S_01<- search_primer_pair(name= as.character(Primers_16S[1,1]), forward = as.character(Primers_16S[1,2]), reverse = as.character(Primers_16S[1,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_16S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_16S_01.Rds")
+}

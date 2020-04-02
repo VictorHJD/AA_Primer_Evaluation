@@ -42,11 +42,266 @@ Taxonomy_18S<- temporal
 rm(temporal)
 
 ##Get counts of unique taxa per taxonomic level
-n_distinct(Taxonomy_18S$superkingdom, na.rm = T)
-n_distinct(Taxonomy_18S$phylum, na.rm = T)
-n_distinct(Taxonomy_18S$class, na.rm = T)
-n_distinct(Taxonomy_18S$order, na.rm = T)
-n_distinct(Taxonomy_18S$family, na.rm = T)
-n_distinct(Taxonomy_18S$genus, na.rm = T)
-n_distinct(Taxonomy_18S$species, na.rm = T)
+Unique_taxa<- as.data.frame(sapply(Taxonomy_18S, function(x) n_distinct(x, na.rm = T)))
+colnames(Unique_taxa) <- "Database"
+
+##Get counts of unique taxa per primer pair using in silico predictions on PrimerTree
+
+#test<- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj", pattern = ".Rds")
+#insilico <- ls(envir = .GlobalEnv, pattern = "_Results$")
+
+y<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession") ##Vector with desired order
+
+##Euk_18S_01
+tmp<- as.data.frame(sapply(Euk_18S_01_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_01"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_02
+tmp<- as.data.frame(sapply(Euk_18S_02_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_02"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_03
+tmp<- as.data.frame(sapply(Euk_18S_03_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_03"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_04
+tmp<- as.data.frame(sapply(Euk_18S_04_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_04"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_05
+tmp<- as.data.frame(sapply(Euk_18S_05_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_05"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_06
+tmp<- as.data.frame(sapply(Euk_18S_06_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_06"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_07
+tmp<- as.data.frame(sapply(Euk_18S_07_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_07"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_08
+tmp<- as.data.frame(sapply(Euk_18S_08_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_08"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_09
+tmp<- as.data.frame(sapply(Euk_18S_09_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_09"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_10
+tmp<- as.data.frame(sapply(Euk_18S_10_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_10"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_11
+tmp<- as.data.frame(sapply(Euk_18S_11_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_11"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_12
+tmp<- as.data.frame(sapply(Euk_18S_12_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_12"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_13
+tmp<- as.data.frame(sapply(Euk_18S_13_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_13"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_14
+tmp<- as.data.frame(sapply(Euk_18S_14_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_14"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_15
+tmp<- as.data.frame(sapply(Euk_18S_15_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_15"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_16
+tmp<- as.data.frame(sapply(Euk_18S_16_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_16"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_17
+tmp<- as.data.frame(sapply(Euk_18S_17_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_17"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_18
+tmp<- as.data.frame(sapply(Euk_18S_18_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_18"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_19
+tmp<- as.data.frame(sapply(Euk_18S_19_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_19"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_20
+tmp<- as.data.frame(sapply(Euk_18S_20_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_20"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
+##Euk_18S_21
+tmp<- as.data.frame(sapply(Euk_18S_21_Results, function(x) n_distinct(x, na.rm = T)))
+colnames(tmp) <- "Euk_18S_21"
+tmp[,2]<-rownames(tmp)
+tmp%>%
+  slice(match(y, V2))%>%
+  dplyr::select(-V2)%>%
+  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+  column_to_rownames("V2")%>%
+  cbind(Unique_taxa)-> Unique_taxa
+rm(tmp)
+
 
