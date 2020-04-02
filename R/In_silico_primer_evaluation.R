@@ -41,7 +41,7 @@ primerTreeObj<- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj",
 
 lapply(primerTreeObj, function(x) {
   objname<- gsub("/home/victor/AA_Primer_evaluation/output/primerTreeObj/", "", x)
-  objname<- gsub(".Rds", "", basen)
+  objname<- gsub(".Rds", "", objname)
   tmp <- readRDS(x)
   assign(objname, tmp, envir = .GlobalEnv)
   })
