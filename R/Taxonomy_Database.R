@@ -13,6 +13,14 @@ library("DECIPHER")
 library("annotate")
 library("taxonomizr")
 
+##Functions
+##Convert objects with in silico taxnomoy results in the global environment into a list
+env2list <- function(env){
+  names = ls(env, pattern = "_Results$")
+  mget(names, env)
+}
+
+
 ##Load data base 18S 
 Seq_18S_db<- readDNAStringSet("/SAN/db/blastdb/18S_ENA/18S_All_ENA.fasta.gzcleaned.fasta", format = "fasta")
 ##Align seqs
@@ -46,11 +54,31 @@ Unique_taxa<- as.data.frame(sapply(Taxonomy_18S, function(x) n_distinct(x, na.rm
 colnames(Unique_taxa) <- "Database"
 
 ##Get counts of unique taxa per primer pair using in silico predictions on PrimerTree
-
-#test<- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj", pattern = ".Rds")
-#insilico <- ls(envir = .GlobalEnv, pattern = "_Results$")
+insilico <- env2list(.GlobalEnv)
 
 y<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession") ##Vector with desired order
+
+##Make the data frame in one shot
+test<- data.frame() ###Create the data frame 
+
+for (i in 1: length(insilico)) ### Start a loop: for every element in the list ...
+{ 
+  tmp <- data.frame() #### make an individual data frame ...
+  
+  {
+    tmp <- as.data.frame(sapply(i, function(x) n_distinct(x, na.rm = T)))  ###Make a data frame with the data included in each element of the list 
+    colnames(tmp)<- "j"
+    #tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
+    #y<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession") ##Vector with desired order
+    #tmp%>%
+    #  slice(match(y, V2))%>%
+    #  dplyr::select(-V2)%>%
+    #  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
+    #  column_to_rownames("V2")  
+    
+  }
+  test <- cbind(test, tmp) ### Join all the "individual" data frames into the final data frame 
+}
 
 ##Euk_18S_01
 tmp<- as.data.frame(sapply(Euk_18S_01_Results, function(x) n_distinct(x, na.rm = T)))
