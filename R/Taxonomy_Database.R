@@ -304,4 +304,5 @@ tmp%>%
   cbind(Unique_taxa)-> Unique_taxa
 rm(tmp)
 
+write.csv(Unique_taxa, "~/AA_Primer_evaluation/Unique_taxa_by_primer_combination.csv")
 
