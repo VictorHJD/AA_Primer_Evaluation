@@ -60,7 +60,7 @@ insilico_18S <- env2list(.GlobalEnv)
 
 names_18S <- gsub("_Results", "\\1", names(insilico_18S))
 
-##Make the data frame in one shot
+##Data frame with total unique taxa by primer combinations
 final<- list() ###Start with an empty list 
 
 for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the list ...
@@ -90,3 +90,27 @@ rm(tmp)
 
 write.csv(Unique_taxa, "~/AA_Primer_evaluation/Unique_taxa_by_primer_combination.csv")
 
+final_trans <- data.table::transpose(final)
+rownames(final_trans)<- colnames(final)
+colnames(final_trans)<- rownames(final)
+
+##Data frame with cummulative new taxa by primer combination
+names(insilico_18S)<- names_18S
+
+alltaxa<- data.frame() ###Start with an empty data frame
+
+for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the list ...
+{ 
+  tmp <- data.frame() #### make an individual data frame ...
+  {
+    tmp <- as.data.frame(distinct(insilico_18S[[i]]))  ###Make a data frame with the data included in each element of the list 
+    tmp<- dplyr::select(tmp, c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession"))
+    colnames(tmp)<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S")
+    tmp<- dplyr::mutate(tmp, Primer_comb_ID= names(insilico_18S[i])) ##Add a colum with Primer combination name
+  }
+  alltaxa<- rbind(alltaxa, tmp) ### Join all the "individual" data frames into the final data frame 
+}
+
+sapply(alltaxa, function(x) n_distinct(x, na.rm = T))
+
+unique(alltaxa$species)
