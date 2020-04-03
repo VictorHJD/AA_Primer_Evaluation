@@ -14,12 +14,14 @@ library("annotate")
 library("taxonomizr")
 
 ##Functions
-##Convert objects with in silico taxnomoy results in the global environment into a list
+##Convert objects with in silico taxnomoy for 18S results in the global environment into a list
 env2list <- function(env){
-  names = ls(env, pattern = "_Results$")
+  names = ls(env, pattern = "18S_\\d+_Results$")
   mget(names, env)
 }
 
+##
+source("~/GitProjects/AA_Primer_Evaluation/R/In_silico_primer_evaluation.R")
 
 ##Load data base 18S 
 Seq_18S_db<- readDNAStringSet("/SAN/db/blastdb/18S_ENA/18S_All_ENA.fasta.gzcleaned.fasta", format = "fasta")
@@ -54,31 +56,35 @@ Unique_taxa<- as.data.frame(sapply(Taxonomy_18S, function(x) n_distinct(x, na.rm
 colnames(Unique_taxa) <- "Database"
 
 ##Get counts of unique taxa per primer pair using in silico predictions on PrimerTree
-insilico <- env2list(.GlobalEnv)
+insilico_18S <- env2list(.GlobalEnv)
 
-y<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession") ##Vector with desired order
+names_18S <- gsub("_Results", "\\1", names(insilico_18S))
 
 ##Make the data frame in one shot
-test<- data.frame() ###Create the data frame 
+final<- list() ###Start with an empty list 
 
-for (i in 1: length(insilico)) ### Start a loop: for every element in the list ...
+for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the list ...
 { 
   tmp <- data.frame() #### make an individual data frame ...
   
   {
-    tmp <- as.data.frame(sapply(i, function(x) n_distinct(x, na.rm = T)))  ###Make a data frame with the data included in each element of the list 
-    colnames(tmp)<- "j"
-    #tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
-    #y<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession") ##Vector with desired order
-    #tmp%>%
-    #  slice(match(y, V2))%>%
-    #  dplyr::select(-V2)%>%
-    #  mutate(V2= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S"))%>%
-    #  column_to_rownames("V2")  
+    tmp <- as.data.frame(sapply(insilico_18S[[i]], function(x) n_distinct(x, na.rm = T)))  ###Make a data frame with the data included in each element of the list 
+    colnames(tmp)<- i
+    tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
+    tmp<- slice(tmp, match(c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession"), V2))
+    tmp<- dplyr::mutate(tmp, V3= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S")) ##Vector with desired order
+    tmp<-  column_to_rownames(tmp, "V3") 
+    tmp<- dplyr::select(tmp, -V2)
     
   }
-  test <- cbind(test, tmp) ### Join all the "individual" data frames into the final data frame 
+  final[[i]] <- tmp ### Join all the "individual" data frames into the list 
 }
+
+final<- data.frame(final)
+
+colnames(final)<- names_18S
+
+Unique_taxa<- cbind(Unique_taxa, final)
 
 ##Euk_18S_01
 tmp<- as.data.frame(sapply(Euk_18S_01_Results, function(x) n_distinct(x, na.rm = T)))
