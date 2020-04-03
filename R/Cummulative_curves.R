@@ -293,7 +293,7 @@ cd <- grid.arrange(c,d, nrow= 1, ncol= 2,
 if(SSU_18S){
   Primtax.comb18 <- subset(PrimTax, Gen== "18S")
   
-  ps.numord.l.comb18 <- PS.l[c(Primtax.comb18$Primer_name)][order(Primtax.comb18$num.reads, decreasing=TRUE)]
+  ps.numord.l.comb18 <- PS.l[c(Primtax.comb18$Primer_comb_ID)][order(Primtax.comb18$num.reads, decreasing=TRUE)]
   
   
   cum.tax.comb18 <- sapply(c("species","genus", "family", "order", "phylum"), function (rank){
@@ -309,24 +309,68 @@ if(SSU_18S){
   
   cum.plot.comb18 <- ggplot(cum.tax.comb18) +
     geom_step(aes(Primer_name, cum.species), color="red") +
-    geom_text(aes(20, 2200, label="Species"), color="red")+ 
+    geom_text(aes(24, 4300, label="Species"), color="red")+ 
+    geom_hline(yintercept = 4098, color="red", linetype= "dashed")+
     geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-    geom_text(aes(20, 1600, label="Genera"), color="#0D0887FF") +
+    geom_text(aes(24, 2100, label="Genera"), color="#0D0887FF") +
+    geom_hline(yintercept = 1988, color="#0D0887FF", linetype= "dashed")+
     geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-    geom_text(aes(20, 840, label="Families"), color="#7E03A8FF") +
+    geom_text(aes(24, 950, label="Families"), color="#7E03A8FF") +
+    geom_hline(yintercept = 850, color="#7E03A8FF", linetype= "dashed")+
     geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-    geom_text(aes(20, 380, label="Orders"), color="#CC4678FF") +
+    geom_text(aes(24, 360, label="Orders"), color="#CC4678FF") +
+    geom_hline(yintercept = 321, color="#CC4678FF", linetype= "dashed")+
     #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
     #geom_text(aes(20, 135, label="Classes"), color="#F0F921FF") +
     geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-    geom_text(aes(20, 40, label="Phyla"), color="#F89441FF") +
+    geom_text(aes(24, 38, label="Phyla"), color="#F89441FF") +
+    geom_hline(yintercept = 34, color="#F89441FF", linetype= "dashed")+
     scale_y_log10("Cummulative count of taxa") +
-    #scale_x_continuous("Number of primers considerd (starting with the one with highest read count)") + 
+    scale_x_continuous("Number of primers considered \n (starting with the one with highest read count)") + 
     annotation_logticks(sides="l") +
     theme_bw() +
-    theme(panel.grid.minor = element_blank(), axis.title.x = element_blank(), text = element_text(size=20))+
+    theme(panel.grid.minor = element_blank(), text = element_text(size=20)#,
+          #axis.title.x = element_blank()
+          )+
     labs(tag = "B)")+
-    coord_cartesian(ylim = c(20, 4000))
+    coord_cartesian(ylim = c(20, 4300), xlim = c(0,25))
+  
+  pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Pre_Figure_4_V1.pdf", width = 10, height = 8)
+  cum.plot.comb18
+  dev.off()
+  
+  cum.plot.comb18_2 <- ggplot(cum.tax.comb18) +
+    geom_step(aes(Primer_name, cum.species), color="red") +
+    geom_text(aes(24, 4350, label="Species"), color="red")+ 
+    geom_segment(aes(x= 15, y= 4098, xend= 25, yend= 4098), color="red", linetype= "dashed")+
+    geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
+    geom_text(aes(24, 2200, label="Genera"), color="#0D0887FF") +
+    geom_segment(aes(x= 15, y= 1988, xend= 25, yend= 1988), color="#0D0887FF", linetype= "dashed")+
+    geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
+    geom_text(aes(24, 950, label="Families"), color="#7E03A8FF") +
+    geom_segment(aes(x= 15, y= 850, xend= 25, yend= 850), color="#7E03A8FF", linetype= "dashed")+
+    geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
+    geom_text(aes(24, 380, label="Orders"), color="#CC4678FF") +
+    geom_segment(aes(x= 15, y= 321, xend= 25, yend= 321), color="#CC4678FF", linetype= "dashed")+
+    #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
+    #geom_text(aes(20, 135, label="Classes"), color="#F0F921FF") +
+    geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
+    geom_text(aes(24, 40, label="Phyla"), color="#F89441FF") +
+    geom_segment(aes(x= 15, y= 34, xend= 25, yend= 34), color="#F89441FF", linetype= "dashed")+
+    scale_y_log10("Cummulative count of taxa") +
+    scale_x_continuous("Number of primers considered \n (starting with the one with highest read count)") + 
+    annotation_logticks(sides="l") +
+    theme_bw() +
+    theme(panel.grid.minor = element_blank(), text = element_text(size=20)#,
+          #axis.title.x = element_blank()
+    )+
+    labs(tag = "B)")+
+    coord_cartesian(ylim = c(20, 4300), xlim = c(0,25))
+  
+  pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Pre_Figure_4_V2.pdf", width = 10, height = 8)
+  cum.plot.comb18_2
+  dev.off()
+  
 }
 ####18S and 28S
 if(SSU_LSU){
