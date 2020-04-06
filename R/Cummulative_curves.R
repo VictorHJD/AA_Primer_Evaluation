@@ -321,7 +321,8 @@ if(SSU_18S){
     geom_text(aes(24, 360, label="Orders"), color="#CC4678FF") +
     geom_hline(yintercept = 321, color="#CC4678FF", linetype= "dashed")+
     #geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-    #geom_text(aes(20, 135, label="Classes"), color="#F0F921FF") +
+    geom_text(aes(24, 115, label="Classes"), color="#F0F921FF") +
+    geom_hline(yintercept = 102, color="#F0F921FF", linetype= "dashed")+
     geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
     geom_text(aes(24, 38, label="Phyla"), color="#F89441FF") +
     geom_hline(yintercept = 34, color="#F89441FF", linetype= "dashed")+
