@@ -253,11 +253,9 @@ row.names(col_groups)<- col_groups$Primer_comb_ID
 
 col_groups$Primer_comb_ID<- NULL
 
-colour_groups <- list( Gen= c("12S"= "#E3DAC9", "16S"= "pink","18S"= "#440154FF", "28S"= "#21908CFF", 
-                              "COI"= "#FDE725FF", "ITS"= "#C46210", "rbcL"= "#D0FF14"),
+colour_groups <- list( Gen= c("18S"= "#440154FF"),
                        Region= c("V1-V2"= "#8DD3C7", "V3-V4"= "#FFFFB3", "V4"= "#BEBADA", "V4-V5"= "#FB8072", "V6-V7"= "#80B1D3",
-                                 "V6-V8"="#FDB462", "V7-V8"= "#B3DE69", "V8-V9"= "#FCCDE5", "V9"= "#D9D9D9",
-                                 "D2"="#D95F02", "D3"= "#7570B3", "Folmer"= "#E7298A", "ITS1"= "#A6761D", "Chloroplast"= "#66A61E", "Mitochondrial"= "#E6AB02"))
+                                 "V6-V8"="#FDB462", "V7-V8"= "#B3DE69", "V8-V9"= "#FCCDE5", "V9"= "#D9D9D9"))
 require(pheatmap)
 require(viridis)
 BCheatmap.insilico <- pheatmap(foo.braycurt, 
