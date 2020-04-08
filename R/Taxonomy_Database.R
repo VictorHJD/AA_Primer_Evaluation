@@ -111,57 +111,36 @@ for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the li
   alltaxa<- rbind(alltaxa, tmp) ### Join all the "individual" data frames into the final data frame 
 }
 
-##Get number of cummulative unique by primer combination (preliminary code "manual") 
+##Get number of cummulative unique by 18S primer combination in silico 
 
-sapply(alltaxa, function(x) n_distinct(x, na.rm = T))
+pre_cum_in_silico<- list()
 
-uniquesp%>%
-  filter(Primer_comb_ID== "Euk_18S_21", .preserve = T) -> foo
+for(i in names(alltaxa)){
+  tmp <- data.frame() #### make an individual data frame ...
+  {
+    tmp<-as.data.frame(dplyr::distinct(alltaxa, !!as.name(i), .keep_all= T)) 
+    tmp<- dplyr::select(tmp, c(!!as.name(i), "Primer_comb_ID"))
+    tmp<- dplyr::group_by(tmp, Primer_comb_ID)
+    tmp<- dplyr::summarise(tmp, n())
+    if(colnames(tmp) == i) ### A tiny condition for the list "Primer_comb_ID"
+    {
+      colnames(tmp)<- c("Primer_comb_ID", "Primer_ID") ### Add a zero in the first column
+    }else   
+    colnames(tmp)<- c("Primer_comb_ID", i)
+  }
+  pre_cum_in_silico[[i]] <- tmp
+}
 
-sapply(foo, function(x) n_distinct(x, na.rm = T))
+pre_cum_in_silico<- lapply(pre_cum_in_silico, data.frame, row.names=NULL)
 
-alltaxa%>%
-  distinct(genus, .keep_all= T) -> uniquegen
+pre_cum_in_silico<- Reduce(function(x,y) merge(x, y, by = "Primer_comb_ID", all.x = TRUE, all.y = TRUE),
+                           pre_cum_in_silico)
 
-uniquegen%>%
-  filter(Primer_comb_ID== "Euk_18S_21", .preserve = T) -> foo
+pre_cum_in_silico[is.na(pre_cum_in_silico)]<- 0 ##Transform false NAs to zeros
 
-sapply(foo, function(x) n_distinct(x, na.rm = T))
+pre_cum_in_silico$Primer_ID<- NULL
 
-alltaxa%>%
-  distinct(family, .keep_all= T) -> uniquefam
-
-uniquefam%>%
-  filter(Primer_comb_ID== "Euk_18S_21", .preserve = T) -> foo
-
-sapply(foo, function(x) n_distinct(x, na.rm = T))
-
-alltaxa%>%
-  distinct(order, .keep_all= T) -> uniqueord
-
-uniqueord%>%
-  filter(Primer_comb_ID== "Euk_18S_21", .preserve = T) -> foo
-
-sapply(foo, function(x) n_distinct(x, na.rm = T))
-
-alltaxa%>%
-  distinct(class, .keep_all= T) -> uniquecla
-
-uniquecla%>%
-  filter(Primer_comb_ID== "Euk_18S_21", .preserve = T) -> foo
-
-sapply(foo, function(x) n_distinct(x, na.rm = T))
-
-alltaxa%>%
-  distinct(phylum, .keep_all= T) -> uniquephy
-
-uniquephy%>%
-  filter(Primer_comb_ID== "Euk_18S_21", .preserve = T) -> foo
-
-sapply(foo, function(x) n_distinct(x, na.rm = T))
-
-##Load the file generate semi-manually with the previous "code" 
-pre_cum_in_silico <- read.csv("~/AA_Primer_evaluation/Pre_cum_tax_comb18_in_silico.csv")
+#write.csv(pre_cum_in_silico, "~/AA_Primer_evaluation/Pre_cum_tax_comb18_in_silico.csv") ##save again just in case of change
 
 ##Create a real cummulative count of taxa by primer combination for cummulative curves
 pre_cum_in_silico%>%
@@ -171,11 +150,11 @@ pre_cum_in_silico%>%
   mutate(cum.order= cumsum(order))%>%
   mutate(cum.class= cumsum(class))%>%
   mutate(cum.phylum= cumsum(phylum))%>%
-  mutate(Primer_name= rownames(pre_cum_in_silico))%>%
-  dplyr::select(-(1:7))%>%
+  mutate(Primer_name= as.integer(rownames(pre_cum_in_silico)))%>%
+  dplyr::select(-(1:10))%>%
   dplyr::select(Primer_name, cum.species, cum.genus, cum.family, cum.order, cum.class, cum.phylum)-> cum.tax.comb18.insilico
 
-cum.tax.comb18.insilico$Primer_name<- as.integer(cum.tax.comb18.insilico$Primer_name)
+rm(pre_cum_in_silico, tmp)
 
 baseline.zero <- data.frame(0, 0, 0, 0, 0, 0, 0)
 names(baseline.zero)<- c("Primer_name", "cum.species", "cum.genus", "cum.family", "cum.order", "cum.class", "cum.phylum")
@@ -211,12 +190,12 @@ cum.plot.comb18.insilico <- ggplot(cum.tax.comb18.insilico) +
   labs(tag = "A)")+
   coord_cartesian(ylim = c(20, 4300), xlim = c(0,25))
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Pre_Figure_4.pdf", width = 8, height = 10)
-grid.arrange(cum.plot.comb18.insilico, cum.plot.comb18) 
-dev.off()
+#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Pre_Figure_4.pdf", width = 8, height = 10)
+#grid.arrange(cum.plot.comb18.insilico, cum.plot.comb18) 
+#dev.off()
 
-###Try to create a matrix with 0/1 data for the in silico observation
-##Prepair matrix for PCA analysis
+###Matrix with presence/absence (1/0) data for the in silico analysis
+##Prepair matrix for PCA analysis at genus level
 alltaxa%>%
   dplyr::select(6,10)%>%
   group_by(Primer_comb_ID)%>%
