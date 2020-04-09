@@ -14,6 +14,7 @@ library("tidyverse")
 registerDoMC(15)
 
 RunBLAST <- F ##Re-run PrimerTree BLAST
+UnresBLAST<- F ##Previously saved results unrestricted size BLAST
 PreBLAST<- T ##Use previously saved results
 
 ##Data
@@ -39,6 +40,17 @@ seqcounts[,1]<-NULL
 seqcounts%>%
   dplyr::select(c("Primer_comb_ID", "Seq_F", "Seq_R", "Gen"))-> Primers
 
+if(UnresBLAST){
+  primerTreeObj<- list.files(path = "~/AA_Primer_evaluation/output/unrestrictedPrimerTree/primerTreeObj", pattern = ".Rds", full.names = T)
+  
+  lapply(primerTreeObj, function(x) {
+    objname<- gsub("/home/victor/AA_Primer_evaluation/output/unrestrictedPrimerTree/primerTreeObj/", "", x)
+    objname<- gsub(".Rds", "", objname)
+    tmp <- readRDS(x)
+    assign(objname, tmp, envir = .GlobalEnv)
+  })
+}
+
 if(PreBLAST){
 primerTreeObj<- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj", pattern = ".Rds", full.names = T)
 
@@ -60,9 +72,9 @@ Primers %>%
 if(RunBLAST){
 
 Euk_18S_01<- search_primer_pair(name= as.character(Primers_18S[1,1]), as.character(Primers_18S[1,2]), as.character(Primers_18S[1,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/New_10000/Euk_18S_01.Rds")
+#saveRDS(Euk_18S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_01.Rds")
 
-Euk_18S_02<- search_primer_pair(name= as.character(Primers_18S[2,1]), as.character(Primers_18S[2,2]), as.character(Primers_18S[2,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_02<- search_primer_pair(name= as.character(Primers_18S[2,1]), as.character(Primers_18S[2,2]), as.character(Primers_18S[2,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_02, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_02.Rds")
 
 Euk_18S_03<- search_primer_pair(name= as.character(Primers_18S[3,1]), as.character(Primers_18S[3,2]), as.character(Primers_18S[3,3]), .parallel = T, num_aligns = 1000)
@@ -153,6 +165,8 @@ Euk_18S_01_RA%>%
 
 colnames(Euk_18S_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_01, Euk_18S_01_BLAST, Euk_18S_01_Tax)
+
 ###Euk_18S_02
 #plot(Euk_18S_02, ranks= "phylum")
 Euk_18S_02_Tax<- Euk_18S_02$taxonomy ##Taxonomy information 
@@ -171,6 +185,8 @@ Euk_18S_02_RA%>%
   mutate(Primer_name= "Euk_18S_02")->Euk_18S_02_RA
 
 colnames(Euk_18S_02_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_02, Euk_18S_02_BLAST, Euk_18S_02_Tax)
 
 ###Euk_18S_03
 #plot(Euk_18S_03, ranks= "phylum")
@@ -191,6 +207,8 @@ Euk_18S_03_RA%>%
 
 colnames(Euk_18S_03_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_03, Euk_18S_03_BLAST, Euk_18S_03_Tax)
+
 ###Euk_18S_04
 #plot(Euk_18S_04, ranks= "phylum")
 Euk_18S_04_Tax<- Euk_18S_04$taxonomy ##Taxonomy information 
@@ -209,6 +227,8 @@ Euk_18S_04_RA%>%
   mutate(Primer_name= "Euk_18S_04")->Euk_18S_04_RA
 
 colnames(Euk_18S_04_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_04, Euk_18S_04_BLAST, Euk_18S_04_Tax)
 
 ###Euk_18S_05
 #plot(Euk_18S_05, ranks= "phylum")
@@ -229,6 +249,8 @@ Euk_18S_05_RA%>%
 
 colnames(Euk_18S_05_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_05, Euk_18S_05_BLAST, Euk_18S_05_Tax)
+
 ###Euk_18S_06
 #plot(Euk_18S_06, ranks= "phylum")
 Euk_18S_06_Tax<- Euk_18S_06$taxonomy ##Taxonomy information 
@@ -247,6 +269,8 @@ Euk_18S_06_RA%>%
   mutate(Primer_name= "Euk_18S_06")->Euk_18S_06_RA
 
 colnames(Euk_18S_06_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_06, Euk_18S_06_BLAST, Euk_18S_06_Tax)
 
 ###Euk_18S_07
 #plot(Euk_18S_07, ranks= "phylum")
@@ -267,6 +291,8 @@ Euk_18S_07_RA%>%
 
 colnames(Euk_18S_07_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_07, Euk_18S_07_BLAST, Euk_18S_07_Tax)
+
 ###Euk_18S_08
 #plot(Euk_18S_08, ranks= "phylum")
 Euk_18S_08_Tax<- Euk_18S_08$taxonomy ##Taxonomy information 
@@ -285,6 +311,8 @@ Euk_18S_08_RA%>%
   mutate(Primer_name= "Euk_18S_08")->Euk_18S_08_RA
 
 colnames(Euk_18S_08_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_08, Euk_18S_08_BLAST, Euk_18S_08_Tax)
 
 ###Euk_18S_09
 #plot(Euk_18S_09, ranks= "phylum")
@@ -305,6 +333,8 @@ Euk_18S_09_RA%>%
 
 colnames(Euk_18S_09_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_09, Euk_18S_09_BLAST, Euk_18S_09_Tax)
+
 ###Euk_18S_10
 #plot(Euk_18S_10, ranks= "phylum")
 Euk_18S_10_Tax<- Euk_18S_10$taxonomy ##Taxonomy information 
@@ -323,6 +353,8 @@ Euk_18S_10_RA%>%
   mutate(Primer_name= "Euk_18S_10")->Euk_18S_10_RA
 
 colnames(Euk_18S_10_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_10, Euk_18S_10_BLAST, Euk_18S_10_Tax)
 
 ###Euk_18S_11
 #plot(Euk_18S_11, ranks= "phylum")
@@ -343,6 +375,8 @@ Euk_18S_11_RA%>%
 
 colnames(Euk_18S_11_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_11, Euk_18S_11_BLAST, Euk_18S_11_Tax)
+
 ###Euk_18S_12
 #plot(Euk_18S_12, ranks= "phylum")
 Euk_18S_12_Tax<- Euk_18S_12$taxonomy ##Taxonomy information 
@@ -361,6 +395,8 @@ Euk_18S_12_RA%>%
   mutate(Primer_name= "Euk_18S_12")->Euk_18S_12_RA
 
 colnames(Euk_18S_12_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_12, Euk_18S_12_BLAST, Euk_18S_12_Tax)
 
 ###Euk_18S_13
 #plot(Euk_18S_13, ranks= "phylum")
@@ -381,6 +417,8 @@ Euk_18S_13_RA%>%
 
 colnames(Euk_18S_13_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_13, Euk_18S_13_BLAST, Euk_18S_13_Tax)
+
 ###Euk_18S_14
 #plot(Euk_18S_14, ranks= "phylum")
 Euk_18S_14_Tax<- Euk_18S_14$taxonomy ##Taxonomy information 
@@ -399,6 +437,8 @@ Euk_18S_14_RA%>%
   mutate(Primer_name= "Euk_18S_14")->Euk_18S_14_RA
 
 colnames(Euk_18S_14_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_14, Euk_18S_14_BLAST, Euk_18S_14_Tax)
 
 ###Euk_18S_15
 #plot(Euk_18S_15, ranks= "phylum")
@@ -419,6 +459,8 @@ Euk_18S_15_RA%>%
 
 colnames(Euk_18S_15_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_15, Euk_18S_15_BLAST, Euk_18S_15_Tax)
+
 ###Euk_18S_16
 plot(Euk_18S_16, ranks= "phylum")
 Euk_18S_16_Tax<- Euk_18S_16$taxonomy ##Taxonomy information 
@@ -437,6 +479,8 @@ Euk_18S_16_RA%>%
   mutate(Primer_name= "Euk_18S_16")->Euk_18S_16_RA
 
 colnames(Euk_18S_16_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_16, Euk_18S_16_BLAST, Euk_18S_16_Tax)
 
 ###Euk_18S_17
 plot(Euk_18S_17, ranks= "phylum")
@@ -457,6 +501,8 @@ Euk_18S_17_RA%>%
 
 colnames(Euk_18S_17_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_17, Euk_18S_17_BLAST, Euk_18S_17_Tax)
+
 ###Euk_18S_18
 plot(Euk_18S_18, ranks= "phylum")
 Euk_18S_18_Tax<- Euk_18S_18$taxonomy ##Taxonomy information 
@@ -475,6 +521,8 @@ Euk_18S_18_RA%>%
   mutate(Primer_name= "Euk_18S_18")->Euk_18S_18_RA
 
 colnames(Euk_18S_18_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_18, Euk_18S_18_BLAST, Euk_18S_18_Tax)
 
 ###Euk_18S_19
 plot(Euk_18S_19, ranks= "phylum")
@@ -495,6 +543,8 @@ Euk_18S_19_RA%>%
 
 colnames(Euk_18S_19_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_19, Euk_18S_19_BLAST, Euk_18S_19_Tax)
+
 ###Euk_18S_20
 plot(Euk_18S_20, ranks= "phylum")
 Euk_18S_20_Tax<- Euk_18S_20$taxonomy ##Taxonomy information 
@@ -513,6 +563,8 @@ Euk_18S_20_RA%>%
   mutate(Primer_name= "Euk_18S_20")->Euk_18S_20_RA
 
 colnames(Euk_18S_20_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_20, Euk_18S_20_BLAST, Euk_18S_20_Tax)
 
 ###Euk_18S_21
 plot(Euk_18S_21, ranks= "phylum")
@@ -533,6 +585,8 @@ Euk_18S_21_RA%>%
 
 colnames(Euk_18S_21_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
+rm(Euk_18S_21, Euk_18S_21_BLAST, Euk_18S_21_Tax)
+
 ##Relative abundance in silico comparison
 
 Relative_abundance_18S<- bind_rows(Euk_18S_01_RA, Euk_18S_02_RA, Euk_18S_03_RA, Euk_18S_04_RA, Euk_18S_05_RA, Euk_18S_06_RA,
@@ -545,6 +599,11 @@ Relative_abundance_18S%>%
   mutate(Main_taxa= Rel_abund>= 0.05) %>%
   mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$phylum))) %>%
   arrange(Primer_name, desc(phylum))->Relative_abundance_18S
+
+rm(Euk_18S_01_RA, Euk_18S_02_RA, Euk_18S_03_RA, Euk_18S_04_RA, Euk_18S_05_RA, Euk_18S_06_RA,
+   Euk_18S_07_RA, Euk_18S_08_RA, Euk_18S_09_RA, Euk_18S_10_RA, Euk_18S_11_RA, Euk_18S_12_RA,
+   Euk_18S_13_RA, Euk_18S_14_RA, Euk_18S_15_RA, Euk_18S_16_RA, Euk_18S_17_RA, Euk_18S_18_RA,
+   Euk_18S_19_RA, Euk_18S_20_RA, Euk_18S_21_RA)
 
 #RA_18S <- 
 ggplot(data=Relative_abundance_18S, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
@@ -582,7 +641,7 @@ done28S <- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj/", pat
 done28S<- lapply(done28S, function(x) gsub(".Rds", "_RA", x))
 
 ###Euk_28S_01
-plot(Euk_28S_01, ranks= "phylum")
+#plot(Euk_28S_01, ranks= "phylum")
 Euk_28S_01_Tax<- Euk_28S_01$taxonomy ##Taxonomy information 
 Euk_28S_01_BLAST<- Euk_28S_01$BLAST_result #BLAST information
 Euk_28S_01_Tax[is.na(Euk_28S_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -598,9 +657,9 @@ Euk_28S_01_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_28S_01")->Euk_28S_01_RA
 colnames(Euk_28S_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
-
+rm(Euk_28S_01, Euk_28S_01_BLAST, Euk_28S_01_Tax)
 ###Euk_28S_02
-plot(Euk_28S_02, ranks= "phylum")
+#plot(Euk_28S_02, ranks= "phylum")
 Euk_28S_02_Tax<- Euk_28S_02$taxonomy ##Taxonomy information 
 Euk_28S_02_BLAST<- Euk_28S_02$BLAST_result #BLAST information
 Euk_28S_02_Tax[is.na(Euk_28S_02_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -616,9 +675,9 @@ Euk_28S_02_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_28S_02")->Euk_28S_02_RA
 colnames(Euk_28S_02_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
-
+rm(Euk_28S_02, Euk_28S_02_BLAST, Euk_28S_02_Tax)
 ###Euk_28S_03
-plot(Euk_28S_03, ranks= "phylum")
+#plot(Euk_28S_03, ranks= "phylum")
 Euk_28S_03_Tax<- Euk_28S_03$taxonomy ##Taxonomy information 
 Euk_28S_03_BLAST<- Euk_28S_03$BLAST_result #BLAST information
 Euk_28S_03_Tax[is.na(Euk_28S_03_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -634,6 +693,7 @@ Euk_28S_03_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_28S_03")->Euk_28S_03_RA
 colnames(Euk_28S_03_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_28S_03, Euk_28S_03_BLAST, Euk_28S_03_Tax)
 
 Relative_abundance_28S<- bind_rows(Euk_28S_01_RA, Euk_28S_02_RA, Euk_28S_03_RA) ##Change everytime to add next primer information
   
@@ -642,7 +702,9 @@ Relative_abundance_28S%>%
   mutate(Main_taxa= Rel_abund>= 0.05) %>%
   mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$phylum))) %>%
   arrange(Primer_name, desc(phylum))->Relative_abundance_28S
-  
+
+rm(Euk_28S_01_RA, Euk_28S_02_RA, Euk_28S_03_RA)
+
 #RA_28S <- 
 ggplot(data=Relative_abundance_28S, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
   scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
@@ -676,7 +738,7 @@ Euk_ITS_01<- search_primer_pair(name= as.character(Primers_others[3,1]), forward
 #saveRDS(Euk_ITS_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
 }
 ###Euk_12S_01
-plot(Euk_12S_01, ranks= "phylum")
+#plot(Euk_12S_01, ranks= "phylum")
 Euk_12S_01_Tax<- Euk_12S_01$taxonomy ##Taxonomy information 
 Euk_12S_01_BLAST<- Euk_12S_01$BLAST_result #BLAST information
 Euk_12S_01_Tax[is.na(Euk_12S_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -692,9 +754,9 @@ Euk_12S_01_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_12S_01")->Euk_12S_01_RA
 colnames(Euk_12S_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
-
+rm(Euk_12S_01, Euk_12S_01_BLAST, Euk_12S_01_Tax)
 ###Euk_rbcL_01
-plot(Euk_rbcL_01, ranks= "phylum")
+#plot(Euk_rbcL_01, ranks= "phylum")
 Euk_rbcL_01_Tax<- Euk_rbcL_01$taxonomy ##Taxonomy information 
 Euk_rbcL_01_BLAST<- Euk_rbcL_01$BLAST_result #BLAST information
 Euk_rbcL_01_Tax[is.na(Euk_rbcL_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -710,9 +772,9 @@ Euk_rbcL_01_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_rbcL_01")->Euk_rbcL_01_RA
 colnames(Euk_rbcL_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
-
+rm(Euk_rbcL_01, Euk_rbcL_01_BLAST, Euk_rbcL_01_Tax)
 ###Euk_ITS_01
-plot(Euk_ITS_01, ranks= "phylum")
+#plot(Euk_ITS_01, ranks= "phylum")
 Euk_ITS_01_Tax<- Euk_ITS_01$taxonomy ##Taxonomy information 
 Euk_ITS_01_BLAST<- Euk_ITS_01$BLAST_result #BLAST information
 Euk_ITS_01_Tax[is.na(Euk_ITS_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -728,6 +790,7 @@ Euk_ITS_01_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_ITS_01")->Euk_ITS_01_RA
 colnames(Euk_ITS_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_ITS_01, Euk_ITS_01_BLAST, Euk_ITS_01_Tax)
 
 Relative_abundance_others<- bind_rows(Euk_12S_01_RA, Euk_rbcL_01_RA, Euk_ITS_01_RA) ##Change everytime to add next primer information
 
@@ -736,6 +799,8 @@ Relative_abundance_others%>%
   mutate(Main_taxa= Rel_abund>= 0.05) %>%
   mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$phylum))) %>%
   arrange(Primer_name, desc(phylum))->Relative_abundance_others
+
+rm(Euk_12S_01_RA, Euk_rbcL_01_RA, Euk_ITS_01_RA)
 
 #RA_others <- 
 ggplot(data=Relative_abundance_others, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
@@ -770,7 +835,7 @@ Euk_COI_04<- search_primer_pair(name= as.character(Primers_COI[4,1]), forward = 
 #saveRDS(Euk_COI_04, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_COI_04.Rds")
 }
 ###Euk_COI_01
-plot(Euk_COI_01, ranks= "phylum")
+#plot(Euk_COI_01, ranks= "phylum")
 Euk_COI_01_Tax<- Euk_COI_01$taxonomy ##Taxonomy information 
 Euk_COI_01_BLAST<- Euk_COI_01$BLAST_result #BLAST information
 Euk_COI_01_Tax[is.na(Euk_COI_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -786,9 +851,10 @@ Euk_COI_01_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_COI_01")->Euk_COI_01_RA
 colnames(Euk_COI_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_COI_01, Euk_COI_01_BLAST, Euk_COI_01_Tax)
 
 ###Euk_COI_02
-plot(Euk_COI_02, ranks= "phylum")
+#plot(Euk_COI_02, ranks= "phylum")
 Euk_COI_02_Tax<- Euk_COI_02$taxonomy ##Taxonomy information 
 Euk_COI_02_BLAST<- Euk_COI_02$BLAST_result #BLAST information
 Euk_COI_02_Tax[is.na(Euk_COI_02_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -804,9 +870,10 @@ Euk_COI_02_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_COI_02")->Euk_COI_02_RA
 colnames(Euk_COI_02_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_COI_02, Euk_COI_02_BLAST, Euk_COI_02_Tax)
 
 ###Euk_COI_03
-plot(Euk_COI_03, ranks= "phylum")
+#plot(Euk_COI_03, ranks= "phylum")
 Euk_COI_03_Tax<- Euk_COI_03$taxonomy ##Taxonomy information 
 Euk_COI_03_BLAST<- Euk_COI_03$BLAST_result #BLAST information
 Euk_COI_03_Tax[is.na(Euk_COI_03_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -822,9 +889,10 @@ Euk_COI_03_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_COI_03")->Euk_COI_03_RA
 colnames(Euk_COI_03_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_COI_03, Euk_COI_03_BLAST, Euk_COI_03_Tax)
 
 ###Euk_COI_04
-plot(Euk_COI_04, ranks= "phylum")
+#plot(Euk_COI_04, ranks= "phylum")
 Euk_COI_04_Tax<- Euk_COI_04$taxonomy ##Taxonomy information 
 Euk_COI_04_BLAST<- Euk_COI_04$BLAST_result #BLAST information
 Euk_COI_04_Tax[is.na(Euk_COI_04_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -840,6 +908,7 @@ Euk_COI_04_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
   mutate(Primer_name= "Euk_COI_04")->Euk_COI_04_RA
 colnames(Euk_COI_04_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_COI_04, Euk_COI_04_BLAST, Euk_COI_04_Tax)
 
 Relative_abundance_COI<- bind_rows(Euk_COI_01_RA, Euk_COI_02_RA, Euk_COI_03_RA, Euk_COI_04_RA) ##Change everytime to add next primer information
 
@@ -849,6 +918,7 @@ Relative_abundance_COI%>%
   mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$phylum))) %>%
   arrange(Primer_name, desc(phylum))->Relative_abundance_COI
 
+rm(Euk_COI_01_RA, Euk_COI_02_RA, Euk_COI_03_RA, Euk_COI_04_RA)
 #RA_COI <- 
 ggplot(data=Relative_abundance_COI, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
   scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C",#"#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
