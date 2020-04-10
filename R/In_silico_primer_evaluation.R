@@ -77,61 +77,61 @@ Euk_18S_01<- search_primer_pair(name= as.character(Primers_18S[1,1]), as.charact
 Euk_18S_02<- search_primer_pair(name= as.character(Primers_18S[2,1]), as.character(Primers_18S[2,2]), as.character(Primers_18S[2,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_02, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_02.Rds")
 
-Euk_18S_03<- search_primer_pair(name= as.character(Primers_18S[3,1]), as.character(Primers_18S[3,2]), as.character(Primers_18S[3,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_03<- search_primer_pair(name= as.character(Primers_18S[3,1]), as.character(Primers_18S[3,2]), as.character(Primers_18S[3,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_03, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_03.Rds")
 
-Euk_18S_04<- search_primer_pair(name= as.character(Primers_18S[4,1]), as.character(Primers_18S[4,2]), as.character(Primers_18S[4,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_04<- search_primer_pair(name= as.character(Primers_18S[4,1]), as.character(Primers_18S[4,2]), as.character(Primers_18S[4,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_04, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_04.Rds")
 
-Euk_18S_05<- search_primer_pair(name= as.character(Primers_18S[5,1]), as.character(Primers_18S[5,2]), as.character(Primers_18S[5,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_05<- search_primer_pair(name= as.character(Primers_18S[5,1]), as.character(Primers_18S[5,2]), as.character(Primers_18S[5,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_05, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_05.Rds")
 
-Euk_18S_06<- search_primer_pair(name= as.character(Primers_18S[6,1]), as.character(Primers_18S[6,2]), as.character(Primers_18S[6,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_06<- search_primer_pair(name= as.character(Primers_18S[6,1]), as.character(Primers_18S[6,2]), as.character(Primers_18S[6,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_06, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_06.Rds")
 
-Euk_18S_07<- search_primer_pair(name= as.character(Primers_18S[7,1]), as.character(Primers_18S[7,2]), as.character(Primers_18S[7,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_07<- search_primer_pair(name= as.character(Primers_18S[7,1]), as.character(Primers_18S[7,2]), as.character(Primers_18S[7,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_07, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_07.Rds")
 
-Euk_18S_08<- search_primer_pair(name= as.character(Primers_18S[8,1]), as.character(Primers_18S[8,2]), as.character(Primers_18S[8,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_08<- search_primer_pair(name= as.character(Primers_18S[8,1]), as.character(Primers_18S[8,2]), as.character(Primers_18S[8,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_08, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_08.Rds")
 
-Euk_18S_09<- search_primer_pair(name= as.character(Primers_18S[9,1]), as.character(Primers_18S[9,2]), as.character(Primers_18S[9,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_09<- search_primer_pair(name= as.character(Primers_18S[9,1]), as.character(Primers_18S[9,2]), as.character(Primers_18S[9,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_09, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_09.Rds")
 
-Euk_18S_10<- search_primer_pair(name= as.character(Primers_18S[10,1]), as.character(Primers_18S[10,2]), as.character(Primers_18S[10,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_10<- search_primer_pair(name= as.character(Primers_18S[10,1]), as.character(Primers_18S[10,2]), as.character(Primers_18S[10,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_10, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_10.Rds")
 
-Euk_18S_11<- search_primer_pair(name= as.character(Primers_18S[11,1]), as.character(Primers_18S[11,2]), as.character(Primers_18S[11,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_11<- search_primer_pair(name= as.character(Primers_18S[11,1]), as.character(Primers_18S[11,2]), as.character(Primers_18S[11,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_11, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_11.Rds")
 
-Euk_18S_12<- search_primer_pair(name= as.character(Primers_18S[12,1]), as.character(Primers_18S[12,2]), as.character(Primers_18S[12,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_12<- search_primer_pair(name= as.character(Primers_18S[12,1]), as.character(Primers_18S[12,2]), as.character(Primers_18S[12,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_12, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_12.Rds")
 
-Euk_18S_13<- search_primer_pair(name= as.character(Primers_18S[13,1]), as.character(Primers_18S[13,2]), as.character(Primers_18S[13,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_13<- search_primer_pair(name= as.character(Primers_18S[13,1]), as.character(Primers_18S[13,2]), as.character(Primers_18S[13,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_13, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_13.Rds")
 
-Euk_18S_14<- search_primer_pair(name= as.character(Primers_18S[14,1]), as.character(Primers_18S[14,2]), as.character(Primers_18S[14,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_14<- search_primer_pair(name= as.character(Primers_18S[14,1]), as.character(Primers_18S[14,2]), as.character(Primers_18S[14,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_14, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_14.Rds")
 
-Euk_18S_15<- search_primer_pair(name= as.character(Primers_18S[15,1]), as.character(Primers_18S[15,2]), as.character(Primers_18S[15,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_15<- search_primer_pair(name= as.character(Primers_18S[15,1]), as.character(Primers_18S[15,2]), as.character(Primers_18S[15,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_15, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_15.Rds")
 
-Euk_18S_16<- search_primer_pair(name= as.character(Primers_18S[16,1]), as.character(Primers_18S[16,2]), as.character(Primers_18S[16,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_16<- search_primer_pair(name= as.character(Primers_18S[16,1]), as.character(Primers_18S[16,2]), as.character(Primers_18S[16,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_16, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_16.Rds")
 
-Euk_18S_17<- search_primer_pair(name= as.character(Primers_18S[17,1]), as.character(Primers_18S[17,2]), as.character(Primers_18S[17,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_17<- search_primer_pair(name= as.character(Primers_18S[17,1]), as.character(Primers_18S[17,2]), as.character(Primers_18S[17,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_17, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_17.Rds")
 
-Euk_18S_18<- search_primer_pair(name= as.character(Primers_18S[18,1]), as.character(Primers_18S[18,2]), as.character(Primers_18S[18,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_18<- search_primer_pair(name= as.character(Primers_18S[18,1]), as.character(Primers_18S[18,2]), as.character(Primers_18S[18,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_18, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_18.Rds")
 
-Euk_18S_19<- search_primer_pair(name=as.character(Primers_18S[19,1]), as.character(Primers_18S[19,2]), as.character(Primers_18S[19,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_19<- search_primer_pair(name=as.character(Primers_18S[19,1]), as.character(Primers_18S[19,2]), as.character(Primers_18S[19,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_19, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_19.Rds")
 
-Euk_18S_20<- search_primer_pair(name= as.character(Primers_18S[20,1]), as.character(Primers_18S[20,2]), as.character(Primers_18S[20,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_20<- search_primer_pair(name= as.character(Primers_18S[20,1]), as.character(Primers_18S[20,2]), as.character(Primers_18S[20,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_20, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_20.Rds")
 
-Euk_18S_21<- search_primer_pair(name= as.character(Primers_18S[21,1]), as.character(Primers_18S[21,2]), as.character(Primers_18S[21,3]), .parallel = T, num_aligns = 1000)
+Euk_18S_21<- search_primer_pair(name= as.character(Primers_18S[21,1]), as.character(Primers_18S[21,2]), as.character(Primers_18S[21,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_21, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_21.Rds")
 }
 
@@ -152,7 +152,8 @@ Euk_18S_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>% ##Keep a single ocurrence of each species 
-  dplyr::select(-(X1))-> Euk_18S_01_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_01_Results
 
 #write.csv(Euk_18S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_01_Results.csv")
 hist(Euk_18S_01_Results$product_length)
@@ -176,7 +177,8 @@ Euk_18S_02_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_02_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_02_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_02_Results
 #write.csv(Euk_18S_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_02_Results.csv")
 hist(Euk_18S_02_Results$product_length)
 Euk_18S_02_RA<- data.frame(dplyr::count(Euk_18S_02_Results, phylum))
@@ -197,7 +199,8 @@ Euk_18S_03_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_03_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_03_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_03_Results
 #write.csv(Euk_18S_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_03_Results.csv")
 hist(Euk_18S_03_Results$product_length)
 Euk_18S_03_RA<- data.frame(dplyr::count(Euk_18S_03_Results, phylum))
@@ -218,7 +221,8 @@ Euk_18S_04_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_04_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_04_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_04_Results
 #write.csv(Euk_18S_04_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_04_Results.csv")
 hist(Euk_18S_04_Results$product_length)
 Euk_18S_04_RA<- data.frame(dplyr::count(Euk_18S_04_Results, phylum))
@@ -239,7 +243,8 @@ Euk_18S_05_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_05_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_05_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_05_Results
 #write.csv(Euk_18S_05_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_05_Results.csv")
 hist(Euk_18S_05_Results$product_length)
 Euk_18S_05_RA<- data.frame(dplyr::count(Euk_18S_05_Results, phylum))
@@ -260,7 +265,8 @@ Euk_18S_06_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_06_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_06_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_06_Results
 #write.csv(Euk_18S_06_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_06_Results.csv")
 hist(Euk_18S_06_Results$product_length)
 Euk_18S_06_RA<- data.frame(dplyr::count(Euk_18S_06_Results, phylum))
@@ -281,7 +287,8 @@ Euk_18S_07_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_07_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_07_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_07_Results
 #write.csv(Euk_18S_07_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_07_Results.csv")
 hist(Euk_18S_07_Results$product_length)
 Euk_18S_07_RA<- data.frame(dplyr::count(Euk_18S_07_Results, phylum))
@@ -302,7 +309,8 @@ Euk_18S_08_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_08_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_08_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_08_Results
 #write.csv(Euk_18S_08_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_08_Results.csv")
 hist(Euk_18S_08_Results$product_length)
 Euk_18S_08_RA<- data.frame(dplyr::count(Euk_18S_08_Results, phylum))
@@ -323,7 +331,8 @@ Euk_18S_09_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_09_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_09_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_09_Results
 #write.csv(Euk_18S_09_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_09_Results.csv")
 hist(Euk_18S_09_Results$product_length)
 Euk_18S_09_RA<- data.frame(dplyr::count(Euk_18S_09_Results, phylum))
@@ -344,7 +353,8 @@ Euk_18S_10_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_10_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_10_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_10_Results
 #write.csv(Euk_18S_10_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_10_Results.csv")
 hist(Euk_18S_10_Results$product_length)
 Euk_18S_10_RA<- data.frame(dplyr::count(Euk_18S_10_Results, phylum))
@@ -365,7 +375,8 @@ Euk_18S_11_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_11_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_11_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_11_Results
 #write.csv(Euk_18S_11_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_11_Results.csv")
 hist(Euk_18S_11_Results$product_length)
 Euk_18S_11_RA<- data.frame(dplyr::count(Euk_18S_11_Results, phylum))
@@ -386,7 +397,8 @@ Euk_18S_12_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_12_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_12_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_12_Results
 #write.csv(Euk_18S_12_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_12_Results.csv")
 hist(Euk_18S_12_Results$product_length)
 Euk_18S_12_RA<- data.frame(dplyr::count(Euk_18S_12_Results, phylum))
@@ -407,7 +419,8 @@ Euk_18S_13_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_13_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_13_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_13_Results
 #write.csv(Euk_18S_13_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_13_Results.csv")
 hist(Euk_18S_13_Results$product_length)
 Euk_18S_13_RA<- data.frame(dplyr::count(Euk_18S_13_Results, phylum))
@@ -428,7 +441,8 @@ Euk_18S_14_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_14_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_14_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_14_Results
 #write.csv(Euk_18S_14_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_14_Results.csv")
 hist(Euk_18S_14_Results$product_length)
 Euk_18S_14_RA<- data.frame(dplyr::count(Euk_18S_14_Results, phylum))
@@ -449,7 +463,8 @@ Euk_18S_15_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_15_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_15_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_15_Results
 #write.csv(Euk_18S_15_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_15_Results.csv")
 hist(Euk_18S_15_Results$product_length)
 Euk_18S_15_RA<- data.frame(dplyr::count(Euk_18S_15_Results, phylum))
@@ -470,7 +485,8 @@ Euk_18S_16_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_16_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_16_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_16_Results
 #write.csv(Euk_18S_16_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_16_Results.csv")
 hist(Euk_18S_16_Results$product_length)
 Euk_18S_16_RA<- data.frame(dplyr::count(Euk_18S_16_Results, phylum))
@@ -491,7 +507,8 @@ Euk_18S_17_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_17_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_17_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_17_Results
 #write.csv(Euk_18S_17_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_17_Results.csv")
 hist(Euk_18S_17_Results$product_length)
 Euk_18S_17_RA<- data.frame(dplyr::count(Euk_18S_17_Results, phylum))
@@ -512,7 +529,8 @@ Euk_18S_18_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_18_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_18_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_18_Results
 #write.csv(Euk_18S_18_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_18_Results.csv")
 hist(Euk_18S_18_Results$product_length)
 Euk_18S_18_RA<- data.frame(dplyr::count(Euk_18S_18_Results, phylum))
@@ -533,7 +551,8 @@ Euk_18S_19_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_19_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_19_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_19_Results
 #write.csv(Euk_18S_19_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_19_Results.csv")
 hist(Euk_18S_19_Results$product_length)
 Euk_18S_19_RA<- data.frame(dplyr::count(Euk_18S_19_Results, phylum))
@@ -554,7 +573,8 @@ Euk_18S_20_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_20_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_20_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_20_Results
 #write.csv(Euk_18S_20_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_20_Results.csv")
 hist(Euk_18S_20_Results$product_length)
 Euk_18S_20_RA<- data.frame(dplyr::count(Euk_18S_20_Results, phylum))
@@ -575,7 +595,8 @@ Euk_18S_21_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_21_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_18S_21_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_21_Results
 #write.csv(Euk_18S_21_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_21_Results.csv")
 hist(Euk_18S_21_Results$product_length)
 Euk_18S_21_RA<- data.frame(dplyr::count(Euk_18S_21_Results, phylum))
@@ -649,7 +670,8 @@ Euk_28S_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_28S_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_28S_01_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_28S_01_Results
 #write.csv(Euk_28S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_01_Results.csv")
 hist(Euk_28S_01_Results$product_length)
 Euk_28S_01_RA<- data.frame(dplyr::count(Euk_28S_01_Results, phylum))
@@ -667,7 +689,8 @@ Euk_28S_02_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_28S_02_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_28S_02_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_28S_02_Results
 #write.csv(Euk_28S_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_02_Results.csv")
 hist(Euk_28S_02_Results$product_length)
 Euk_28S_02_RA<- data.frame(dplyr::count(Euk_28S_02_Results, phylum))
@@ -685,7 +708,8 @@ Euk_28S_03_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_28S_03_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_28S_03_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_28S_03_Results
 #write.csv(Euk_28S_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_03_Results.csv")
 hist(Euk_28S_03_Results$product_length)
 Euk_28S_03_RA<- data.frame(dplyr::count(Euk_28S_03_Results, phylum))
@@ -764,7 +788,8 @@ Euk_rbcL_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_rbcL_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_rbcL_01_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_rbcL_01_Results
 #write.csv(Euk_rbcL_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_rbcL_01_Results.csv")
 hist(Euk_rbcL_01_Results$product_length)
 Euk_rbcL_01_RA<- data.frame(dplyr::count(Euk_rbcL_01_Results, phylum))
@@ -782,7 +807,8 @@ Euk_ITS_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_ITS_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_ITS_01_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_ITS_01_Results
 #write.csv(Euk_ITS_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_ITS_01_Results.csv")
 hist(Euk_ITS_01_Results$product_length)
 Euk_ITS_01_RA<- data.frame(dplyr::count(Euk_ITS_01_Results, phylum))
@@ -843,7 +869,8 @@ Euk_COI_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_COI_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_COI_01_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_COI_01_Results
 #write.csv(Euk_COI_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_01_Results.csv")
 hist(Euk_COI_01_Results$product_length)
 Euk_COI_01_RA<- data.frame(dplyr::count(Euk_COI_01_Results, phylum))
@@ -862,7 +889,8 @@ Euk_COI_02_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_COI_02_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_COI_02_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_COI_02_Results
 #write.csv(Euk_COI_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_02_Results.csv")
 hist(Euk_COI_02_Results$product_length)
 Euk_COI_02_RA<- data.frame(dplyr::count(Euk_COI_02_Results, phylum))
@@ -881,7 +909,8 @@ Euk_COI_03_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_COI_03_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_COI_03_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_COI_03_Results
 #write.csv(Euk_COI_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_03_Results.csv")
 hist(Euk_COI_03_Results$product_length)
 Euk_COI_03_RA<- data.frame(dplyr::count(Euk_COI_03_Results, phylum))
@@ -900,7 +929,8 @@ Euk_COI_04_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_COI_04_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_COI_04_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_COI_04_Results
 #write.csv(Euk_COI_04_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_04_Results.csv")
 hist(Euk_COI_04_Results$product_length)
 Euk_COI_04_RA<- data.frame(dplyr::count(Euk_COI_04_Results, phylum))
