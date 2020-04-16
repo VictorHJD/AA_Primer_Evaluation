@@ -31,14 +31,34 @@ if(!exists("seqrawcounts")){
 }
 
 seqcounts %>%
-  join(seqrawcounts, by= "Primer_comb_ID")%>%
-  join(primerInput, by= "Primer_comb_ID")->seqcounts
+  plyr::join(seqrawcounts, by= "Primer_comb_ID")%>%
+  plyr::join(primerInput, by= "Primer_comb_ID")->seqcounts
 
 seqcounts[,1]<-NULL
+seqcounts[,6]<-NULL
 seqcounts[,1]<-NULL
 
 seqcounts%>%
-  dplyr::select(c("Primer_comb_ID", "Seq_F", "Seq_R", "Gen"))-> Primers
+  dplyr::select(c("Primer_comb_ID", "Seq_F", "Seq_R", "Gen"))-> Primers ##Just including primers for the paper 
+
+###Do in silico PCR also for primers used on the HMHZ metabarcoding 
+
+if(!exists("HMHZ_Primers")){
+  HMHZ_Primers<- read.csv(file="~/AA_HMHZ/Primer_list.csv") ##   
+}
+
+HMHZ_Primers%>%
+  dplyr::select(1)%>%
+  join(primerInput, by= "Primer_name")%>%
+  dplyr::select(c("Primer_comb_ID", "Seq_F", "Seq_R", "Gen"))%>%
+  bind_rows(Primers)%>%
+  distinct(Primer_comb_ID, .keep_all= T)-> Primers
+
+primerInput%>%
+  dplyr::slice(11)%>%
+  dplyr::select(c("Primer_comb_ID", "Seq_F", "Seq_R", "Gen"))%>%
+  bind_rows(Primers)%>%
+  arrange(Primer_comb_ID)-> Primers ##Including primers used for HMHZ metabarcoding and Eimeria-Microbiome experiment
 
 if(UnresBLAST){
   primerTreeObj<- list.files(path = "~/AA_Primer_evaluation/output/unrestrictedPrimerTree/primerTreeObj", pattern = ".Rds", full.names = T)
@@ -66,7 +86,7 @@ lapply(primerTreeObj, function(x) {
 ##For degenerated primers uo to 25 combinations are tested for now
 ##18S primer pairs
 
-Primers %>%
+Primers%>%
   filter(Gen== "18S")-> Primers_18S
 
 if(RunBLAST){
@@ -133,6 +153,15 @@ Euk_18S_20<- search_primer_pair(name= as.character(Primers_18S[20,1]), as.charac
 
 Euk_18S_21<- search_primer_pair(name= as.character(Primers_18S[21,1]), as.character(Primers_18S[21,2]), as.character(Primers_18S[21,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_18S_21, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_21.Rds")
+
+Euk_18S_22<- search_primer_pair(name= as.character(Primers_18S[22,1]), as.character(Primers_18S[22,2]), as.character(Primers_18S[22,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_18S_22, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_22.Rds")
+
+Euk_18S_23<- search_primer_pair(name= as.character(Primers_18S[23,1]), as.character(Primers_18S[23,2]), as.character(Primers_18S[23,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_18S_23, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_23.Rds")
+
+Euk_18S_24<- search_primer_pair(name= as.character(Primers_18S[24,1]), as.character(Primers_18S[24,2]), as.character(Primers_18S[24,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_18S_24, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_24.Rds")
 }
 
 #Make a list of primerTree objects saved
@@ -477,7 +506,7 @@ colnames(Euk_18S_15_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_18S_15, Euk_18S_15_BLAST, Euk_18S_15_Tax)
 
 ###Euk_18S_16
-plot(Euk_18S_16, ranks= "phylum")
+#plot(Euk_18S_16, ranks= "phylum")
 Euk_18S_16_Tax<- Euk_18S_16$taxonomy ##Taxonomy information 
 Euk_18S_16_BLAST<- Euk_18S_16$BLAST_result #BLAST information
 Euk_18S_16_Tax[is.na(Euk_18S_16_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -499,7 +528,7 @@ colnames(Euk_18S_16_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_18S_16, Euk_18S_16_BLAST, Euk_18S_16_Tax)
 
 ###Euk_18S_17
-plot(Euk_18S_17, ranks= "phylum")
+#plot(Euk_18S_17, ranks= "phylum")
 Euk_18S_17_Tax<- Euk_18S_17$taxonomy ##Taxonomy information 
 Euk_18S_17_BLAST<- Euk_18S_17$BLAST_result #BLAST information
 Euk_18S_17_Tax[is.na(Euk_18S_17_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -521,7 +550,7 @@ colnames(Euk_18S_17_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_18S_17, Euk_18S_17_BLAST, Euk_18S_17_Tax)
 
 ###Euk_18S_18
-plot(Euk_18S_18, ranks= "phylum")
+#plot(Euk_18S_18, ranks= "phylum")
 Euk_18S_18_Tax<- Euk_18S_18$taxonomy ##Taxonomy information 
 Euk_18S_18_BLAST<- Euk_18S_18$BLAST_result #BLAST information
 Euk_18S_18_Tax[is.na(Euk_18S_18_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -543,7 +572,7 @@ colnames(Euk_18S_18_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_18S_18, Euk_18S_18_BLAST, Euk_18S_18_Tax)
 
 ###Euk_18S_19
-plot(Euk_18S_19, ranks= "phylum")
+#plot(Euk_18S_19, ranks= "phylum")
 Euk_18S_19_Tax<- Euk_18S_19$taxonomy ##Taxonomy information 
 Euk_18S_19_BLAST<- Euk_18S_19$BLAST_result #BLAST information
 Euk_18S_19_Tax[is.na(Euk_18S_19_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -565,7 +594,7 @@ colnames(Euk_18S_19_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_18S_19, Euk_18S_19_BLAST, Euk_18S_19_Tax)
 
 ###Euk_18S_20
-plot(Euk_18S_20, ranks= "phylum")
+#plot(Euk_18S_20, ranks= "phylum")
 Euk_18S_20_Tax<- Euk_18S_20$taxonomy ##Taxonomy information 
 Euk_18S_20_BLAST<- Euk_18S_20$BLAST_result #BLAST information
 Euk_18S_20_Tax[is.na(Euk_18S_20_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
