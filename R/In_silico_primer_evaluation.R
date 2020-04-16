@@ -72,10 +72,10 @@ if(UnresBLAST){
 }
 
 if(PreBLAST){
-primerTreeObj<- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj", pattern = ".Rds", full.names = T)
+primerTreeObj<- list.files(path = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj", pattern = ".Rds", full.names = T)
 
 lapply(primerTreeObj, function(x) {
-  objname<- gsub("/home/victor/AA_Primer_evaluation/output/primerTreeObj/", "", x)
+  objname<- gsub("/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/", "", x)
   objname<- gsub(".Rds", "", objname)
   tmp <- readRDS(x)
   assign(objname, tmp, envir = .GlobalEnv)
@@ -92,80 +92,80 @@ Primers%>%
 if(RunBLAST){
 
 Euk_18S_01<- search_primer_pair(name= as.character(Primers_18S[1,1]), as.character(Primers_18S[1,2]), as.character(Primers_18S[1,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_01.Rds")
+#saveRDS(Euk_18S_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_01.Rds")
 
 Euk_18S_02<- search_primer_pair(name= as.character(Primers_18S[2,1]), as.character(Primers_18S[2,2]), as.character(Primers_18S[2,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_02, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_02.Rds")
+#saveRDS(Euk_18S_02, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_02.Rds")
 
 Euk_18S_03<- search_primer_pair(name= as.character(Primers_18S[3,1]), as.character(Primers_18S[3,2]), as.character(Primers_18S[3,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_03, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_03.Rds")
+#saveRDS(Euk_18S_03, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_03.Rds")
 
 Euk_18S_04<- search_primer_pair(name= as.character(Primers_18S[4,1]), as.character(Primers_18S[4,2]), as.character(Primers_18S[4,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_04, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_04.Rds")
+#saveRDS(Euk_18S_04, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_04.Rds")
 
 Euk_18S_05<- search_primer_pair(name= as.character(Primers_18S[5,1]), as.character(Primers_18S[5,2]), as.character(Primers_18S[5,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_05, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_05.Rds")
+#saveRDS(Euk_18S_05, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_05.Rds")
 
 Euk_18S_06<- search_primer_pair(name= as.character(Primers_18S[6,1]), as.character(Primers_18S[6,2]), as.character(Primers_18S[6,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_06, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_06.Rds")
+#saveRDS(Euk_18S_06, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_06.Rds")
 
 Euk_18S_07<- search_primer_pair(name= as.character(Primers_18S[7,1]), as.character(Primers_18S[7,2]), as.character(Primers_18S[7,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_07, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_07.Rds")
+#saveRDS(Euk_18S_07, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_07.Rds")
 
 Euk_18S_08<- search_primer_pair(name= as.character(Primers_18S[8,1]), as.character(Primers_18S[8,2]), as.character(Primers_18S[8,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_08, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_08.Rds")
+#saveRDS(Euk_18S_08, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_08.Rds")
 
 Euk_18S_09<- search_primer_pair(name= as.character(Primers_18S[9,1]), as.character(Primers_18S[9,2]), as.character(Primers_18S[9,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_09, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_09.Rds")
+#saveRDS(Euk_18S_09, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_09.Rds")
 
 Euk_18S_10<- search_primer_pair(name= as.character(Primers_18S[10,1]), as.character(Primers_18S[10,2]), as.character(Primers_18S[10,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_10, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_10.Rds")
+#saveRDS(Euk_18S_10, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_10.Rds")
 
 Euk_18S_11<- search_primer_pair(name= as.character(Primers_18S[11,1]), as.character(Primers_18S[11,2]), as.character(Primers_18S[11,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_11, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_11.Rds")
+#saveRDS(Euk_18S_11, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_11.Rds")
 
 Euk_18S_12<- search_primer_pair(name= as.character(Primers_18S[12,1]), as.character(Primers_18S[12,2]), as.character(Primers_18S[12,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_12, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_12.Rds")
+#saveRDS(Euk_18S_12, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_12.Rds")
 
 Euk_18S_13<- search_primer_pair(name= as.character(Primers_18S[13,1]), as.character(Primers_18S[13,2]), as.character(Primers_18S[13,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_13, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_13.Rds")
+#saveRDS(Euk_18S_13, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_13.Rds")
 
 Euk_18S_14<- search_primer_pair(name= as.character(Primers_18S[14,1]), as.character(Primers_18S[14,2]), as.character(Primers_18S[14,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_14, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_14.Rds")
+#saveRDS(Euk_18S_14, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_14.Rds")
 
 Euk_18S_15<- search_primer_pair(name= as.character(Primers_18S[15,1]), as.character(Primers_18S[15,2]), as.character(Primers_18S[15,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_15, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_15.Rds")
+#saveRDS(Euk_18S_15, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_15.Rds")
 
 Euk_18S_16<- search_primer_pair(name= as.character(Primers_18S[16,1]), as.character(Primers_18S[16,2]), as.character(Primers_18S[16,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_16, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_16.Rds")
+#saveRDS(Euk_18S_16, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_16.Rds")
 
 Euk_18S_17<- search_primer_pair(name= as.character(Primers_18S[17,1]), as.character(Primers_18S[17,2]), as.character(Primers_18S[17,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_17, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_17.Rds")
+#saveRDS(Euk_18S_17, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_17.Rds")
 
 Euk_18S_18<- search_primer_pair(name= as.character(Primers_18S[18,1]), as.character(Primers_18S[18,2]), as.character(Primers_18S[18,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_18, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_18.Rds")
+#saveRDS(Euk_18S_18, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_18.Rds")
 
 Euk_18S_19<- search_primer_pair(name=as.character(Primers_18S[19,1]), as.character(Primers_18S[19,2]), as.character(Primers_18S[19,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_19, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_19.Rds")
+#saveRDS(Euk_18S_19, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_19.Rds")
 
 Euk_18S_20<- search_primer_pair(name= as.character(Primers_18S[20,1]), as.character(Primers_18S[20,2]), as.character(Primers_18S[20,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_20, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_20.Rds")
+#saveRDS(Euk_18S_20, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_20.Rds")
 
 Euk_18S_21<- search_primer_pair(name= as.character(Primers_18S[21,1]), as.character(Primers_18S[21,2]), as.character(Primers_18S[21,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_21, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_21.Rds")
+#saveRDS(Euk_18S_21, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_21.Rds")
 
 Euk_18S_22<- search_primer_pair(name= as.character(Primers_18S[22,1]), as.character(Primers_18S[22,2]), as.character(Primers_18S[22,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_22, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_22.Rds")
+#saveRDS(Euk_18S_22, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_22.Rds")
 
 Euk_18S_23<- search_primer_pair(name= as.character(Primers_18S[23,1]), as.character(Primers_18S[23,2]), as.character(Primers_18S[23,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_23, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_23.Rds")
+#saveRDS(Euk_18S_23, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_23.Rds")
 
 Euk_18S_24<- search_primer_pair(name= as.character(Primers_18S[24,1]), as.character(Primers_18S[24,2]), as.character(Primers_18S[24,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
-#saveRDS(Euk_18S_24, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_18S_24.Rds")
+#saveRDS(Euk_18S_24, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_18S_24.Rds")
 }
 
 #Make a list of primerTree objects saved
-done18S <- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj/", pattern = "Euk_18S_")
+done18S <- list.files(path = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/", pattern = "Euk_18S_")
 done18S<- lapply(done18S, function(x) gsub(".Rds", "", x))
 
 ##General overview of the results
@@ -558,8 +558,8 @@ Euk_18S_18_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_18_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_18_Results
+  dplyr::select(-(X1))-> Euk_18S_18_Results #%>%
+  #dplyr::filter(between(product_length, 200, 700)) #primerTree search didn't work for this primer combination
 #write.csv(Euk_18S_18_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_18_Results.csv")
 hist(Euk_18S_18_Results$product_length)
 Euk_18S_18_RA<- data.frame(dplyr::count(Euk_18S_18_Results, phylum))
@@ -616,7 +616,7 @@ colnames(Euk_18S_20_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_18S_20, Euk_18S_20_BLAST, Euk_18S_20_Tax)
 
 ###Euk_18S_21
-plot(Euk_18S_21, ranks= "phylum")
+#plot(Euk_18S_21, ranks= "phylum")
 Euk_18S_21_Tax<- Euk_18S_21$taxonomy ##Taxonomy information 
 Euk_18S_21_BLAST<- Euk_18S_21$BLAST_result #BLAST information
 Euk_18S_21_Tax[is.na(Euk_18S_21_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
@@ -677,17 +677,17 @@ Primers %>%
 
 if(RunBLAST){
 Euk_28S_01<- search_primer_pair(name= as.character(Primers_28S[1,1]), forward = as.character(Primers_28S[1,2]), reverse = as.character(Primers_28S[1,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_28S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_28S_01.Rds")
+#saveRDS(Euk_28S_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_28S_01.Rds")
 
 Euk_28S_02<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = as.character(Primers_28S[2,2]), reverse = as.character(Primers_28S[2,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_28S_02, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_28S_02.Rds")
+#saveRDS(Euk_28S_02, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_28S_02.Rds")
 
 Euk_28S_03<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = as.character(Primers_28S[3,2]), reverse = as.character(Primers_28S[3,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_28S_03, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_28S_03.Rds")
+#saveRDS(Euk_28S_03, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_28S_03.Rds")
 }
 
 #Make a list of primerTree objects saved
-done28S <- list.files(path = "~/AA_Primer_evaluation/output/primerTreeObj/", pattern = "Euk_28S_")
+done28S <- list.files(path = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/", pattern = "Euk_28S_")
 done28S<- lapply(done28S, function(x) gsub(".Rds", "_RA", x))
 
 ###Euk_28S_01
@@ -782,13 +782,13 @@ Primers %>%
 
 if(RunBLAST){
 Euk_12S_01<- search_primer_pair(name= as.character(Primers_others[1,1]), forward = as.character(Primers_others[1,2]), reverse = as.character(Primers_others[1,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_12S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_12S_01.Rds")
+#saveRDS(Euk_12S_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_12S_01.Rds")
 
 Euk_rbcL_01<- search_primer_pair(name= as.character(Primers_others[2,1]), forward = as.character(Primers_others[2,2]), reverse = as.character(Primers_others[2,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_rbcL_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_rbcL_01.Rds")
+#saveRDS(Euk_rbcL_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_rbcL_01.Rds")
 
 Euk_ITS_01<- search_primer_pair(name= as.character(Primers_others[3,1]), forward = as.character(Primers_others[3,2]), reverse = as.character(Primers_others[3,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_ITS_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
+#saveRDS(Euk_ITS_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
 }
 ###Euk_12S_01
 #plot(Euk_12S_01, ranks= "phylum")
@@ -878,16 +878,16 @@ Primers %>%
 
 if(RunBLAST){
 Euk_COI_01<- search_primer_pair(name= as.character(Primers_COI[1,1]), forward = as.character(Primers_COI[1,2]), reverse = as.character(Primers_COI[1,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_COI_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_COI_01.Rds")
+#saveRDS(Euk_COI_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_01.Rds")
 
 Euk_COI_02<- search_primer_pair(name= as.character(Primers_COI[2,1]), forward = as.character(Primers_COI[2,2]), reverse = as.character(Primers_COI[2,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_COI_02, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_COI_02.Rds")
+#saveRDS(Euk_COI_02, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_02.Rds")
 
 Euk_COI_03<- search_primer_pair(name= as.character(Primers_COI[3,1]), forward = as.character(Primers_COI[3,2]), reverse = as.character(Primers_COI[3,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_COI_03, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_COI_03.Rds")
+#saveRDS(Euk_COI_03, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_03.Rds")
 
 Euk_COI_04<- search_primer_pair(name= as.character(Primers_COI[4,1]), forward = as.character(Primers_COI[4,2]), reverse = as.character(Primers_COI[4,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_COI_04, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_COI_04.Rds")
+#saveRDS(Euk_COI_04, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_04.Rds")
 }
 ###Euk_COI_01
 #plot(Euk_COI_01, ranks= "phylum")
@@ -1020,5 +1020,5 @@ Primers %>%
 
 if(RunBLAST){
 Euk_16S_01<- search_primer_pair(name= as.character(Primers_16S[1,1]), forward = as.character(Primers_16S[1,2]), reverse = as.character(Primers_16S[1,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_16S_01, file = "~/AA_Primer_evaluation/output/primerTreeObj/Euk_16S_01.Rds")
+#saveRDS(Euk_16S_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_16S_01.Rds")
 }
