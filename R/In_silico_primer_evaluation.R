@@ -16,6 +16,7 @@ registerDoMC(15)
 RunBLAST <- F ##Re-run PrimerTree BLAST
 UnresBLAST<- F ##Previously saved results unrestricted size BLAST
 PreBLAST<- T ##Use previously saved results
+AllPrimers<- F ##Run plotting considering manuscript primers (fox+racoon) and HMHZ primers
 
 ##Data
 if(!exists("primerInput")){
@@ -59,6 +60,8 @@ primerInput%>%
   dplyr::select(c("Primer_comb_ID", "Seq_F", "Seq_R", "Gen"))%>%
   bind_rows(Primers)%>%
   arrange(Primer_comb_ID)-> Primers ##Including primers used for HMHZ metabarcoding and Eimeria-Microbiome experiment
+
+rm(primerInput, seqrawcounts) 
 
 if(UnresBLAST){
   primerTreeObj<- list.files(path = "~/AA_Primer_evaluation/output/unrestrictedPrimerTree/primerTreeObj", pattern = ".Rds", full.names = T)
@@ -637,17 +640,94 @@ colnames(Euk_18S_21_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 
 rm(Euk_18S_21, Euk_18S_21_BLAST, Euk_18S_21_Tax)
 
+###Euk_18S_22
+#plot(Euk_18S_22, ranks= "phylum")
+Euk_18S_22_Tax<- Euk_18S_22$taxonomy ##Taxonomy information 
+Euk_18S_22_BLAST<- Euk_18S_22$BLAST_result #BLAST information
+Euk_18S_22_Tax[is.na(Euk_18S_22_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_18S_22_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  join(Euk_18S_22_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_22_Results
+#write.csv(Euk_18S_22_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_22_Results.csv")
+hist(Euk_18S_22_Results$product_length)
+Euk_18S_22_RA<- data.frame(dplyr::count(Euk_18S_22_Results, phylum))
+Euk_18S_22_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_18S_22")->Euk_18S_22_RA
+
+colnames(Euk_18S_22_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_22, Euk_18S_22_BLAST, Euk_18S_22_Tax)
+
+###Euk_18S_23
+#plot(Euk_18S_23, ranks= "phylum")
+Euk_18S_23_Tax<- Euk_18S_23$taxonomy ##Taxonomy information 
+Euk_18S_23_BLAST<- Euk_18S_23$BLAST_result #BLAST information
+Euk_18S_23_Tax[is.na(Euk_18S_23_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_18S_23_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  join(Euk_18S_23_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_23_Results
+#write.csv(Euk_18S_23_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_23_Results.csv")
+hist(Euk_18S_23_Results$product_length)
+Euk_18S_23_RA<- data.frame(dplyr::count(Euk_18S_23_Results, phylum))
+Euk_18S_23_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_18S_23")->Euk_18S_23_RA
+
+colnames(Euk_18S_23_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_23, Euk_18S_23_BLAST, Euk_18S_23_Tax)
+
+###Euk_18S_24
+#plot(Euk_18S_24, ranks= "phylum")
+Euk_18S_24_Tax<- Euk_18S_24$taxonomy ##Taxonomy information (for this particular case doesn't include all taxa levels)
+Euk_18S_24_BLAST<- Euk_18S_24$BLAST_result #BLAST information
+Euk_18S_24_Tax[is.na(Euk_18S_24_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_18S_24_Tax%>% ##To make the results table required tiny adjustments 
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "phylum", "order", "family", "genus"))%>%
+  join(Euk_18S_24_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
+  dplyr::mutate(kingdom= "Unassigned")%>%
+  dplyr::mutate(class= "Unassigned")%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", 
+                  "accession", "product_length", "mismatch_forward", "mismatch_reverse", "forward_start", "forward_stop",
+                  "reverse_start", "reverse_stop", "product_start", "product_stop"))-> Euk_18S_24_Results
+#write.csv(Euk_18S_24_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_24_Results.csv")
+hist(Euk_18S_24_Results$product_length)
+Euk_18S_24_RA<- data.frame(dplyr::count(Euk_18S_24_Results, phylum))
+Euk_18S_24_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_18S_24")->Euk_18S_24_RA
+
+colnames(Euk_18S_24_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+
+rm(Euk_18S_24, Euk_18S_24_BLAST, Euk_18S_24_Tax)
+
 ##Relative abundance in silico comparison
 
 Relative_abundance_18S<- bind_rows(Euk_18S_01_RA, Euk_18S_02_RA, Euk_18S_03_RA, Euk_18S_04_RA, Euk_18S_05_RA, Euk_18S_06_RA,
                                Euk_18S_07_RA, Euk_18S_08_RA, Euk_18S_09_RA, Euk_18S_10_RA, Euk_18S_11_RA, Euk_18S_12_RA,
                                Euk_18S_13_RA, Euk_18S_14_RA, Euk_18S_15_RA, Euk_18S_16_RA, Euk_18S_17_RA, Euk_18S_18_RA,
                                Euk_18S_19_RA, Euk_18S_20_RA, Euk_18S_21_RA)
+if(AllPrimers){
+  Relative_abundance_18S<- bind_rows(Relative_abundance_18S, Euk_18S_22_RA, Euk_18S_23_RA, Euk_18S_24_RA)
+  
+  rm(Euk_18S_22_RA, Euk_18S_23_RA, Euk_18S_24_RA)
+}
+
 
 Relative_abundance_18S%>%
   group_by(Primer_name)%>%
   mutate(Main_taxa= Rel_abund>= 0.05) %>%
-  mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$phylum))) %>%
+  dplyr::mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(phylum)))%>%
   arrange(Primer_name, desc(phylum))->Relative_abundance_18S
 
 rm(Euk_18S_01_RA, Euk_18S_02_RA, Euk_18S_03_RA, Euk_18S_04_RA, Euk_18S_05_RA, Euk_18S_06_RA,
@@ -669,6 +749,24 @@ ggplot(data=Relative_abundance_18S, aes(x= Primer_name,y= Rel_abund, fill= phylu
 #RA_18S
 #dev.off()
 
+if(AllPrimers){
+RA_18S <- 
+ggplot(data=Relative_abundance_18S, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
+  scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
+                               "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061", "#c00000","darkolivegreen","lightgrey","darkgrey"))+
+  geom_bar(aes(), stat="identity", position="fill") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+  labs(x = "Primer combination ID", y= "Relative abundance (In silico)", tag = "A)")+
+  guides(fill= guide_legend(nrow = 8))
+
+pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figure_18S_All.pdf", width = 10, height = 8)
+RA_18S
+dev.off()
+
+rm(RA_18S)
+}
+
 ##28S primer pairs
 ##Select Primer sequeces and Primer combination ID
 
@@ -676,13 +774,13 @@ Primers %>%
   filter(Gen== "28S")-> Primers_28S
 
 if(RunBLAST){
-Euk_28S_01<- search_primer_pair(name= as.character(Primers_28S[1,1]), forward = as.character(Primers_28S[1,2]), reverse = as.character(Primers_28S[1,3]), .parallel = T, num_aligns = 1000)
+Euk_28S_01<- search_primer_pair(name= as.character(Primers_28S[1,1]), forward = as.character(Primers_28S[1,2]), reverse = as.character(Primers_28S[1,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_28S_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_28S_01.Rds")
 
-Euk_28S_02<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = as.character(Primers_28S[2,2]), reverse = as.character(Primers_28S[2,3]), .parallel = T, num_aligns = 1000)
+Euk_28S_02<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = as.character(Primers_28S[2,2]), reverse = as.character(Primers_28S[2,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_28S_02, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_28S_02.Rds")
 
-Euk_28S_03<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = as.character(Primers_28S[3,2]), reverse = as.character(Primers_28S[3,3]), .parallel = T, num_aligns = 1000)
+Euk_28S_03<- search_primer_pair(name= as.character(Primers_28S[2,1]), forward = as.character(Primers_28S[3,2]), reverse = as.character(Primers_28S[3,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_28S_03, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_28S_03.Rds")
 }
 
@@ -752,8 +850,8 @@ Relative_abundance_28S<- bind_rows(Euk_28S_01_RA, Euk_28S_02_RA, Euk_28S_03_RA) 
   
 Relative_abundance_28S%>%
   group_by(Primer_name)%>%
-  mutate(Main_taxa= Rel_abund>= 0.05) %>%
-  mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$phylum))) %>%
+  mutate(Main_taxa= Rel_abund>= 0.02) %>%
+  mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(phylum))) %>%
   arrange(Primer_name, desc(phylum))->Relative_abundance_28S
 
 rm(Euk_28S_01_RA, Euk_28S_02_RA, Euk_28S_03_RA)
@@ -761,9 +859,9 @@ rm(Euk_28S_01_RA, Euk_28S_02_RA, Euk_28S_03_RA)
 #RA_28S <- 
 ggplot(data=Relative_abundance_28S, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
   scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
-                              # "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061", "#c00000",
+                              "#CAB2D6", "#6A3D9A","#FFFF99",#"#B15928","#eddc12","#01665e","#053061", "#c00000",
                               # "aquamarine","darkolivegreen","#FFDB77FF",
-                              "lightgrey","#004CFFFF","#969696"))+
+                              "darkolivegreen","lightgrey","darkgrey"))+
   geom_bar(aes(), stat="identity", position="fill") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
@@ -773,7 +871,7 @@ ggplot(data=Relative_abundance_28S, aes(x= Primer_name,y= Rel_abund, fill= phylu
 #pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figure_2.pdf", width = 10, height = 8)
 #RA_28S
 #dev.off()
-
+#rm(RA_28S)
 ##Plant primer pairs
 ##Select Primer sequeces and Primer combination ID
 
