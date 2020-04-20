@@ -876,18 +876,46 @@ ggplot(data=Relative_abundance_28S, aes(x= Primer_name,y= Rel_abund, fill= phylu
 ##Select Primer sequeces and Primer combination ID
 
 Primers %>%
-  filter(Gen%in% c("ITS", "rbcL", "12S"))-> Primers_others
+  filter(Gen%in% c("ITS", "rbcL", "12S", "BG", "GDH", "HSP70", "ORF470", "TPI", "tRNA"))-> Primers_others
 
 if(RunBLAST){
-Euk_12S_01<- search_primer_pair(name= as.character(Primers_others[1,1]), forward = as.character(Primers_others[1,2]), reverse = as.character(Primers_others[1,3]), .parallel = T, num_aligns = 1000)
+Euk_12S_01<- search_primer_pair(name= as.character(Primers_others[1,1]), forward = as.character(Primers_others[1,2]), reverse = as.character(Primers_others[1,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_12S_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_12S_01.Rds")
 
-Euk_rbcL_01<- search_primer_pair(name= as.character(Primers_others[2,1]), forward = as.character(Primers_others[2,2]), reverse = as.character(Primers_others[2,3]), .parallel = T, num_aligns = 1000)
+Euk_BG_01<- search_primer_pair(name= as.character(Primers_others[2,1]), forward = as.character(Primers_others[2,2]), reverse = as.character(Primers_others[2,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_BG_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_BG_01.Rds")
+
+Euk_GDH_01<- search_primer_pair(name= as.character(Primers_others[3,1]), forward = as.character(Primers_others[3,2]), reverse = as.character(Primers_others[3,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_GDH_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_GDH_01.Rds")
+
+Euk_HSP70_01<- search_primer_pair(name= as.character(Primers_others[4,1]), forward = as.character(Primers_others[4,2]), reverse = as.character(Primers_others[4,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_HSP70_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_HSP70_01.Rds")
+
+Euk_ITS_01<- search_primer_pair(name= as.character(Primers_others[5,1]), forward = as.character(Primers_others[5,2]), reverse = as.character(Primers_others[5,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_ITS_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
+
+Euk_ITS_02<- search_primer_pair(name= as.character(Primers_others[6,1]), forward = as.character(Primers_others[6,2]), reverse = as.character(Primers_others[6,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_ITS_02, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
+
+Euk_ITS_03<- search_primer_pair(name= as.character(Primers_others[7,1]), forward = as.character(Primers_others[7,2]), reverse = as.character(Primers_others[7,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_ITS_03, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
+
+Euk_ITS_04<- search_primer_pair(name= as.character(Primers_others[8,1]), forward = as.character(Primers_others[8,2]), reverse = as.character(Primers_others[8,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_ITS_04, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_ITS_04.Rds")
+
+Euk_ORF470_01<- search_primer_pair(name= as.character(Primers_others[9,1]), forward = as.character(Primers_others[9,2]), reverse = as.character(Primers_others[9,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_ORF470_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_ORF470_01.Rds")
+
+Euk_rbcL_01<- search_primer_pair(name= as.character(Primers_others[10,1]), forward = as.character(Primers_others[10,2]), reverse = as.character(Primers_others[10,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_rbcL_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_rbcL_01.Rds")
 
-Euk_ITS_01<- search_primer_pair(name= as.character(Primers_others[3,1]), forward = as.character(Primers_others[3,2]), reverse = as.character(Primers_others[3,3]), .parallel = T, num_aligns = 1000)
-#saveRDS(Euk_ITS_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_ITS_01.Rds")
+Euk_TPI_01<- search_primer_pair(name= as.character(Primers_others[11,1]), forward = as.character(Primers_others[11,2]), reverse = as.character(Primers_others[11,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_TPI_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_TPI_01.Rds")
+
+Euk_tRNA_01<- search_primer_pair(name= as.character(Primers_others[12,1]), forward = as.character(Primers_others[12,2]), reverse = as.character(Primers_others[12,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_tRNA_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_tRNA_01.Rds")
 }
+
 ###Euk_12S_01
 #plot(Euk_12S_01, ranks= "phylum")
 Euk_12S_01_Tax<- Euk_12S_01$taxonomy ##Taxonomy information 
@@ -897,7 +925,8 @@ Euk_12S_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_12S_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))-> Euk_12S_01_Results
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 150, 700))-> Euk_12S_01_Results
 #write.csv(Euk_12S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_12S_01_Results.csv")
 hist(Euk_12S_01_Results$product_length)
 Euk_12S_01_RA<- data.frame(dplyr::count(Euk_12S_01_Results, phylum))
@@ -906,25 +935,77 @@ Euk_12S_01_RA%>%
   mutate(Primer_name= "Euk_12S_01")->Euk_12S_01_RA
 colnames(Euk_12S_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_12S_01, Euk_12S_01_BLAST, Euk_12S_01_Tax)
-###Euk_rbcL_01
-#plot(Euk_rbcL_01, ranks= "phylum")
-Euk_rbcL_01_Tax<- Euk_rbcL_01$taxonomy ##Taxonomy information 
-Euk_rbcL_01_BLAST<- Euk_rbcL_01$BLAST_result #BLAST information
-Euk_rbcL_01_Tax[is.na(Euk_rbcL_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
-Euk_rbcL_01_Tax%>%
-  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
-  join(Euk_rbcL_01_BLAST, by= "gi")%>%
+###Euk_BG_01
+#plot(Euk_12S_01, ranks= "phylum")
+Euk_BG_01_Tax<- Euk_BG_01$taxonomy ##Taxonomy information 
+Euk_BG_01_BLAST<- Euk_BG_01$BLAST_result #BLAST information
+Euk_BG_01_Tax[is.na(Euk_BG_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_BG_01_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "phylum", "order", "family", "genus"))%>%
+  join(Euk_BG_01_BLAST, by= "gi")%>%
   distinct(species, .keep_all= T)%>%
   dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_rbcL_01_Results
-#write.csv(Euk_rbcL_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_rbcL_01_Results.csv")
-hist(Euk_rbcL_01_Results$product_length)
-Euk_rbcL_01_RA<- data.frame(dplyr::count(Euk_rbcL_01_Results, phylum))
-Euk_rbcL_01_RA%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
+  dplyr::mutate(kingdom= "Unassigned")%>%
+  dplyr::mutate(class= "Unassigned")%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", 
+                  "accession", "product_length", "mismatch_forward", "mismatch_reverse", "forward_start", "forward_stop",
+                  "reverse_start", "reverse_stop", "product_start", "product_stop"))-> Euk_BG_01_Results
+#write.csv(Euk_BG_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_BG_01_Results.csv")
+hist(Euk_BG_01_Results$product_length)
+Euk_BG_01_RA<- data.frame(dplyr::count(Euk_BG_01_Results, phylum))
+Euk_BG_01_RA%>%
   mutate(Rel_abund= n/sum(n))%>%
-  mutate(Primer_name= "Euk_rbcL_01")->Euk_rbcL_01_RA
-colnames(Euk_rbcL_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
-rm(Euk_rbcL_01, Euk_rbcL_01_BLAST, Euk_rbcL_01_Tax)
+  mutate(Primer_name= "Euk_BG_01")->Euk_BG_01_RA
+colnames(Euk_BG_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_BG_01, Euk_BG_01_BLAST, Euk_BG_01_Tax)
+###Euk_GDH_01
+#plot(Euk_GDH_01, ranks= "phylum")
+Euk_GDH_01_Tax<- Euk_GDH_01$taxonomy ##Taxonomy information 
+Euk_GDH_01_BLAST<- Euk_GDH_01$BLAST_result #BLAST information
+Euk_GDH_01_Tax[is.na(Euk_GDH_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_GDH_01_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "phylum", "order", "family", "genus"))%>%
+  join(Euk_GDH_01_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
+  dplyr::mutate(kingdom= "Unassigned")%>%
+  dplyr::mutate(class= "Unassigned")%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", 
+                  "accession", "product_length", "mismatch_forward", "mismatch_reverse", "forward_start", "forward_stop",
+                  "reverse_start", "reverse_stop", "product_start", "product_stop"))-> Euk_GDH_01_Results
+#write.csv(Euk_GDH_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_GDH_01_Results.csv")
+hist(Euk_GDH_01_Results$product_length)
+Euk_GDH_01_RA<- data.frame(dplyr::count(Euk_GDH_01_Results, phylum))
+Euk_GDH_01_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_GDH_01")->Euk_GDH_01_RA
+colnames(Euk_GDH_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_GDH_01, Euk_GDH_01_BLAST, Euk_GDH_01_Tax)
+###Euk_HSP70_01
+#plot(Euk_HSP70_01, ranks= "phylum")
+Euk_HSP70_01_Tax<- Euk_HSP70_01$taxonomy ##Taxonomy information 
+Euk_HSP70_01_BLAST<- Euk_HSP70_01$BLAST_result #BLAST information
+Euk_HSP70_01_Tax[is.na(Euk_HSP70_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_HSP70_01_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "phylum", "class","order", "family", "genus"))%>%
+  join(Euk_HSP70_01_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
+  dplyr::mutate(kingdom= "Unassigned")%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", 
+                  "accession", "product_length", "mismatch_forward", "mismatch_reverse", "forward_start", "forward_stop",
+                  "reverse_start", "reverse_stop", "product_start", "product_stop"))-> Euk_HSP70_01_Results
+#write.csv(Euk_HSP70_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_HSP70_01_Results.csv")
+hist(Euk_HSP70_01_Results$product_length)
+Euk_HSP70_01_RA<- data.frame(dplyr::count(Euk_HSP70_01_Results, phylum))
+Euk_HSP70_01_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_HSP70_01")->Euk_HSP70_01_RA
+colnames(Euk_HSP70_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_HSP70_01, Euk_HSP70_01_BLAST, Euk_HSP70_01_Tax)
 ###Euk_ITS_01
 #plot(Euk_ITS_01, ranks= "phylum")
 Euk_ITS_01_Tax<- Euk_ITS_01$taxonomy ##Taxonomy information 
@@ -944,6 +1025,83 @@ Euk_ITS_01_RA%>%
   mutate(Primer_name= "Euk_ITS_01")->Euk_ITS_01_RA
 colnames(Euk_ITS_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
 rm(Euk_ITS_01, Euk_ITS_01_BLAST, Euk_ITS_01_Tax)
+###Euk_ITS_02
+#plot(Euk_ITS_02, ranks= "phylum")
+Euk_ITS_02_Tax<- Euk_ITS_02$taxonomy ##Taxonomy information 
+Euk_ITS_02_BLAST<- Euk_ITS_02$BLAST_result #BLAST information
+Euk_ITS_02_Tax[is.na(Euk_ITS_02_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_ITS_02_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  join(Euk_ITS_02_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_ITS_02_Results
+#write.csv(Euk_ITS_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_ITS_02_Results.csv")
+hist(Euk_ITS_02_Results$product_length)
+Euk_ITS_02_RA<- data.frame(dplyr::count(Euk_ITS_02_Results, phylum))
+Euk_ITS_02_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_ITS_02")->Euk_ITS_02_RA
+colnames(Euk_ITS_02_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_ITS_02, Euk_ITS_02_BLAST, Euk_ITS_02_Tax)
+###Euk_ITS_03
+#plot(Euk_ITS_03, ranks= "phylum")
+Euk_ITS_03_Tax<- Euk_ITS_03$taxonomy ##Taxonomy information 
+Euk_ITS_03_BLAST<- Euk_ITS_03$BLAST_result #BLAST information
+Euk_ITS_03_Tax[is.na(Euk_ITS_03_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_ITS_03_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  join(Euk_ITS_03_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_ITS_03_Results
+#write.csv(Euk_ITS_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_ITS_03_Results.csv")
+hist(Euk_ITS_03_Results$product_length)
+Euk_ITS_03_RA<- data.frame(dplyr::count(Euk_ITS_03_Results, phylum))
+Euk_ITS_03_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_ITS_03")->Euk_ITS_03_RA
+colnames(Euk_ITS_03_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_ITS_03, Euk_ITS_03_BLAST, Euk_ITS_03_Tax)
+###Euk_ITS_04
+#plot(Euk_ITS_04, ranks= "phylum")
+Euk_ITS_04_Tax<- Euk_ITS_04$taxonomy ##Taxonomy information 
+Euk_ITS_04_BLAST<- Euk_ITS_04$BLAST_result #BLAST information
+Euk_ITS_04_Tax[is.na(Euk_ITS_04_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_ITS_04_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  join(Euk_ITS_04_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_ITS_04_Results
+#write.csv(Euk_ITS_04_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_ITS_04_Results.csv")
+hist(Euk_ITS_04_Results$product_length)
+Euk_ITS_04_RA<- data.frame(dplyr::count(Euk_ITS_04_Results, phylum))
+Euk_ITS_04_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_ITS_04")->Euk_ITS_04_RA
+colnames(Euk_ITS_04_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_ITS_04, Euk_ITS_04_BLAST, Euk_ITS_04_Tax)
+###Euk_rbcL_01
+#plot(Euk_rbcL_01, ranks= "phylum")
+Euk_rbcL_01_Tax<- Euk_rbcL_01$taxonomy ##Taxonomy information 
+Euk_rbcL_01_BLAST<- Euk_rbcL_01$BLAST_result #BLAST information
+Euk_rbcL_01_Tax[is.na(Euk_rbcL_01_Tax)]<- "Unassigned" ##Change NA's into Unassigned 
+Euk_rbcL_01_Tax%>%
+  dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
+  join(Euk_rbcL_01_BLAST, by= "gi")%>%
+  distinct(species, .keep_all= T)%>%
+  dplyr::select(-(X1))%>%
+  dplyr::filter(between(product_length, 200, 700))-> Euk_rbcL_01_Results
+#write.csv(Euk_rbcL_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_rbcL_01_Results.csv")
+hist(Euk_rbcL_01_Results$product_length)
+Euk_rbcL_01_RA<- data.frame(dplyr::count(Euk_rbcL_01_Results, phylum))
+Euk_rbcL_01_RA%>%
+  mutate(Rel_abund= n/sum(n))%>%
+  mutate(Primer_name= "Euk_rbcL_01")->Euk_rbcL_01_RA
+colnames(Euk_rbcL_01_RA)<- c("phylum", "Freq", "Rel_abund", "Primer_name")
+rm(Euk_rbcL_01, Euk_rbcL_01_BLAST, Euk_rbcL_01_Tax)
+
 
 Relative_abundance_others<- bind_rows(Euk_12S_01_RA, Euk_rbcL_01_RA, Euk_ITS_01_RA) ##Change everytime to add next primer information
 
