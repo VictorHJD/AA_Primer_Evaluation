@@ -1209,17 +1209,26 @@ Primers %>%
   filter(Gen== "COI")-> Primers_COI
 
 if(RunBLAST){
-Euk_COI_01<- search_primer_pair(name= as.character(Primers_COI[1,1]), forward = as.character(Primers_COI[1,2]), reverse = as.character(Primers_COI[1,3]), .parallel = T, num_aligns = 1000)
+Euk_COI_01<- search_primer_pair(name= as.character(Primers_COI[1,1]), forward = as.character(Primers_COI[1,2]), reverse = as.character(Primers_COI[1,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_COI_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_01.Rds")
 
-Euk_COI_02<- search_primer_pair(name= as.character(Primers_COI[2,1]), forward = as.character(Primers_COI[2,2]), reverse = as.character(Primers_COI[2,3]), .parallel = T, num_aligns = 1000)
+Euk_COI_02<- search_primer_pair(name= as.character(Primers_COI[2,1]), forward = as.character(Primers_COI[2,2]), reverse = as.character(Primers_COI[2,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700) #Real permutations 82944
 #saveRDS(Euk_COI_02, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_02.Rds")
 
-Euk_COI_03<- search_primer_pair(name= as.character(Primers_COI[3,1]), forward = as.character(Primers_COI[3,2]), reverse = as.character(Primers_COI[3,3]), .parallel = T, num_aligns = 1000)
+Euk_COI_03<- search_primer_pair(name= as.character(Primers_COI[3,1]), forward = as.character(Primers_COI[3,2]), reverse = as.character(Primers_COI[3,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700) #Real permutations 1990656
 #saveRDS(Euk_COI_03, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_03.Rds")
 
-Euk_COI_04<- search_primer_pair(name= as.character(Primers_COI[4,1]), forward = as.character(Primers_COI[4,2]), reverse = as.character(Primers_COI[4,3]), .parallel = T, num_aligns = 1000)
+Euk_COI_04<- search_primer_pair(name= as.character(Primers_COI[4,1]), forward = as.character(Primers_COI[4,2]), reverse = as.character(Primers_COI[4,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
 #saveRDS(Euk_COI_04, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_04.Rds")
+
+Euk_COI_05<- search_primer_pair(name= as.character(Primers_COI[5,1]), forward = as.character(Primers_COI[5,2]), reverse = as.character(Primers_COI[5,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_COI_05, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_05.Rds")
+
+Euk_COI_06<- search_primer_pair(name= as.character(Primers_COI[6,1]), forward = as.character(Primers_COI[6,2]), reverse = as.character(Primers_COI[6,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_COI_06, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_06.Rds")
+
+Euk_COI_07<- search_primer_pair(name= as.character(Primers_COI[7,1]), forward = as.character(Primers_COI[7,2]), reverse = as.character(Primers_COI[7,3]), .parallel = T, num_aligns = 10000, num_permutations=1000, PRIMER_PRODUCT_MIN= 200, PRIMER_PRODUCT_MAX= 700)
+#saveRDS(Euk_COI_07, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_COI_07.Rds")
 }
 ###Euk_COI_01
 #plot(Euk_COI_01, ranks= "phylum")

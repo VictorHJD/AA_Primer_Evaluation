@@ -1,16 +1,16 @@
 ##Phyloseq pipeline for diversity analysis by amplicon
 
-library(ggplot2)
-library(reshape)
-library(phyloseq)
-library(data.table)
-library(parallel)
-library(microbiome)
-library(tidyverse)
-library(plyr)
-library(gridExtra)
-library(grid)
-library(vegan)
+library("ggplot2")
+library("reshape")
+library("phyloseq")
+library("data.table")
+library("parallel")
+library("microbiome")
+library("tidyverse")
+library("plyr")
+library("gridExtra")
+library("grid")
+library("vegan")
 library("FactoMineR")
 library("factoextra")
 library("corrplot")
@@ -39,18 +39,18 @@ Genus<- F ##Beta diversity analysis to genus level
 Figures<- F ##Activate to save new versions of the figures 
 
 ###Non rarefied raw counts by amplicon
-seqrawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
+rawcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
   data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
 })))
 
-seqrawcounts[,2] <- rownames(seqrawcounts)
-rownames(seqrawcounts) <- c(1:nrow(seqrawcounts))
-colnames(seqrawcounts) <- c("Reads_non_rare","Primer_comb_ID")
-seqrawcounts <- data.frame(Primer_comb_ID = seqrawcounts$Primer_comb_ID, Reads_non_rare = seqrawcounts$Reads_non_rare) 
-seqrawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", seqrawcounts$Primer_comb_ID)
+rawcounts[,2] <- rownames(rawcounts)
+rownames(rawcounts) <- c(1:nrow(rawcounts))
+colnames(rawcounts) <- c("Reads_non_rare","Primer_comb_ID")
+rawcounts <- data.frame(Primer_comb_ID = rawcounts$Primer_comb_ID, Reads_non_rare = rawcounts$Reads_non_rare) 
+rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
 
 ##Create a table with total number of ASVs per primer pair
-#write.csv(seqrawcounts, file = "~/AA_Primer_evaluation/ASVs_per_Primer_Pair.csv")
+#write.csv(rawcounts, file = "~/AA_Primer_evaluation/ASVs_per_Primer_Pair.csv")
 
 ###Rarefaction curves by amplicon 
 ###Summary by amplicon
@@ -91,6 +91,18 @@ PS.l.High <- lapply(PS.l, function (x) {
   prune_samples(sample_sums(x)>0, x)
 })
 
+###Non rarefied high counts by amplicon
+highcounts <- as.data.frame(unlist(lapply(PS.l.High, function(x){
+  data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
+})))
+
+highcounts[,2] <- rownames(highcounts)
+rownames(highcounts) <- c(1:nrow(highcounts))
+colnames(highcounts) <- c("Reads_high","Primer_comb_ID")
+highcounts <- data.frame(Primer_comb_ID = highcounts$Primer_comb_ID, Reads_high = highcounts$Reads_high) 
+highcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", highcounts$Primer_comb_ID)
+
+
 ###Rarefied data
 ##Each amplicon has their own depth, so rarefy to the total sum of reads by ASV by amplicon 
 PS.l.rar <- lapply(PS.l.High, function (x) {
@@ -98,15 +110,15 @@ PS.l.rar <- lapply(PS.l.High, function (x) {
 })
 
 ### Rarefied sequence counts
-rawcounts <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
+rarecounts <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
   data.frame(cbind(asvCount=colSums(data.frame(rowSums(otu_table(x))))))
 })))
 
-rawcounts[,2] <- rownames(rawcounts)
-rownames(rawcounts) <- c(1:nrow(rawcounts))
-colnames(rawcounts) <- c("Reads","Primer_comb_ID")
-rawcounts <- data.frame("Primer_comb_ID" = rawcounts$Primer_comb_ID, Reads = rawcounts$Reads) 
-rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
+rarecounts[,2] <- rownames(rarecounts)
+rownames(rarecounts) <- c(1:nrow(rarecounts))
+colnames(rarecounts) <- c("Reads_rare","Primer_comb_ID")
+rarecounts <- data.frame("Primer_comb_ID" = rarecounts$Primer_comb_ID, Reads_rare = rarecounts$Reads_rare) 
+rarecounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rarecounts$Primer_comb_ID)
 
 ##Alpha diversity 
 alphaDiv <- data.frame()
@@ -161,25 +173,26 @@ for (i in 1: length(readNumByPhylum)) ### Start a loop: fro every element in the
   }
   
   phyla[,3] <- names(readNumByPhylum)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
-  colnames(phyla) <- c("ASV", "Phyla", "Primer_comb_ID") ### change the names for the columns 
+  colnames(phyla) <- c("ASV_count", "Phyla", "Primer_comb_ID") ### change the names for the columns 
   AbPhy <- rbind(AbPhy, phyla) ### Join all the "individual" data frames into the final data frame 
   
 }   ### close loop
 
 rownames(AbPhy) <- c(1:nrow(AbPhy)) ### change the rownames to consecutive numbers 
-AbPhy <- data.frame(Primer_comb_ID = AbPhy$Primer_comb_ID, Phyla = AbPhy$Phyla, ASV = AbPhy$ASV) ###change the order of the columns
-AbPhy$ASV <- as.numeric(AbPhy$ASV)
+AbPhy <- data.frame(Primer_comb_ID = AbPhy$Primer_comb_ID, Phyla = AbPhy$Phyla, ASV_count = AbPhy$ASV_count) ###change the order of the columns
+AbPhy$ASV_count <- as.numeric(AbPhy$ASV_count)
 
 AbPhy %>%
   group_by(Primer_comb_ID) %>% 
-  mutate(Total_ASV = sum(ASV)) -> AbPhy ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+  mutate(Total_count = sum(ASV_count))%>%
+  mutate(Relative_abundance= ASV_count/Total_count)-> AbPhy ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
 
 ##This value represent the relative abundance respect to the total amount of reads
-Relative_abundance = AbPhy$ASV/AbPhy$Total_ASV ### create a vector with the result of the operation 
+#Relative_abundance = AbPhy$ASV/AbPhy$Total_ASV ### create a vector with the result of the operation 
 
-AbPhy[,5] <- Relative_abundance ### And put it in the same order in the colum 5
+#AbPhy[,5] <- Relative_abundance ### And put it in the same order in the colum 5
 
-colnames(AbPhy)[5] <- "Relative_abundance" ### Change the name of the column 
+#colnames(AbPhy)[5] <- "Relative_abundance" ### Change the name of the column 
 
 AbPhy$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbPhy$Primer_comb_ID) ### check if the primer names have extra spaces
 
@@ -187,7 +200,7 @@ AbPhy$Primer_comb_ID <- gsub(pattern = "-", replacement = "_", x = AbPhy$Primer_
 
 AbPhy <- merge(AbPhy, primerInput, by= "Primer_comb_ID") ###merge the selected information with the origial data frame created 
 
-AbPhy <- plyr::join(AbPhy, rawcounts, by= "Primer_comb_ID")
+AbPhy <- plyr::join(AbPhy, rarecounts, by= "Primer_comb_ID")
 
 ##Create a REAL relative abundance value respect the total amount of reads per amplicon
 Rel_abund_amp = AbPhy$ASV/AbPhy$Reads ### create a vector with the result of the operation 
@@ -236,14 +249,15 @@ if(Genus){
   
   AbGen %>%
     group_by(Primer_comb_ID) %>% 
-    mutate(Total_ASV = sum(ASV)) -> AbGen ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+    mutate(Total_ASV = sum(ASV))%>%
+    mutate(Relative_abundance= ASV/Total_ASV)-> AbGen ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
   
   ##This value represent the relative abundance respect to the total amount of reads
-  Relative_abundance = AbGen$ASV/AbGen$Total_ASV ### create a vector with the result of the operation 
+  #Relative_abundance = AbGen$ASV/AbGen$Total_ASV ### create a vector with the result of the operation 
   
-  AbGen[,5] <- Relative_abundance ### And put it in the same order in the colum 5
+  #AbGen[,5] <- Relative_abundance ### And put it in the same order in the colum 5
   
-  colnames(AbGen)[5] <- "Relative_abundance" ### Change the name of the column 
+  #colnames(AbGen)[5] <- "Relative_abundance" ### Change the name of the column 
   
   AbGen$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbGen$Primer_comb_ID) ### check if the primer names have extra spaces
   
@@ -251,7 +265,7 @@ if(Genus){
   
   AbGen <- merge(AbGen, primerInput, by= "Primer_comb_ID") ###merge the selected information with the origial data frame created 
   
-  AbGen <- plyr::join(AbGen, rawcounts, by= "Primer_comb_ID")
+  AbGen <- plyr::join(AbGen, rarecounts, by= "Primer_comb_ID")
   
   ##Create a REAL relative abundance value respect the total amount of reads per amplicon
   Rel_abund_amp = AbGen$ASV/AbGen$Reads ### create a vector with the result of the operation 
@@ -273,11 +287,11 @@ if(Genus){
 foo.primer<-join(foo, primerInput, by= "Primer_comb_ID")
 rownames(foo.primer)<-foo.primer[,1]
 
-##Add rawcounts
-rawcounts<- as.data.frame(rawcounts)
-rownames(rawcounts)<-rawcounts[,1]
+##Add rarecounts
+rarecounts<- as.data.frame(rarecounts)
+rownames(rarecounts)<-rarecounts[,1]
 
-foo.primer<-join(foo.primer, rawcounts, by= "Primer_comb_ID")
+foo.primer<-join(foo.primer, rarecounts, by= "Primer_comb_ID")
 rownames(foo.primer)<- rownames(foo)
 
 foo[,1]<- NULL
