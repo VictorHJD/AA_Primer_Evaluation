@@ -249,7 +249,7 @@ if(Genus){
   AbGen$Primer_comb_ID <- gsub(pattern = "-", replacement = "_", x = AbGen$Primer_comb_ID)
   
   AbGen%>%
-    dplyr::merge(primerInput, by= "Primer_comb_ID")%>%  ###merge the selected information with the origial data frame created 
+    merge(primerInput, by= "Primer_comb_ID")%>%  ###merge the selected information with the origial data frame created 
     plyr::join(rarecounts, by= "Primer_comb_ID")%>%
     dplyr::mutate(Rel_abund_rare= ASV_count/Reads_rare)-> AbGen ##Create a REAL relative abundance value respect the total amount of reads per amplicon
   
@@ -528,8 +528,8 @@ if(Phylum){
   AbPhy%>%
   select(1,2,14,25)%>%
   group_by(Primer_comb_ID) %>%
-  mutate(Main_taxa= Rel_abund_amp>= 0.05) %>%
-  mutate(Phyla= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$Phyla))) %>%
+  dplyr::mutate(Main_taxa= Rel_abund_rare>= 0.05) %>%
+  dplyr::mutate(Phyla= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(Phyla))) %>%
   arrange(Primer_comb_ID, desc(Phyla))-> CompPhy
 
 e <- ggplot(data=CompPhy, aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
@@ -541,14 +541,14 @@ e <- ggplot(data=CompPhy, aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla))
         labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
         guides(fill= guide_legend(nrow = 8))
 
-eB <- ggplot(data=subset(CompPhy, Gen=="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+eB <- ggplot(data=subset(CompPhy, Gen=="16S"), aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Phyla)) +
   scale_fill_manual(values = c("#33A02C","#CAB2D6","#6A3D9A","#01665e","#969696"))+
   geom_bar(aes(), stat="identity", position="fill") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
   labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")
 
-eE <- ggplot(data=subset(CompPhy, Gen!="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+eE <- ggplot(data=subset(CompPhy, Gen!="16S"), aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Phyla)) +
   scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
                                "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061","#969696"))+
   geom_bar(aes(), stat="identity", position="fill") +
@@ -557,7 +557,7 @@ eE <- ggplot(data=subset(CompPhy, Gen!="16S"), aes(x= Primer_comb_ID, y= Rel_abu
   labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
   guides(fill= guide_legend(nrow = 8))
 
-e18 <- ggplot(data=subset(CompPhy, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+e18 <- ggplot(data=subset(CompPhy, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Phyla)) +
         scale_fill_manual(values = c("#1F78B4","#B2DF8A","#FB9A99","#E31A1C","#FDBF6F",
                                "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061","#969696"))+
         geom_bar(aes(), stat="identity", position="fill") +
@@ -571,11 +571,11 @@ if(Genus){
   AbGen%>%
     select(1,2,14,25)%>%
     group_by(Primer_comb_ID) %>%
-    mutate(Main_taxa= Rel_abund_amp>= 0.1) %>%
-    mutate(Genus= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(.$Genus))) %>%
+    mutate(Main_taxa= Rel_abund_rare>= 0.1) %>%
+    mutate(Genus= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(Genus))) %>%
     arrange(Primer_comb_ID, desc(Genus))-> CompGen
   
-  e <- ggplot(data=CompGen, aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+  e <- ggplot(data=CompGen, aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Genus)) +
     scale_fill_manual(values = viridis(20))+
     geom_bar(aes(), stat="identity", position="fill") +
     theme_bw() +
@@ -583,14 +583,14 @@ if(Genus){
     labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
     guides(fill= guide_legend(nrow = 15))
   
-  eB <- ggplot(data=subset(CompGen, Gen=="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+  eB <- ggplot(data=subset(CompGen, Gen=="16S"), aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Genus)) +
     scale_fill_manual(values = c("#33A02C","#CAB2D6","#6A3D9A","#01665e","#969696"))+
     geom_bar(aes(), stat="identity", position="fill") +
     theme_bw() +
     theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
     labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")
   
-  eE <- ggplot(data=subset(CompGen, Gen!="16S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+  eE <- ggplot(data=subset(CompGen, Gen!="16S"), aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Genus)) +
     scale_fill_manual(values = viridis(18))+
     geom_bar(aes(), stat="identity", position="fill") +
     theme_bw() +
@@ -598,7 +598,7 @@ if(Genus){
     labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
     guides(fill= guide_legend(nrow = 8))
   
-  e18 <- ggplot(data=subset(CompGen, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Genus)) +
+  e18 <- ggplot(data=subset(CompGen, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Genus)) +
     scale_fill_manual(values = viridis(20))+
     geom_bar(aes(), stat="identity", position="fill") +
     theme_bw() +
