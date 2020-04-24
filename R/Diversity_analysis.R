@@ -184,35 +184,25 @@ AbPhy$ASV_count <- as.numeric(AbPhy$ASV_count)
 
 AbPhy %>%
   group_by(Primer_comb_ID) %>% 
-  mutate(Total_count = sum(ASV_count))%>%
-  mutate(Relative_abundance= ASV_count/Total_count)-> AbPhy ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+  dplyr::mutate(Total_count = sum(ASV_count))%>%
+  dplyr::mutate(Relative_abundance= ASV_count/Total_count)-> AbPhy 
 
-##This value represent the relative abundance respect to the total amount of reads
-#Relative_abundance = AbPhy$ASV/AbPhy$Total_ASV ### create a vector with the result of the operation 
+### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+##This value represent the relative abundance respect to the total amount of reads after rarefing
+### check if the primer names have extra spaces
 
-#AbPhy[,5] <- Relative_abundance ### And put it in the same order in the colum 5
-
-#colnames(AbPhy)[5] <- "Relative_abundance" ### Change the name of the column 
-
-AbPhy$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbPhy$Primer_comb_ID) ### check if the primer names have extra spaces
-
+AbPhy$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbPhy$Primer_comb_ID) 
 AbPhy$Primer_comb_ID <- gsub(pattern = "-", replacement = "_", x = AbPhy$Primer_comb_ID)
 
-AbPhy <- merge(AbPhy, primerInput, by= "Primer_comb_ID") ###merge the selected information with the origial data frame created 
-
-AbPhy <- plyr::join(AbPhy, rarecounts, by= "Primer_comb_ID")
-
-##Create a REAL relative abundance value respect the total amount of reads per amplicon
-Rel_abund_amp = AbPhy$ASV/AbPhy$Reads ### create a vector with the result of the operation 
-
-AbPhy[,25] <- Rel_abund_amp ### And put it in the same order in the colum 25
-
-colnames(AbPhy)[25] <- "Rel_abund_amp" ### Change the name of the column 
+AbPhy%>%
+  merge(primerInput, by= "Primer_comb_ID")%>% ###merge the selected information with the origial data frame created 
+  plyr::join(rarecounts, by= "Primer_comb_ID")%>%
+  dplyr::mutate(Rel_abund_rare= ASV_count/Reads_rare)-> AbPhy 
 
 ##Prepair matrix for PCA analysis
 foo<- AbPhy%>%select(1,2,25)
-foo<- reshape(foo, v.names = "Rel_abund_amp", timevar = "Phyla", idvar = "Primer_comb_ID",direction = "wide")
-colnames(foo) <- gsub("Rel_abund_amp.", "\\1", colnames(foo)) ##Remove "Rel_abund_amp"
+foo<- reshape(foo, v.names = "Rel_abund_rare", timevar = "Phyla", idvar = "Primer_comb_ID",direction = "wide")
+colnames(foo) <- gsub("Rel_abund_rare.", "\\1", colnames(foo)) ##Remove "Rel_abund_rare"
 ##Transform NA to 0
 foo[is.na(foo)]<- 0
 rownames(foo)<-foo[,1]
@@ -238,46 +228,35 @@ if(Genus){
     }
     
     genus[,3] <- names(readNumByGenus)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
-    colnames(genus) <- c("ASV", "Genus", "Primer_comb_ID") ### change the names for the columns 
+    colnames(genus) <- c("ASV_count", "Genus", "Primer_comb_ID") ### change the names for the columns 
     AbGen <- rbind(AbGen, genus) ### Join all the "individual" data frames into the final data frame 
     
   }   ### close loop
   
   rownames(AbGen) <- c(1:nrow(AbGen)) ### change the rownames to consecutive numbers 
-  AbGen <- data.frame(Primer_comb_ID = AbGen$Primer_comb_ID, Genus = AbGen$Genus, ASV = AbGen$ASV) ###change the order of the columns
-  AbGen$ASV <- as.numeric(AbGen$ASV)
+  AbGen <- data.frame(Primer_comb_ID = AbGen$Primer_comb_ID, Genus = AbGen$Genus, ASV_count = AbGen$ASV_count) ###change the order of the columns
+  AbGen$ASV_count <- as.numeric(AbGen$ASV_count)
   
   AbGen %>%
     group_by(Primer_comb_ID) %>% 
-    mutate(Total_ASV = sum(ASV))%>%
-    mutate(Relative_abundance= ASV/Total_ASV)-> AbGen ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+    dplyr::mutate(Total_count = sum(ASV_count))%>%
+    dplyr::mutate(Relative_abundance= ASV_count/Total_count)-> AbGen 
   
-  ##This value represent the relative abundance respect to the total amount of reads
-  #Relative_abundance = AbGen$ASV/AbGen$Total_ASV ### create a vector with the result of the operation 
-  
-  #AbGen[,5] <- Relative_abundance ### And put it in the same order in the colum 5
-  
-  #colnames(AbGen)[5] <- "Relative_abundance" ### Change the name of the column 
-  
-  AbGen$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbGen$Primer_comb_ID) ### check if the primer names have extra spaces
-  
+  ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
+  ##This value represent the relative abundance respect to the total amount of reads after rarefaction
+  ### check if the primer names have extra spaces
+  AbGen$Primer_comb_ID <- gsub(pattern = " ", replacement = "", x = AbGen$Primer_comb_ID) 
   AbGen$Primer_comb_ID <- gsub(pattern = "-", replacement = "_", x = AbGen$Primer_comb_ID)
   
-  AbGen <- merge(AbGen, primerInput, by= "Primer_comb_ID") ###merge the selected information with the origial data frame created 
-  
-  AbGen <- plyr::join(AbGen, rarecounts, by= "Primer_comb_ID")
-  
-  ##Create a REAL relative abundance value respect the total amount of reads per amplicon
-  Rel_abund_amp = AbGen$ASV/AbGen$Reads ### create a vector with the result of the operation 
-  
-  AbGen[,25] <- Rel_abund_amp ### And put it in the same order in the colum 25
-  
-  colnames(AbGen)[25] <- "Rel_abund_amp" ### Change the name of the column 
+  AbGen%>%
+    dplyr::merge(primerInput, by= "Primer_comb_ID")%>%  ###merge the selected information with the origial data frame created 
+    plyr::join(rarecounts, by= "Primer_comb_ID")%>%
+    dplyr::mutate(Rel_abund_rare= ASV_count/Reads_rare)-> AbGen ##Create a REAL relative abundance value respect the total amount of reads per amplicon
   
   ##Prepair matrix for PCA analysis
   foo<- AbGen%>%select(1,2,25)
-  foo<- reshape(foo, v.names = "Rel_abund_amp", timevar = "Genus", idvar = "Primer_comb_ID",direction = "wide")
-  colnames(foo) <- gsub("Rel_abund_amp.", "\\1", colnames(foo)) ##Remove "Rel_abund_amp"
+  foo<- reshape(foo, v.names = "Rel_abund_rare", timevar = "Genus", idvar = "Primer_comb_ID",direction = "wide")
+  colnames(foo) <- gsub("Rel_abund_rare.", "\\1", colnames(foo)) ##Remove "Rel_abund_rare"
   ##Transform NA to 0
   foo[is.na(foo)]<- 0
   rownames(foo)<-foo[,1]
@@ -340,9 +319,9 @@ BCheatmap <- pheatmap(foo.braycurt,
                       show_colnames = F,
                       main= "Bray-Curtis dissimilarity among primers")
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_2.pdf", width = 10, height = 8)
-BCheatmap
-dev.off()
+#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_2.pdf", width = 10, height = 8)
+#BCheatmap
+#dev.off()
 
 ####PCA and composition plots (Figure 3 and supplementary)####
 ##Let's do a PCA of individuals
