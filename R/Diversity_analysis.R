@@ -626,3 +626,57 @@ pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_3.pdf", width = 10,
 grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
 }
+
+#####Permutation tests
+sign.pc<-function(x,R=1000,s=100, cor=T,...){
+  # run PCA
+  pc.out<-princomp(x,cor=cor,...)
+  # the proportion of variance of each PC
+  pve=(pc.out$sdev^2/sum(pc.out$sdev^2))[1:s]
+  
+  # a matrix with R rows and s columns that contains
+  # the proportion of variance explained by each pc
+  # for each randomization replicate.
+  pve.perm<-matrix(NA,ncol=s,nrow=R)
+  for(i in 1:R){
+    # permutation each column
+    x.perm<-apply(x,2,sample)
+    # run PCA
+    pc.perm.out<-princomp(x.perm,cor=cor,...)
+    # the proportion of variance of each PC.perm
+    pve.perm[i,]=(pc.perm.out$sdev^2/sum(pc.perm.out$sdev^2))[1:s]
+  }
+  # calcalute the p-values
+  pval<-apply(t(pve.perm)>pve,1,sum)/R
+  return(list(pve=pve,pval=pval))
+}
+
+pca_eigenperm<- function(data, nperm = 1000){
+  pca_out<- prcomp(data, scale. = T)
+  eigenperm<- data.frame(matrix(NA, nperm, ncol(data)))
+  n<- ncol(data)
+  data_i<- data.frame(matrix(NA, nrow(data), ncol(data)))
+  for (j in 1: nperm){
+    for (i in 1:n){
+      data_i[,i]<- sample(data[,i], replace = F)
+    }
+    pca.perm<- prcomp(data_i, scale. = T)
+    eigenperm[j,]<- pca.perm$sdev^2
+  }
+  colnames(eigenperm)<- colnames(pca_out$rotation)
+  eigenperm
+  
+}
+
+test_pca<- pca_eigenperm(t(foo)) ##Without transmutate teh table it doesn't work. However, in our case the variables are the columns. 
+fviz_pca_ind(test_pca,
+             pointsize = "cos2",
+             pointshape = 21,
+             geom.ind = "point", # show points only (but not "text")
+             col.ind = "black", # color by region
+             palette = plasma(45),
+             addEllipses = F, # Concentration ellipses
+             legend.title = "Taxa")
+
+test_pca_2 <- sign.pc(t(foo))##Without transmutate teh table it doesn't work. However, in our case the variables are the columns.
+
