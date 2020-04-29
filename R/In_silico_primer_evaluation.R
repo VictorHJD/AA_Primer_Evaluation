@@ -183,9 +183,9 @@ Euk_18S_01_Tax[is.na(Euk_18S_01_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_01_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>% ##Keep a single ocurrence of each species 
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_01_Results
+  dplyr::select(-(X1))-> Euk_18S_01_Results
 
 #write.csv(Euk_18S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_01_Results.csv")
 hist(Euk_18S_01_Results$product_length)
@@ -208,9 +208,9 @@ Euk_18S_02_Tax[is.na(Euk_18S_02_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_02_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_02_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_02_Results
+  dplyr::select(-(X1))-> Euk_18S_02_Results
 #write.csv(Euk_18S_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_02_Results.csv")
 hist(Euk_18S_02_Results$product_length)
 Euk_18S_02_RA<- data.frame(dplyr::count(Euk_18S_02_Results, phylum))
@@ -230,9 +230,9 @@ Euk_18S_03_Tax[is.na(Euk_18S_03_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_03_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_03_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_03_Results
+  dplyr::select(-(X1))-> Euk_18S_03_Results
 #write.csv(Euk_18S_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_03_Results.csv")
 hist(Euk_18S_03_Results$product_length)
 Euk_18S_03_RA<- data.frame(dplyr::count(Euk_18S_03_Results, phylum))
@@ -252,9 +252,9 @@ Euk_18S_04_Tax[is.na(Euk_18S_04_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_04_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_04_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_04_Results
+  dplyr::select(-(X1))-> Euk_18S_04_Results
 #write.csv(Euk_18S_04_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_04_Results.csv")
 hist(Euk_18S_04_Results$product_length)
 Euk_18S_04_RA<- data.frame(dplyr::count(Euk_18S_04_Results, phylum))
@@ -274,9 +274,9 @@ Euk_18S_05_Tax[is.na(Euk_18S_05_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_05_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_05_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_05_Results
+  dplyr::select(-(X1))-> Euk_18S_05_Results
 #write.csv(Euk_18S_05_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_05_Results.csv")
 hist(Euk_18S_05_Results$product_length)
 Euk_18S_05_RA<- data.frame(dplyr::count(Euk_18S_05_Results, phylum))
@@ -296,9 +296,9 @@ Euk_18S_06_Tax[is.na(Euk_18S_06_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_06_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_06_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_06_Results
+  dplyr::select(-(X1))-> Euk_18S_06_Results
 #write.csv(Euk_18S_06_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_06_Results.csv")
 hist(Euk_18S_06_Results$product_length)
 Euk_18S_06_RA<- data.frame(dplyr::count(Euk_18S_06_Results, phylum))
@@ -318,9 +318,9 @@ Euk_18S_07_Tax[is.na(Euk_18S_07_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_07_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_07_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_07_Results
+  dplyr::select(-(X1))-> Euk_18S_07_Results
 #write.csv(Euk_18S_07_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_07_Results.csv")
 hist(Euk_18S_07_Results$product_length)
 Euk_18S_07_RA<- data.frame(dplyr::count(Euk_18S_07_Results, phylum))
@@ -340,9 +340,9 @@ Euk_18S_08_Tax[is.na(Euk_18S_08_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_08_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_08_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_08_Results
+  dplyr::select(-(X1))-> Euk_18S_08_Results
 #write.csv(Euk_18S_08_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_08_Results.csv")
 hist(Euk_18S_08_Results$product_length)
 Euk_18S_08_RA<- data.frame(dplyr::count(Euk_18S_08_Results, phylum))
@@ -362,9 +362,9 @@ Euk_18S_09_Tax[is.na(Euk_18S_09_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_09_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_09_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_09_Results
+  dplyr::select(-(X1))-> Euk_18S_09_Results
 #write.csv(Euk_18S_09_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_09_Results.csv")
 hist(Euk_18S_09_Results$product_length)
 Euk_18S_09_RA<- data.frame(dplyr::count(Euk_18S_09_Results, phylum))
@@ -384,9 +384,9 @@ Euk_18S_10_Tax[is.na(Euk_18S_10_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_10_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_10_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_10_Results
+  dplyr::select(-(X1))-> Euk_18S_10_Results
 #write.csv(Euk_18S_10_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_10_Results.csv")
 hist(Euk_18S_10_Results$product_length)
 Euk_18S_10_RA<- data.frame(dplyr::count(Euk_18S_10_Results, phylum))
@@ -406,9 +406,9 @@ Euk_18S_11_Tax[is.na(Euk_18S_11_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_11_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_11_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_11_Results
+  dplyr::select(-(X1))-> Euk_18S_11_Results
 #write.csv(Euk_18S_11_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_11_Results.csv")
 hist(Euk_18S_11_Results$product_length)
 Euk_18S_11_RA<- data.frame(dplyr::count(Euk_18S_11_Results, phylum))
@@ -428,9 +428,9 @@ Euk_18S_12_Tax[is.na(Euk_18S_12_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_12_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_12_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_12_Results
+  dplyr::select(-(X1))-> Euk_18S_12_Results
 #write.csv(Euk_18S_12_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_12_Results.csv")
 hist(Euk_18S_12_Results$product_length)
 Euk_18S_12_RA<- data.frame(dplyr::count(Euk_18S_12_Results, phylum))
@@ -450,9 +450,9 @@ Euk_18S_13_Tax[is.na(Euk_18S_13_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_13_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_13_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_13_Results
+  dplyr::select(-(X1))-> Euk_18S_13_Results
 #write.csv(Euk_18S_13_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_13_Results.csv")
 hist(Euk_18S_13_Results$product_length)
 Euk_18S_13_RA<- data.frame(dplyr::count(Euk_18S_13_Results, phylum))
@@ -472,9 +472,9 @@ Euk_18S_14_Tax[is.na(Euk_18S_14_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_14_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_14_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_14_Results
+  dplyr::select(-(X1))-> Euk_18S_14_Results
 #write.csv(Euk_18S_14_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_14_Results.csv")
 hist(Euk_18S_14_Results$product_length)
 Euk_18S_14_RA<- data.frame(dplyr::count(Euk_18S_14_Results, phylum))
@@ -494,9 +494,9 @@ Euk_18S_15_Tax[is.na(Euk_18S_15_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_15_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_15_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_15_Results
+  dplyr::select(-(X1))-> Euk_18S_15_Results
 #write.csv(Euk_18S_15_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_15_Results.csv")
 hist(Euk_18S_15_Results$product_length)
 Euk_18S_15_RA<- data.frame(dplyr::count(Euk_18S_15_Results, phylum))
@@ -516,9 +516,9 @@ Euk_18S_16_Tax[is.na(Euk_18S_16_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_16_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_16_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_16_Results
+  dplyr::select(-(X1))-> Euk_18S_16_Results
 #write.csv(Euk_18S_16_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_16_Results.csv")
 hist(Euk_18S_16_Results$product_length)
 Euk_18S_16_RA<- data.frame(dplyr::count(Euk_18S_16_Results, phylum))
@@ -538,9 +538,9 @@ Euk_18S_17_Tax[is.na(Euk_18S_17_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_17_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_17_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_17_Results
+  dplyr::select(-(X1))-> Euk_18S_17_Results
 #write.csv(Euk_18S_17_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_17_Results.csv")
 hist(Euk_18S_17_Results$product_length)
 Euk_18S_17_RA<- data.frame(dplyr::count(Euk_18S_17_Results, phylum))
@@ -582,9 +582,9 @@ Euk_18S_19_Tax[is.na(Euk_18S_19_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_19_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_19_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_19_Results
+  dplyr::select(-(X1))-> Euk_18S_19_Results
 #write.csv(Euk_18S_19_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_19_Results.csv")
 hist(Euk_18S_19_Results$product_length)
 Euk_18S_19_RA<- data.frame(dplyr::count(Euk_18S_19_Results, phylum))
@@ -604,9 +604,9 @@ Euk_18S_20_Tax[is.na(Euk_18S_20_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_20_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_20_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_20_Results
+  dplyr::select(-(X1))-> Euk_18S_20_Results
 #write.csv(Euk_18S_20_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_20_Results.csv")
 hist(Euk_18S_20_Results$product_length)
 Euk_18S_20_RA<- data.frame(dplyr::count(Euk_18S_20_Results, phylum))
@@ -626,9 +626,9 @@ Euk_18S_21_Tax[is.na(Euk_18S_21_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_21_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_21_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_21_Results
+  dplyr::select(-(X1))-> Euk_18S_21_Results
 #write.csv(Euk_18S_21_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_21_Results.csv")
 hist(Euk_18S_21_Results$product_length)
 Euk_18S_21_RA<- data.frame(dplyr::count(Euk_18S_21_Results, phylum))
@@ -648,9 +648,9 @@ Euk_18S_22_Tax[is.na(Euk_18S_22_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_22_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_22_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_22_Results
+  dplyr::select(-(X1))-> Euk_18S_22_Results
 #write.csv(Euk_18S_22_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_22_Results.csv")
 hist(Euk_18S_22_Results$product_length)
 Euk_18S_22_RA<- data.frame(dplyr::count(Euk_18S_22_Results, phylum))
@@ -670,9 +670,9 @@ Euk_18S_23_Tax[is.na(Euk_18S_23_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_23_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_18S_23_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_18S_23_Results
+  dplyr::select(-(X1))-> Euk_18S_23_Results
 #write.csv(Euk_18S_23_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_18S_23_Results.csv")
 hist(Euk_18S_23_Results$product_length)
 Euk_18S_23_RA<- data.frame(dplyr::count(Euk_18S_23_Results, phylum))
@@ -692,9 +692,9 @@ Euk_18S_24_Tax[is.na(Euk_18S_24_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_18S_24_Tax%>% ##To make the results table required tiny adjustments 
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "phylum", "order", "family", "genus"))%>%
   join(Euk_18S_24_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
   dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))%>%
   dplyr::mutate(kingdom= "Unassigned")%>%
   dplyr::mutate(class= "Unassigned")%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus", 
@@ -796,9 +796,9 @@ Euk_28S_01_Tax[is.na(Euk_28S_01_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_28S_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_28S_01_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_28S_01_Results
+  dplyr::select(-(X1))-> Euk_28S_01_Results
 #write.csv(Euk_28S_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_01_Results.csv")
 hist(Euk_28S_01_Results$product_length)
 Euk_28S_01_RA<- data.frame(dplyr::count(Euk_28S_01_Results, phylum))
@@ -815,9 +815,9 @@ Euk_28S_02_Tax[is.na(Euk_28S_02_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_28S_02_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_28S_02_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_28S_02_Results
+  dplyr::select(-(X1))-> Euk_28S_02_Results
 #write.csv(Euk_28S_02_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_02_Results.csv")
 hist(Euk_28S_02_Results$product_length)
 Euk_28S_02_RA<- data.frame(dplyr::count(Euk_28S_02_Results, phylum))
@@ -834,9 +834,9 @@ Euk_28S_03_Tax[is.na(Euk_28S_03_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_28S_03_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_28S_03_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_28S_03_Results
+  dplyr::select(-(X1))-> Euk_28S_03_Results
 #write.csv(Euk_28S_03_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_28S_03_Results.csv")
 hist(Euk_28S_03_Results$product_length)
 Euk_28S_03_RA<- data.frame(dplyr::count(Euk_28S_03_Results, phylum))
@@ -1238,9 +1238,9 @@ Euk_COI_01_Tax[is.na(Euk_COI_01_Tax)]<- "Unassigned" ##Change NA's into Unassign
 Euk_COI_01_Tax%>%
   dplyr::select(c("taxId", "gi", "species", "superkingdom", "kingdom", "phylum", "class", "order", "family", "genus"))%>%
   join(Euk_COI_01_BLAST, by= "gi")%>%
+  dplyr::filter(between(product_length, 200, 700))%>%
   distinct(species, .keep_all= T)%>%
-  dplyr::select(-(X1))%>%
-  dplyr::filter(between(product_length, 200, 700))-> Euk_COI_01_Results
+  dplyr::select(-(X1))-> Euk_COI_01_Results
 #write.csv(Euk_COI_01_Results, "~/AA_Primer_evaluation/output/taxonomy/Euk_COI_01_Results.csv")
 hist(Euk_COI_01_Results$product_length)
 Euk_COI_01_RA<- data.frame(dplyr::count(Euk_COI_01_Results, phylum))
