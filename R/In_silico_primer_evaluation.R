@@ -1363,3 +1363,9 @@ if(RunBLAST){
 Euk_16S_01<- search_primer_pair(name= as.character(Primers_16S[1,1]), forward = as.character(Primers_16S[1,2]), reverse = as.character(Primers_16S[1,3]), .parallel = T, num_aligns = 1000)
 #saveRDS(Euk_16S_01, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerTreeObj/Euk_16S_01.Rds")
 }
+
+
+####In silico PCR using DECIPHER AmplifyDNA
+
+#Euk_18S_01<-DECIPHER::AmplifyDNA(c(as.character(Primers_18S[1,2]), as.character(Primers_18S[1,3])), Seq_18S_db, P= 4e-7, annealingTemp = 60, maxProductSize = 700)
+## The output is not clear :S 
