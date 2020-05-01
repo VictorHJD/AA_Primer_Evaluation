@@ -24,34 +24,39 @@ env2list <- function(env){
 source("~/GitProjects/AA_Primer_Evaluation/R/In_silico_primer_evaluation.R")
 
 ##Load data base 18S 
-Seq_18S_db<- Biostrings::readDNAStringSet("/SAN/db/ENA_marker/18S_All_ENA.fasta.gz1700cleaned.fasta", format = "fasta")
-#Seq_18S_db<- Biostrings::readDNAStringSet("/SAN/db/blastdb/18S_ENA/Full1700_18S.fasta", format = "fasta") ##Missing characters in the GenBank accession number
+#Seq_18S_db<- Biostrings::readDNAStringSet("/SAN/db/ENA_marker/18S_All_ENA.fasta.gz1700cleaned.fasta", format = "fasta") ##Seq names un formated
+Seq_18S_db<- Biostrings::readDNAStringSet("/SAN/db/blastdb/18S_ENA/Full1700_18S.fasta", format = "fasta") ##Seq names are already taxID
 
 ##Align seqs
 #AlignSeqs(Seq_18S_db)
 
 ##Extract names from the sequences 
 Seq_18S_names<- Seq_18S_db@ranges@NAMES
-accession_18S <- as.data.frame(str_extract(Seq_18S_names, "[:alpha:][:alpha:]\\d+.1")) ##Extract accession numbers from them 
-colnames(accession_18S)<- "Accesion_number"
+#accession_18S <- as.data.frame(str_extract(Seq_18S_names, "[:alpha:][:alpha:]\\d+.1")) ##Extract accession numbers from them 
+#colnames(accession_18S)<- "Accesion_number"
 
 ##convert accession numbers to taxonomic IDs 
 ##SQLite database is already in Harriet
-taxID_18S<- accessionToTaxa(as.character(accession_18S$Accesion_number), sqlFile = "/SAN/db/taxonomy/taxonomizr.sql") ##Not working :S
-accession_18S$Taxonomic_ID<- taxID_18S
-rm(taxID_18S)
+#taxID_18S<- accessionToTaxa(as.character(accession_18S$Accesion_number), sqlFile = "/SAN/db/taxonomy/taxonomizr.sql") ##Not working :S
+#accession_18S$Taxonomic_ID<- taxID_18S
+taxID_18S<- as.data.frame(str_extract(Seq_18S_names, "\\d+"))
+colnames(taxID_18S)<- "Taxonomic_ID"
+#accession_18S<- taxonomizr::getAccessions(as.character(taxID_18S$Taxonomic_ID), sqlFile = "/SAN/db/taxonomy/taxonomizr.sql")
+#accession_18S$Taxonomic_ID<- taxID_18S
+#rm(taxID_18S)
 
 ##convert taxonomic IDs to taxonomy
-Taxonomy_18S<- taxonomizr::getTaxonomy(as.character(accession_18S$Taxonomic_ID), sqlFile = "/SAN/db/taxonomy/taxonomizr.sql")
+Taxonomy_18S<- taxonomizr::getTaxonomy(as.character(taxID_18S$Taxonomic_ID), sqlFile = "/SAN/db/taxonomy/taxonomizr.sql")
 
 Taxonomy_18S<- as.data.frame(Taxonomy_18S)
 rownames(Taxonomy_18S) <- c(1:nrow(Taxonomy_18S))
-Taxonomy_18S$Taxonomic_ID<- accession_18S$Taxonomic_ID
-Taxonomy_18S$Accession_18S<- accession_18S$Accesion_number
+Taxonomy_18S$Taxonomic_ID<- taxID_18S$Taxonomic_ID
+Taxonomy_18S$Accession_18S<- NA
 
 ##Get counts of unique taxa per taxonomic level
 Unique_taxa<- as.data.frame(sapply(Taxonomy_18S, function(x) n_distinct(x, na.rm = T)))
 colnames(Unique_taxa) <- "Database"
+
 
 ##Get counts of unique taxa per primer pair using in silico predictions on PrimerTree
 insilico_18S <- env2list(.GlobalEnv)
