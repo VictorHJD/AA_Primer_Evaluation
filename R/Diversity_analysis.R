@@ -278,9 +278,11 @@ rare<-ggplot(samplecounts_rare, aes(x = Primer_comb_ID, y= Reads_rare))+
   theme_minimal()+
   labs(tag = "C)")
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_7.pdf", width = 20, height = 10)
-grid.arrange(raw, high, rare, ncol=3, nrow=1)
-dev.off()
+#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_7.pdf", width = 20, height = 10)
+#grid.arrange(raw, high, rare, ncol=3, nrow=1)
+#dev.off()
+
+rm(raw, high, rare)
 
 ##Alpha diversity 
 alphaDiv <- data.frame()
