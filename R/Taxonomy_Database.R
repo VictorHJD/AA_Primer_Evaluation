@@ -74,7 +74,7 @@ for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the li
     tmp <- as.data.frame(sapply(insilico_18S[[i]], function(x) n_distinct(x, na.rm = T)))  ###Make a data frame with the data included in each element of the list 
     colnames(tmp)<- i
     tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
-    tmp<- slice(tmp, match(c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession"), V2))
+    tmp<- dplyr::slice(tmp, match(c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession"), V2))
     tmp<- dplyr::mutate(tmp, V3= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S")) ##Vector with desired order
     tmp<-  column_to_rownames(tmp, "V3") 
     tmp<- dplyr::select(tmp, -V2)
@@ -166,23 +166,23 @@ cum.tax.comb18.insilico<- rbind(baseline.zero, cum.tax.comb18.insilico)
 
 cum.plot.comb18.insilico <- ggplot(cum.tax.comb18.insilico) +
   geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(24, 4300, label="Species"), color="red")+ 
-  geom_hline(yintercept = 4098, color="red", linetype= "dashed")+
+  geom_text(aes(24, cum.tax.comb18.insilico[25,2]+3000, label="Species"), color="red")+ 
+  geom_hline(yintercept = Unique_taxa[7,1], color="red", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(24, 2100, label="Genera"), color="#0D0887FF") +
-  geom_hline(yintercept = 1988, color="#0D0887FF", linetype= "dashed")+
+  geom_text(aes(24, cum.tax.comb18.insilico[25,3]+1000, label="Genera"), color="#0D0887FF") +
+  geom_hline(yintercept = Unique_taxa[6,1], color="#0D0887FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(24, 950, label="Families"), color="#7E03A8FF") +
-  geom_hline(yintercept = 850, color="#7E03A8FF", linetype= "dashed")+
+  geom_text(aes(24, cum.tax.comb18.insilico[25,4]+400, label="Families"), color="#7E03A8FF") +
+  geom_hline(yintercept = Unique_taxa[5,1], color="#7E03A8FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(24, 360, label="Orders"), color="#CC4678FF") +
-  geom_hline(yintercept = 321, color="#CC4678FF", linetype= "dashed")+
+  geom_text(aes(24, cum.tax.comb18.insilico[25,5]+100, label="Orders"), color="#CC4678FF") +
+  geom_hline(yintercept = Unique_taxa[4,1], color="#CC4678FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  geom_text(aes(24, 115, label="Classes"), color="#F0F921FF") +
-  geom_hline(yintercept = 102, color="#F0F921FF", linetype= "dashed")+
+  geom_text(aes(24, cum.tax.comb18.insilico[25,6]+50, label="Classes"), color="#F0F921FF") +
+  geom_hline(yintercept = Unique_taxa[3,1], color="#F0F921FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(24, 38, label="Phyla"), color="#F89441FF") +
-  geom_hline(yintercept = 34, color="#F89441FF", linetype= "dashed")+
+  geom_text(aes(24, cum.tax.comb18.insilico[25,7]+10, label="Phyla"), color="#F89441FF") +
+  geom_hline(yintercept = Unique_taxa[2,1], color="#F89441FF", linetype= "dashed")+
   scale_y_log10("Cummulative count of taxa") +
   scale_x_continuous("Number of primers considered \n (starting with the one with highest read count)") + 
   annotation_logticks(sides="l") +
@@ -190,8 +190,8 @@ cum.plot.comb18.insilico <- ggplot(cum.tax.comb18.insilico) +
   theme(panel.grid.minor = element_blank(), text = element_text(size=20)#,
         #axis.title.x = element_blank()
   )+
-  labs(tag = "A)")+
-  coord_cartesian(ylim = c(20, 4300), xlim = c(0,25))
+  labs(tag = "A)")#+
+  #coord_cartesian(ylim = c(20, 4300), xlim = c(0,25))
 
 #pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Pre_Figure_4.pdf", width = 8, height = 10)
 #grid.arrange(cum.plot.comb18.insilico, cum.plot.comb18) 
@@ -212,6 +212,7 @@ foo[is.na(foo)]<- 0
 rownames(foo)<-foo[,1]
 foo[,1]<- NULL
 
+require("vegan")
 foo.matrix<- as.matrix(foo)
 foo.braycurt<- vegdist(foo.matrix, method = "bray")
 as.matrix(foo.braycurt)
@@ -236,8 +237,8 @@ row.names(col_groups)<- col_groups$Primer_comb_ID
 col_groups$Primer_comb_ID<- NULL
 
 colour_groups <- list( Gen= c("18S"= "#440154FF"),
-                       Region= c("V1-V2"= "#8DD3C7", "V3-V4"= "#FFFFB3", "V4"= "#BEBADA", "V4-V5"= "#FB8072", "V6-V7"= "#80B1D3",
-                                 "V6-V8"="#FDB462", "V7-V8"= "#B3DE69", "V8-V9"= "#FCCDE5", "V9"= "#D9D9D9"))
+                       Region= c("V1-V2"= "#8DD3C7", "V1-V3"= "#009999","V3-V4"= "#FFFFB3", "V4"= "#BEBADA", "V4-V5"= "#FB8072", "V6-V7"= "#80B1D3",
+                                 "V6-V8"="#FDB462", "V7-V8"= "#B3DE69", "V7-V9"= "#FC4E07","V8-V9"= "#FCCDE5", "V9"= "#D9D9D9"))
 require(pheatmap)
 require(viridis)
 BCheatmap.insilico <- pheatmap(foo.braycurt, 
@@ -252,7 +253,8 @@ BCheatmap.insilico <- pheatmap(foo.braycurt,
                       show_colnames = F,
                       main= "Bray-Curtis dissimilarity among 18S primers in silico")
 
-pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_2_insilico.pdf", width = 10, height = 8)
+#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_2_insilico.pdf", width = 10, height = 8)
+pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figure_4_All.pdf", width = 10, height = 8)
 BCheatmap.insilico
 dev.off()
 

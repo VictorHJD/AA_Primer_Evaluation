@@ -52,6 +52,59 @@ rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
 ##Create a table with total number of ASVs per primer pair
 #write.csv(rawcounts, file = "~/AA_Primer_evaluation/ASVs_per_Primer_Pair.csv")
 
+##Extract sample counts information by primer combination 
+samplecounts<- data.frame()
+
+for (i in 1: length(PS.l)) ### Start a loop: for every element in the list ...
+{ 
+  tmp <- data.frame() #### make an individual data frame ...
+  
+  {
+    tmp <- as.data.frame(sapply(PS.l[i], function(x) sample_sums(x)))  ###Make a data frame with the sample sums for each primer combination 
+    tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
+    tmp[,3] <- names(PS.l[i])
+    colnames(tmp)<- c("Read_non_rare","Sample_ID", "Primer_comb_ID")
+    rownames(tmp) <- c(1:nrow(tmp))
+  }
+  samplecounts <- rbind(samplecounts, tmp) ### Join all the "individual" data frames into the list 
+}
+
+tmp<- primerInput[,c(9,15)]
+
+samplecounts%>%
+plyr::join(tmp, by="Primer_comb_ID")-> samplecounts
+
+rm(tmp)
+##Check how different is the output for each primer combination
+##Calculate summary statistics
+samplecounts%>%
+  dplyr::group_by(Primer_comb_ID)%>%
+  dplyr::summarize(mean_reads= mean(Read_non_rare, na.rm = T), 
+                   sd_reads= sd(Read_non_rare, na.rm = T),
+                   n_reads= n())%>%
+  mutate(se_reads= sd_reads/sqrt(n_reads),
+         lower_ci_reads = mean_reads - qt(1 - (0.05 / 2), n_reads - 1) * se_reads,
+         upper_ci_reads = mean_reads + qt(1 - (0.05 / 2), n_reads - 1) * se_reads)-> tmp
+  
+samplecounts%>%
+  plyr::join(tmp, by= "Primer_comb_ID")%>%
+  mutate(Primer_comb_ID= fct_reorder(Primer_comb_ID, -mean_reads))-> samplecounts_raw
+
+rm(tmp, samplecounts)
+
+#require("ggsci")
+raw<- ggplot(samplecounts_raw, aes(x = Primer_comb_ID, y= Read_non_rare))+
+  #geom_boxplot(outlier.colour = "black")+
+  coord_flip()+
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(color= Gen), alpha= 0.5)+
+  #scale_y_log10()+
+  labs(x="Primer combination ID", y = "Raw read count")+
+  stat_summary(fun.data=mean_cl_normal, geom="pointrange", shape=16, size=0.5, color="black")+
+  #scale_color_npg()+
+  scale_color_manual(values = c("#E3DAC9", "pink", "#440154FF", "#21908CFF","#FDE725FF", "#C46210", "#D0FF14"))+
+  theme_minimal()+
+  labs(tag = "A)")
+
 ###Rarefaction curves by amplicon 
 ###Summary by amplicon
 s.list <- lapply(PS.l, function (x) {
@@ -102,6 +155,58 @@ colnames(highcounts) <- c("Reads_high","Primer_comb_ID")
 highcounts <- data.frame(Primer_comb_ID = highcounts$Primer_comb_ID, Reads_high = highcounts$Reads_high) 
 highcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", highcounts$Primer_comb_ID)
 
+##Read count samples by primer pair after zero discard
+samplecounts<- data.frame()
+
+for (i in 1: length(PS.l.High)) ### Start a loop: for every element in the list ...
+{ 
+  tmp <- data.frame() #### make an individual data frame ...
+  
+  {
+    tmp <- as.data.frame(sapply(PS.l.High[i], function(x) sample_sums(x)))  ###Make a data frame with the sample sums for each primer combination 
+    tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
+    tmp[,3] <- names(PS.l.High[i])
+    colnames(tmp)<- c("Read_non_rare","Sample_ID", "Primer_comb_ID")
+    rownames(tmp) <- c(1:nrow(tmp))
+  }
+  samplecounts <- rbind(samplecounts, tmp) ### Join all the "individual" data frames into the list 
+}
+
+tmp<- primerInput[,c(9,15)]
+
+samplecounts%>%
+  plyr::join(tmp, by="Primer_comb_ID")-> samplecounts
+
+rm(tmp)
+##Check how different is the output for each primer combination
+##Calculate summary statistics
+samplecounts%>%
+  dplyr::group_by(Primer_comb_ID)%>%
+  dplyr::summarize(mean_reads= mean(Read_non_rare, na.rm = T), 
+                   sd_reads= sd(Read_non_rare, na.rm = T),
+                   n_reads= n())%>%
+  mutate(se_reads= sd_reads/sqrt(n_reads),
+         lower_ci_reads = mean_reads - qt(1 - (0.05 / 2), n_reads - 1) * se_reads,
+         upper_ci_reads = mean_reads + qt(1 - (0.05 / 2), n_reads - 1) * se_reads)-> tmp
+
+samplecounts%>%
+  plyr::join(tmp, by= "Primer_comb_ID")%>%
+  mutate(Primer_comb_ID= fct_reorder(Primer_comb_ID, -mean_reads))-> samplecounts_high
+
+rm(tmp, samplecounts)
+
+#require("ggsci")
+high<- ggplot(samplecounts_high, aes(x = Primer_comb_ID, y= Read_non_rare))+
+  #geom_boxplot(outlier.colour = "black")+
+  coord_flip()+
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(color= Gen), alpha= 0.5)+
+  #scale_y_log10()+
+  labs(x="Primer combination ID", y = "Read count high samples (no-zero counts)")+
+  stat_summary(fun.data=mean_cl_normal, geom="pointrange", shape=16, size=0.5, color="black")+
+  #scale_color_npg()+
+  scale_color_manual(values = c("#E3DAC9", "pink", "#440154FF", "#21908CFF","#FDE725FF", "#C46210", "#D0FF14"))+
+  theme_minimal()+
+  labs(tag = "B)")
 
 ###Rarefied data
 ##Each amplicon has their own depth, so rarefy to the total sum of reads by ASV by amplicon 
@@ -119,6 +224,63 @@ rownames(rarecounts) <- c(1:nrow(rarecounts))
 colnames(rarecounts) <- c("Reads_rare","Primer_comb_ID")
 rarecounts <- data.frame("Primer_comb_ID" = rarecounts$Primer_comb_ID, Reads_rare = rarecounts$Reads_rare) 
 rarecounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rarecounts$Primer_comb_ID)
+
+##Read count samples by primer pair after rarefaction
+samplecounts<- data.frame()
+
+for (i in 1: length(PS.l.rar)) ### Start a loop: for every element in the list ...
+{ 
+  tmp <- data.frame() #### make an individual data frame ...
+  
+  {
+    tmp <- as.data.frame(sapply(PS.l.rar[i], function(x) sample_sums(x)))  ###Make a data frame with the sample sums for each primer combination 
+    tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
+    tmp[,3] <- names(PS.l.rar[i])
+    colnames(tmp)<- c("Reads_rare","Sample_ID", "Primer_comb_ID")
+    rownames(tmp) <- c(1:nrow(tmp))
+  }
+  samplecounts <- rbind(samplecounts, tmp) ### Join all the "individual" data frames into the list 
+}
+
+tmp<- primerInput[,c(9,15)]
+
+samplecounts%>%
+  plyr::join(tmp, by="Primer_comb_ID")-> samplecounts
+
+rm(tmp)
+##Check how different is the output for each primer combination
+##Calculate summary statistics
+samplecounts%>%
+  dplyr::group_by(Primer_comb_ID)%>%
+  dplyr::summarize(mean_reads= mean(Reads_rare, na.rm = T), 
+                   sd_reads= sd(Reads_rare, na.rm = T),
+                   n_reads= n())%>%
+  mutate(se_reads= sd_reads/sqrt(n_reads),
+         lower_ci_reads = mean_reads - qt(1 - (0.05 / 2), n_reads - 1) * se_reads,
+         upper_ci_reads = mean_reads + qt(1 - (0.05 / 2), n_reads - 1) * se_reads)-> tmp
+
+samplecounts%>%
+  plyr::join(tmp, by= "Primer_comb_ID")%>%
+  mutate(Primer_comb_ID= fct_reorder(Primer_comb_ID, -mean_reads))-> samplecounts_rare
+
+rm(tmp, samplecounts)
+
+#require("ggsci")
+rare<-ggplot(samplecounts_rare, aes(x = Primer_comb_ID, y= Reads_rare))+
+  #geom_boxplot(outlier.colour = "black")+
+  coord_flip()+
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(color= Gen), alpha= 1)+
+  #scale_y_log10()+
+  labs(x="Primer combination ID", y = "Read count (after rarefaction)")+
+  #stat_summary(fun.data=mean_cl_normal, geom="pointrange", shape=16, size=0.5, color="black")+
+  #scale_color_npg()+
+  scale_color_manual(values = c("#E3DAC9", "pink", "#440154FF", "#21908CFF","#FDE725FF", "#C46210", "#D0FF14"))+
+  theme_minimal()+
+  labs(tag = "C)")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Supplementary_7.pdf", width = 20, height = 10)
+grid.arrange(raw, high, rare, ncol=3, nrow=1)
+dev.off()
 
 ##Alpha diversity 
 alphaDiv <- data.frame()
