@@ -54,6 +54,12 @@ colnames(taxID_18S)<- "Taxonomic_ID"
 #accession_18S$Taxonomic_ID<- taxID_18S
 #rm(taxID_18S)
 
+##Create a file for mapping taxid 
+ENA_18S_db<-as.data.frame(Seq_18S_names)
+ENA_18S_db<- bind_cols(ENA_18S_db, taxID_18S)
+write.table(ENA_18S_db, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/input/ENA_18S_db.txt", sep = "\t",
+            row.names = FALSE, col.names = FALSE, quote = FALSE)
+
 ##convert taxonomic IDs to taxonomy
 Taxonomy_18S<- taxonomizr::getTaxonomy(as.character(taxID_18S$Taxonomic_ID), sqlFile = "/SAN/db/taxonomy/taxonomizr.sql")
 
