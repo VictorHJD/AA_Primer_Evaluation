@@ -650,6 +650,10 @@ foo.18S<- foo.primer[foo.primer$Gen == "18S",]
 if(Phylum){foo.18S2<- foo.18S[,1:45]}
 if(Genus){foo.18S2<- foo.18S[,1:2067]}
 
+##Submatix for "parasites" to compair with in silico results
+parasites.18S2<- foo.18S2[,c("Apicomplexa", "Nematoda", "Microsporidia", "Platyhelminthes")]
+saveRDS(parasites.18S2, file = "~/AA_Primer_evaluation/In_vitro_parasites_18S.RDS")
+
 foo.18S2.pca<- PCA(foo.18S2, graph = T)
 foo.18S2.eig<- get_eigenvalue(foo.18S2.pca)
 fviz_eig(foo.18S2.pca, addlabels = TRUE, ylim = c(0, 50))
