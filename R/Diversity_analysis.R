@@ -93,17 +93,22 @@ samplecounts%>%
 rm(tmp, samplecounts)
 
 #require("ggsci")
-raw<- ggplot(samplecounts_raw, aes(x = Primer_comb_ID, y= Read_non_rare))+
+require("ggpubr")
+raw<- ggplot(subset(samplecounts_raw, Gen %in% "18S"), aes(x = Primer_comb_ID, y= Read_non_rare))+
   #geom_boxplot(outlier.colour = "black")+
   coord_flip()+
   geom_jitter(shape=16, position=position_jitter(0.2), aes(color= Gen), alpha= 0.5)+
   #scale_y_log10()+
   labs(x="Primer combination ID", y = "Raw read count")+
-  stat_summary(fun.data=mean_cl_normal, geom="pointrange", shape=16, size=0.5, color="black")+
+  stat_summary(fun.data=mean_cl_normal, geom="pointrange", shape=16, size=0.5, color="white")+
   #scale_color_npg()+
-  scale_color_manual(values = c("#E3DAC9", "pink", "#440154FF", "#21908CFF","#FDE725FF", "#C46210", "#D0FF14"))+
+  #scale_color_manual(values = c("#E3DAC9", "pink", "#440154FF", "#21908CFF","#FDE725FF", "#C46210", "#D0FF14"))+
+  scale_color_manual(values = "#440154FF")+
   theme_minimal()+
-  labs(tag = "A)")
+  labs(tag = "A)")+
+  stat_compare_means(method = "anova",
+                     aes(label = paste0(..method.., "\n","p ",..p.format..)), label.y= 10000, label.x = 20)+
+  stat_compare_means(label = "p.signif", method = "t.test", ref.group = ".all.") 
 
 ###Rarefaction curves by amplicon 
 ###Summary by amplicon
@@ -466,8 +471,8 @@ col_groups$Primer_comb_ID<- NULL
 
 colour_groups <- list( Gen= c("12S"= "#E3DAC9", "16S"= "pink","18S"= "#440154FF", "28S"= "#21908CFF", 
                               "COI"= "#FDE725FF", "ITS"= "#C46210", "rbcL"= "#D0FF14"),
-                       Region= c("V1-V2"= "#8DD3C7", "V3-V4"= "#FFFFB3", "V4"= "#BEBADA", "V4-V5"= "#FB8072", "V6-V7"= "#80B1D3",
-                                 "V6-V8"="#FDB462", "V7-V8"= "#B3DE69", "V8-V9"= "#FCCDE5", "V9"= "#D9D9D9",
+                       Region= c("V1-V2"= "#8DD3C7","V1-V3"= "#009999" ,"V3-V4"= "#FFFFB3", "V4"= "#BEBADA", "V4-V5"= "#FB8072", "V6-V7"= "#80B1D3",
+                                 "V6-V8"="#FDB462", "V7-V8"= "#B3DE69", "V7-V9"="#FC4E07","V8-V9"= "#FCCDE5", "V9"= "#D9D9D9",
                                  "D2"="#D95F02", "D3"= "#7570B3", "Folmer"= "#E7298A", "ITS1"= "#A6761D", "Chloroplast"= "#66A61E", "Mitochondrial"= "#E6AB02"))
 require(pheatmap)
 require(viridis)
@@ -659,7 +664,7 @@ a18<- fviz_pca_ind(foo.18S2.pca,
                    geom.ind = "point", # show points only (but not "text")
                    col.ind = "black", # color by region
                    fill.ind =  foo.18S$Region,
-                   palette = c("#8DD3C7", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5", "#D9D9D9"),
+                   palette = c("#8DD3C7", "#009999","#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FC4E07","#FCCDE5", "#D9D9D9"),
                    addEllipses = F, # Concentration ellipses
                    legend.title = "Region")+
   labs(tag = "A)")
