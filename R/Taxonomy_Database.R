@@ -20,8 +20,17 @@ env2list <- function(env){
   mget(names, env)
 }
 
-##
-source("~/GitProjects/AA_Primer_Evaluation/R/In_silico_primer_evaluation.R")
+##Load PrimerTree results 
+primerTreeResults<- list.files(path = "~/AA_Primer_evaluation/output/taxonomy", pattern = ".csv", full.names = T)
+
+lapply(primerTreeResults, function(x) {
+  objname<- gsub("/home/victor/AA_Primer_evaluation/output/taxonomy/", "", x)
+  objname<- gsub(".csv", "", objname)
+  tmp <- read_csv(x)
+  assign(objname, tmp, envir = .GlobalEnv)
+})
+
+#source("~/GitProjects/AA_Primer_Evaluation/R/In_silico_primer_evaluation.R")
 
 ##Load data base 18S 
 #Seq_18S_db<- Biostrings::readDNAStringSet("/SAN/db/ENA_marker/18S_All_ENA.fasta.gz1700cleaned.fasta", format = "fasta") ##Seq names un formated
@@ -212,10 +221,64 @@ foo[is.na(foo)]<- 0
 rownames(foo)<-foo[,1]
 foo[,1]<- NULL
 
+##Prepair matrix for PCA analysis at phylum level (just for primers in manuscript)
+alltaxa%>%
+  dplyr::select(2,10)%>%
+  group_by(Primer_comb_ID)%>%
+  distinct(phylum, .keep_all = TRUE)%>%
+  mutate(Abundance= 1)%>%
+  dplyr::filter(!(Primer_comb_ID %in% c("Euk_18S_22", "Euk_18S_23", "Euk_18S_24")))-> foo
+
+foo<- as.data.frame(foo)
+foo<- reshape(foo, v.names = "Abundance",timevar= "phylum", idvar= "Primer_comb_ID", direction= "wide")
+colnames(foo) <- gsub("Abundance.", "\\1", colnames(foo)) ##Remove "Rel_abund_amp"
+foo[is.na(foo)]<- 0
+rownames(foo)<-foo[,1]
+foo[,1]<- NULL
+
 require("vegan")
 foo.matrix<- as.matrix(foo)
 foo.braycurt<- vegdist(foo.matrix, method = "bray")
 as.matrix(foo.braycurt)
+
+##Subset matrix for parasites in silico
+parasites.18S2.insilico<- foo.matrix[,c("Apicomplexa", "Nematoda", "Microsporidia", "Platyhelminthes")]
+
+##Load matrix for parasites in vitro
+parasites.18S2.invitro<- readRDS(file = "~/AA_Primer_evaluation/In_vitro_parasites_18S.RDS")
+parasites.18S2.invitro<- as.matrix(parasites.18S2.invitro)
+
+##Transform relative abundance data into presence/absence data
+for(i in 1:ncol(parasites.18S2.invitro)){
+  for(j in 1:nrow(parasites.18S2.invitro)){
+if(parasites.18S2.invitro[j,i]>0){
+  parasites.18S2.invitro[j,i]<-1
+    } 
+  }
+}
+
+##Estimate BC dissimilarity in vitro and in silico for parasites 
+parasites.invitro.BC<- vegdist(parasites.18S2.invitro, method = "bray")
+parasites.insilico.BC<- vegdist(parasites.18S2.insilico, method = "bray")
+
+parasites.insilico.BC<- as.matrix(parasites.insilico.BC)
+parasites.invitro.BC<- as.matrix(parasites.invitro.BC)
+
+mantel(parasites.insilico.BC, parasites.invitro.BC, permutations = 1000)
+
+##Plot BC dissimiliraty and geographic distance 
+combi.dist<- data.frame(insilico= as.vector(parasites.insilico.BC),
+                        invitro= as.vector(parasites.invitro.BC))
+
+geo.plot<- ggplot(combi.dist, aes(insilico, invitro)) +
+  geom_jitter(alpha=1, width=0.3, height=0, color= "lightblue") + 
+  stat_smooth(se=T, method="lm") +
+  scale_x_continuous("In silico Bray-Curtis dissimilarity between primers") +
+  scale_y_continuous("In vitro Bray-Curtis dissimilarity between primers") +
+  labs(tag = "B)")+
+  theme_classic(base_size = 15, base_family = "Helvetica")
+
+
 
 ###Using pheatmap to include annotations 
 foo.clust <- hclust(dist(foo.braycurt), method = "complete") ##Dendogram
