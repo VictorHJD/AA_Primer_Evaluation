@@ -327,3 +327,60 @@ pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figu
 BCheatmap.insilico
 dev.off()
 
+###PCA with Primer tree data 
+foo$Primer_comb_ID<- rownames(foo)
+foo.primer<-join(foo, primerInput, by= "Primer_comb_ID")
+rownames(foo.primer)<- foo.primer$Primer_comb_ID
+foo$Primer_comb_ID<- NULL
+
+require("FactoMineR") 
+foo.18S_Is.pca<- PCA(foo, graph = T)
+foo.18S_Is.eig<- get_eigenvalue(foo.18S_Is.pca)
+
+a18Is<- fviz_pca_ind(foo.18S_Is.pca,
+                     pointsize = "cos2", ##It is possible to size it by number of reads pointsize = log10(foo.primer$Total_reads)
+                     pointshape = 21,
+                     geom.ind = "point", # show points only (but not "text")
+                     col.ind = "black", # color by region
+                     fill.ind =  foo.primer$Region,
+                     palette = c("#8DD3C7", "#009999","#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FC4E07","#FCCDE5", "#D9D9D9"),
+                     addEllipses = F, # Concentration ellipses
+                     legend.title = "Region")+
+  labs(tag = "A)")
+
+b18IS<-fviz_pca_ind(foo.18S_Is.pca,
+                    pointsize = log10(foo.primer$Expected), 
+                    geom.ind = "point", # show points only (but not "text")
+                    col.ind = foo.primer$Expected, # color by groups
+                    gradient.cols = c("blue", "red"),
+                    alpha.ind = 0.7,
+                    addEllipses = F, # Concentration ellipses
+                    legend.title = "Expected \namplicon size")+
+  labs(tag = "B)")
+
+c18Is<- fviz_contrib(foo.18S_Is.pca, choice = "ind", axes = 1:2, fill = "#440154FF", color = "#440154FF")+
+  labs(tag = "C)") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1))
+
+d18Is<- fviz_pca_var(foo.18S_Is.pca, col.var = "cos2", select.var = list(contrib = 10),
+                     gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+                     repel = TRUE )+ # Avoid text overlapping
+  labs(tag = "D)")
+
+##Composition bar plot is made based on data from In_silico_primer_evaluation.R (for now later will be necessary to re-structure codes :S)
+#e18Is<-ggplot(data=Relative_abundance_18S, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
+#  scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
+#                               "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061", #"#c00000",
+#                               "darkolivegreen",#"#FFDB77FF",
+#                               "lightgrey",#"#004CFFFF",
+#                               "#969696"))+
+#  geom_bar(aes(), stat="identity", position="fill") +
+#  theme_bw() +
+#  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+#  labs(x = "Primer combination ID", y= "Relative abundance (In silico)", tag = "E)")+
+  guides(fill= guide_legend(nrow = 8))
+
+pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figure_PrimerTree.pdf", width = 10, height = 15)
+grid.arrange(a18Is,b18IS, c18Is, d18Is, e18Is, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
+dev.off()
+
