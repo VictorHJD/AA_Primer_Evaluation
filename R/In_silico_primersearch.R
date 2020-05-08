@@ -6,9 +6,10 @@ library("annotate")
 library("taxonomizr")
 library("metacoder")
 
-#Using as reference the function from metacoder package transform primersearch output into an R readable file  
-
-raw_output <- readLines("/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primersearch_18S_ENA")
+#Modification from metabarcoder::parse_primersearch to reshape primersearch output into data frame containing:
+#Primer name (not included in the original function)
+#Sequence name (input) --> for our db is directly the taxid  
+#Product amplicon (not included in the original function) 
 
 parse_primersearch <- function(raw_output) {
   # Split output into chunks for each primer
@@ -29,10 +30,17 @@ parse_primersearch <- function(raw_output) {
                                      do.call(rbind, primer_data)[, -1]), stringsAsFactors = FALSE)
   # Reformat amplicon data
   colnames(primer_data) <- c("pair_name", "amplimer", "input", "name", "f_primer", "f_start",
-                             "f_mismatch",  "r_primer", "r_start", "r_mismatch")
-  primer_data <- primer_data[, c("input",  "f_primer", "f_start", "f_mismatch",
-                                 "r_primer", "r_start", "r_mismatch")]
-  numeric_cols <- c("f_start", "f_mismatch", "r_start", "r_mismatch", "input")
+                             "f_mismatch",  "r_primer", "r_start", "r_mismatch", "product_length")
+  primer_data <- primer_data[, c("pair_name","input",  "f_primer", "f_start", "f_mismatch",
+                                 "r_primer", "r_start", "r_mismatch", "product_length")]
+  numeric_cols <- c("f_start", "f_mismatch", "r_start", "r_mismatch", "input", "product_length")
   for (col in numeric_cols) primer_data[, col] <- as.numeric(primer_data[, col]) 
   return(primer_data)
 } 
+
+##Load raw results 
+##In silico PCR against ENA full 18S database
+raw_output <- readLines("/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primersearch_18S_ENA")
+
+
+Primer_search_18S_results<- parse_primersearch(raw_output = raw_output)
