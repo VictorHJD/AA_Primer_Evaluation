@@ -38,10 +38,10 @@ if(primerTreedata){
 
 if(primerSearchdata){
   ##Load primersearch results 
-  primersearchResults<- list.files(path = "~/AA_Primer_evaluation/output/taxonomy/primersearch", pattern = ".csv", full.names = T)
+  primersearchResults<- list.files(path = "~/AA_Primer_evaluation/output/primersearch/taxonomy", pattern = ".csv", full.names = T)
 
   lapply(primerTreeResults, function(x) {
-    objname<- gsub("/home/victor/AA_Primer_evaluation/output/taxonomy/primersearch/", "", x)
+    objname<- gsub("/home/victor/AA_Primer_evaluation/output/primersearch/taxonomy/", "", x)
     objname<- gsub(".csv", "", objname)
     tmp <- read_csv(x)
     assign(objname, tmp, envir = .GlobalEnv)
