@@ -92,6 +92,7 @@ Primer_search_18S_results$taxID<- stringr::str_extract(Primer_search_18S_results
 
 ##Create a list to split information into each primer combination
 primers18S_list<- split(Primer_search_18S_results, Primer_search_18S_results$pair_name)
+#saveRDS(primers18S_list, "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primersearch_18S_list.rds")
 
 ##Send each to the global environment
 list2env(primers18S_list, envir = .GlobalEnv)
