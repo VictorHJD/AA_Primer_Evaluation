@@ -81,7 +81,7 @@ PrimersOther<- F ##ITS, rbcL, 12S
 ##Load raw results 
 if(Primers18S){
 ##In silico PCR against ENA full 18S database
-raw_output <- readLines("/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primersearch_18S_ENA")
+raw_output <- readLines("/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerSearchObj/primersearch_18S_ENA")
 }
 
 ##Analysis
@@ -92,7 +92,7 @@ Primer_search_18S_results$taxID<- stringr::str_extract(Primer_search_18S_results
 
 ##Create a list to split information into each primer combination
 primers18S_list<- split(Primer_search_18S_results, Primer_search_18S_results$pair_name)
-#saveRDS(primers18S_list, "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primersearch_18S_list.rds")
+#saveRDS(primers18S_list, "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerSearchTax/primersearch_18S_list.rds")
 
 ##Send each to the global environment
 list2env(primers18S_list, envir = .GlobalEnv)
@@ -366,23 +366,31 @@ Relative_abundance_18S%>%
   dplyr::mutate(phylum= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(phylum)))%>%
   arrange(Primer_name, desc(phylum))->Relative_abundance_18S
 
+Relative_abundance_18S$phylum[is.na(Relative_abundance_18S$phylum)]<- "Unassigned" ##Change NA's into Unassigned 
+
 rm(Euk_18S_01_RA, Euk_18S_02_RA, Euk_18S_03_RA, Euk_18S_04_RA, Euk_18S_05_RA, Euk_18S_06_RA,
    Euk_18S_07_RA, Euk_18S_08_RA, Euk_18S_09_RA, Euk_18S_10_RA, Euk_18S_11_RA, Euk_18S_12_RA,
    Euk_18S_13_RA, Euk_18S_14_RA, Euk_18S_15_RA, Euk_18S_16_RA, Euk_18S_17_RA, Euk_18S_18_RA,
    Euk_18S_19_RA, Euk_18S_20_RA, Euk_18S_21_RA)
 
-#RA_18S <- 
+e18Is <- 
 ggplot(data=Relative_abundance_18S, aes(x= Primer_name,y= Rel_abund, fill= phylum)) +
   scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
-                               "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061", "#c00000","darkolivegreen","#FFDB77FF","lightgrey","#004CFFFF","#969696"))+
+                               "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061", "lightgrey","#969696","#004CFFFF","#c00000","darkolivegreen","#FFDB77FF","lightgrey","#969696"))+
   geom_bar(aes(), stat="identity", position="fill") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
   labs(x = "Primer combination ID", y= "Relative abundance (In silico)", tag = "A)")+
   guides(fill= guide_legend(nrow = 8))
 
-#pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Figure_1_primersearch18S.pdf", width = 10, height = 8)
-#RA_18S
-#dev.off()
+pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Figure_1_primersearch18S.pdf", width = 10, height = 8)
+e18Is
+dev.off()
+
+##Save all "Results" files as a list that could be used for the diversity analysis
+
+insilico_18S <- env2list18S(.GlobalEnv)
+saveRDS(insilico_18S, file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerSearchTax/primersearch_18S_Tax.rds")
+
 
 }
