@@ -15,7 +15,7 @@ library("tidyverse")
 
 ##Functions
 ##Convert objects with in silico taxnomoy for 18S results in the global environment into a list
-env2list <- function(env){
+env2list18S <- function(env){
   names = ls(env, pattern = "18S_\\d+_Results$")
   mget(names, env)
 }
@@ -56,12 +56,17 @@ if(!exists("Unique_taxa")){
   source("~/GitProjects/AA_Primer_Evaluation/R/Taxonomy_Database.R") ##   
 }
 
+if(!exists("insilico_18S")){
+  insilico_18S<- readRDS(file = "/SAN/Victors_playground/Metabarcoding/AA_Primer_Evaluation/output/primerSearchTax/primersearch_18S_Tax.rds")
+}
+
+  
 ##Get counts of unique taxa per primer pair using in silico predictions
-insilico_18S <- env2list(.GlobalEnv)
+#insilico_18S <- env2list18S(.GlobalEnv)
 
 names_18S <- gsub("_Results", "\\1", names(insilico_18S))
 
-##Data frame with total unique taxa by primer combinations
+##Data frame with total unique taxa by primer combinations (Check it for primersearch results!)
 final<- list() ###Start with an empty list 
 
 for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the list ...
@@ -89,7 +94,7 @@ Unique_taxa<- cbind(Unique_taxa, final)
 
 rm(tmp)
 
-write.csv(Unique_taxa, "~/AA_Primer_evaluation/output/primersearch/Unique_taxa_by_primer_combination.csv")
+write.csv(Unique_taxa, "~/AA_Primer_evaluation/output/primersearch/taxonomy/Unique_taxa_by_primer_combination.csv")
 
 final_trans <- data.table::transpose(final)
 rownames(final_trans)<- colnames(final)
