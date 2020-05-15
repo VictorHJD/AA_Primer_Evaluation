@@ -380,7 +380,7 @@ ggplot(data=Relative_abundance_18S, aes(x= Primer_name,y= Rel_abund, fill= phylu
   geom_bar(aes(), stat="identity", position="fill") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
-  labs(x = "Primer combination ID", y= "Relative abundance (In silico)", tag = "A)")+
+  labs(x = "Primer combination ID", y= "Relative abundance (In silico)", tag = "E)")+
   guides(fill= guide_legend(nrow = 8))
 
 pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Figure_1_primersearch18S.pdf", width = 10, height = 8)

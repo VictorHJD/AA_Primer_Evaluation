@@ -77,8 +77,8 @@ for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the li
     tmp <- as.data.frame(sapply(insilico_18S[[i]], function(x) n_distinct(x, na.rm = T)))  ###Make a data frame with the data included in each element of the list 
     colnames(tmp)<- i
     tmp[,2]<-rownames(tmp) ### And use the rownames as information of the second column
-    tmp<- dplyr::slice(tmp, match(c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession"), V2))
-    tmp<- dplyr::mutate(tmp, V3= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S")) ##Vector with desired order
+    tmp<- dplyr::slice(tmp, match(c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxID"), V2)) ##for primerTree results: "taxId", "accession"
+    tmp<- dplyr::mutate(tmp, V3= c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID")) ##Vector with desired order, primerTree also has , "Accession_18S"
     tmp<-  column_to_rownames(tmp, "V3") 
     tmp<- dplyr::select(tmp, -V2)
     
@@ -89,6 +89,11 @@ for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the li
 final<- data.frame(final)
 
 colnames(final)<- names_18S
+
+final%>%
+  add_row()-> final ##Add an extra row to make the binding possible... this is not necessary for primerTree results.
+
+row.names(final)<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S")
 
 Unique_taxa<- cbind(Unique_taxa, final)
 
@@ -110,8 +115,8 @@ for (i in 1: length(insilico_18S)) ### Start a loop: for every element in the li
   tmp <- data.frame() #### make an individual data frame ...
   {
     tmp <- as.data.frame(distinct(insilico_18S[[i]]))  ###Make a data frame with the data included in each element of the list 
-    tmp<- dplyr::select(tmp, c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxId", "accession"))
-    colnames(tmp)<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID", "Accession_18S")
+    tmp<- dplyr::select(tmp, c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "taxID"))
+    colnames(tmp)<- c("superkingdom", "phylum", "class", "order", "family", "genus", "species", "Taxonomic_ID")
     tmp<- dplyr::mutate(tmp, Primer_comb_ID= names(insilico_18S[i])) ##Add a colum with Primer combination name
   }
   alltaxa<- rbind(alltaxa, tmp) ### Join all the "individual" data frames into the final data frame 
@@ -146,7 +151,7 @@ pre_cum_in_silico[is.na(pre_cum_in_silico)]<- 0 ##Transform false NAs to zeros
 
 pre_cum_in_silico$Primer_ID<- NULL
 
-#write.csv(pre_cum_in_silico, "~/AA_Primer_evaluation/Pre_cum_tax_comb18_in_silico.csv") ##save again just in case of change
+#write.csv(pre_cum_in_silico, "~/AA_Primer_evaluation/output/primersearch/taxonomy/Pre_cum_tax_comb18_in_silico.csv") ##save again just in case of change
 
 ##Create a real cummulative count of taxa by primer combination for cummulative curves
 pre_cum_in_silico%>%
@@ -157,7 +162,7 @@ pre_cum_in_silico%>%
   mutate(cum.class= cumsum(class))%>%
   mutate(cum.phylum= cumsum(phylum))%>%
   mutate(Primer_name= as.integer(rownames(pre_cum_in_silico)))%>%
-  dplyr::select(-(1:10))%>%
+  dplyr::select(-(1:9))%>%
   dplyr::select(Primer_name, cum.species, cum.genus, cum.family, cum.order, cum.class, cum.phylum)-> cum.tax.comb18.insilico
 
 rm(pre_cum_in_silico, tmp)
@@ -169,22 +174,22 @@ cum.tax.comb18.insilico<- rbind(baseline.zero, cum.tax.comb18.insilico)
 
 cum.plot.comb18.insilico <- ggplot(cum.tax.comb18.insilico) +
   geom_step(aes(Primer_name, cum.species), color="red") +
-  geom_text(aes(24, cum.tax.comb18.insilico[25,2]+3000, label="Species"), color="red")+ 
+  geom_text(aes(24, cum.tax.comb18.insilico[21,2]+4000, label="Species"), color="red")+ 
   geom_hline(yintercept = Unique_taxa[7,1], color="red", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.genus), color="#0D0887FF") +
-  geom_text(aes(24, cum.tax.comb18.insilico[25,3]+1000, label="Genera"), color="#0D0887FF") +
+  geom_text(aes(24, cum.tax.comb18.insilico[21,3]+1000, label="Genera"), color="#0D0887FF") +
   geom_hline(yintercept = Unique_taxa[6,1], color="#0D0887FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.family), color="#7E03A8FF") +
-  geom_text(aes(24, cum.tax.comb18.insilico[25,4]+400, label="Families"), color="#7E03A8FF") +
+  geom_text(aes(24, cum.tax.comb18.insilico[21,4]+400, label="Families"), color="#7E03A8FF") +
   geom_hline(yintercept = Unique_taxa[5,1], color="#7E03A8FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.order), color="#CC4678FF") +
-  geom_text(aes(24, cum.tax.comb18.insilico[25,5]+100, label="Orders"), color="#CC4678FF") +
+  geom_text(aes(24, cum.tax.comb18.insilico[21,5]+100, label="Orders"), color="#CC4678FF") +
   geom_hline(yintercept = Unique_taxa[4,1], color="#CC4678FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.class), color="#F0F921FF") +
-  geom_text(aes(24, cum.tax.comb18.insilico[25,6]+50, label="Classes"), color="#F0F921FF") +
+  geom_text(aes(24, cum.tax.comb18.insilico[21,6]+50, label="Classes"), color="#F0F921FF") +
   geom_hline(yintercept = Unique_taxa[3,1], color="#F0F921FF", linetype= "dashed")+
   geom_step(aes(Primer_name, cum.phylum), color="#F89441FF") +
-  geom_text(aes(24, cum.tax.comb18.insilico[25,7]+10, label="Phyla"), color="#F89441FF") +
+  geom_text(aes(24, cum.tax.comb18.insilico[21,7]+10, label="Phyla"), color="#F89441FF") +
   geom_hline(yintercept = Unique_taxa[2,1], color="#F89441FF", linetype= "dashed")+
   scale_y_log10("Cummulative count of taxa") +
   scale_x_continuous("Number of primers considered \n (starting with the one with highest read count)") + 
@@ -203,7 +208,7 @@ cum.plot.comb18.insilico <- ggplot(cum.tax.comb18.insilico) +
 ###Matrix with presence/absence (1/0) data for the in silico analysis
 ##Prepair matrix for PCA analysis at genus level
 alltaxa%>%
-  dplyr::select(6,10)%>%
+  dplyr::select(6,9)%>%
   group_by(Primer_comb_ID)%>%
   distinct(genus, .keep_all = TRUE)%>%
   mutate(Abundance= 1)-> foo
@@ -217,11 +222,12 @@ foo[,1]<- NULL
 
 ##Prepair matrix for PCA analysis at phylum level (just for primers in manuscript)
 alltaxa%>%
-  dplyr::select(2,10)%>%
+  dplyr::select(2,9)%>%
   group_by(Primer_comb_ID)%>%
   distinct(phylum, .keep_all = TRUE)%>%
-  mutate(Abundance= 1)%>%
-  dplyr::filter(!(Primer_comb_ID %in% c("Euk_18S_22", "Euk_18S_23", "Euk_18S_24")))-> foo
+  mutate(Abundance= 1) -> foo #%>%
+  #dplyr::filter(!(Primer_comb_ID %in% c("Euk_18S_22", "Euk_18S_23", "Euk_18S_24")))
+  
 
 foo<- as.data.frame(foo)
 foo<- reshape(foo, v.names = "Abundance",timevar= "phylum", idvar= "Primer_comb_ID", direction= "wide")
@@ -234,45 +240,6 @@ require("vegan")
 foo.matrix<- as.matrix(foo)
 foo.braycurt<- vegdist(foo.matrix, method = "bray")
 as.matrix(foo.braycurt)
-
-##Subset matrix for parasites in silico
-parasites.18S2.insilico<- foo.matrix[,c("Apicomplexa", "Nematoda", "Microsporidia", "Platyhelminthes")]
-
-##Load matrix for parasites in vitro
-parasites.18S2.invitro<- readRDS(file = "~/AA_Primer_evaluation/In_vitro_parasites_18S.RDS")
-parasites.18S2.invitro<- as.matrix(parasites.18S2.invitro)
-
-##Transform relative abundance data into presence/absence data
-for(i in 1:ncol(parasites.18S2.invitro)){
-  for(j in 1:nrow(parasites.18S2.invitro)){
-    if(parasites.18S2.invitro[j,i]>0){
-      parasites.18S2.invitro[j,i]<-1
-    } 
-  }
-}
-
-##Estimate BC dissimilarity in vitro and in silico for parasites 
-parasites.invitro.BC<- vegdist(parasites.18S2.invitro, method = "bray")
-parasites.insilico.BC<- vegdist(parasites.18S2.insilico, method = "bray")
-
-parasites.insilico.BC<- as.matrix(parasites.insilico.BC)
-parasites.invitro.BC<- as.matrix(parasites.invitro.BC)
-
-mantel(parasites.insilico.BC, parasites.invitro.BC, permutations = 1000)
-
-##Plot BC dissimiliraty and geographic distance 
-combi.dist<- data.frame(insilico= as.vector(parasites.insilico.BC),
-                        invitro= as.vector(parasites.invitro.BC))
-
-geo.plot<- ggplot(combi.dist, aes(insilico, invitro)) +
-  geom_jitter(alpha=1, width=0.3, height=0, color= "lightblue") + 
-  stat_smooth(se=T, method="lm") +
-  scale_x_continuous("In silico Bray-Curtis dissimilarity between primers") +
-  scale_y_continuous("In vitro Bray-Curtis dissimilarity between primers") +
-  labs(tag = "B)")+
-  theme_classic(base_size = 15, base_family = "Helvetica")
-
-
 
 ###Using pheatmap to include annotations 
 foo.clust <- hclust(dist(foo.braycurt), method = "complete") ##Dendogram
@@ -322,6 +289,7 @@ rownames(foo.primer)<- foo.primer$Primer_comb_ID
 foo$Primer_comb_ID<- NULL
 
 require("FactoMineR") 
+require("factoextra")
 foo.18S_Is.pca<- PCA(foo, graph = T)
 foo.18S_Is.eig<- get_eigenvalue(foo.18S_Is.pca)
 
@@ -350,7 +318,7 @@ c18Is<- fviz_contrib(foo.18S_Is.pca, choice = "ind", axes = 1:2, fill = "#440154
   labs(tag = "C)") +
   theme(axis.text.x = element_text(angle = 90, vjust = 1))
 
-d18Is<- fviz_pca_var(foo.18S_Is.pca, col.var = "cos2", select.var = list(contrib = 10),
+d18Is<- fviz_pca_var(foo.18S_Is.pca, col.var = "cos2", select.var = list(contrib = 15),
                      gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
                      repel = TRUE )+ # Avoid text overlapping
   labs(tag = "D)")
@@ -366,9 +334,48 @@ d18Is<- fviz_pca_var(foo.18S_Is.pca, col.var = "cos2", select.var = list(contrib
 #  theme_bw() +
 #  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
 #  labs(x = "Primer combination ID", y= "Relative abundance (In silico)", tag = "E)")+
-guides(fill= guide_legend(nrow = 8))
+#guides(fill= guide_legend(nrow = 8))
 
-pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figure_PrimerTree.pdf", width = 10, height = 15)
+require("gridExtra")
+require("grid")
+
+pdf(file = "~/AA_Primer_evaluation/Figures/In_silico_evaluation/Preliminary/Figure_primersearch.pdf", width = 10, height = 15)
 grid.arrange(a18Is,b18IS, c18Is, d18Is, e18Is, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
 
+##Subset matrix for parasites in silico
+parasites.18S2.insilico<- foo.matrix[,c("Apicomplexa", "Nematoda", "Microsporidia", "Platyhelminthes")]
+
+##Load matrix for parasites in vitro
+parasites.18S2.invitro<- readRDS(file = "~/AA_Primer_evaluation/In_vitro_parasites_18S.RDS")
+parasites.18S2.invitro<- as.matrix(parasites.18S2.invitro)
+
+##Transform relative abundance data into presence/absence data
+for(i in 1:ncol(parasites.18S2.invitro)){
+  for(j in 1:nrow(parasites.18S2.invitro)){
+    if(parasites.18S2.invitro[j,i]>0){
+      parasites.18S2.invitro[j,i]<-1
+    } 
+  }
+}
+
+##Estimate BC dissimilarity in vitro and in silico for parasites 
+parasites.invitro.BC<- vegdist(parasites.18S2.invitro, method = "bray")
+parasites.insilico.BC<- vegdist(parasites.18S2.insilico, method = "bray")
+
+parasites.insilico.BC<- as.matrix(parasites.insilico.BC)
+parasites.invitro.BC<- as.matrix(parasites.invitro.BC)
+
+mantel(parasites.insilico.BC, parasites.invitro.BC, permutations = 1000)
+
+##Plot BC dissimiliraty and geographic distance 
+combi.dist<- data.frame(insilico= as.vector(parasites.insilico.BC),
+                        invitro= as.vector(parasites.invitro.BC))
+
+geo.plot<- ggplot(combi.dist, aes(insilico, invitro)) +
+  geom_jitter(alpha=1, width=0.3, height=0, color= "lightblue") + 
+  stat_smooth(se=T, method="lm") +
+  scale_x_continuous("In silico Bray-Curtis dissimilarity between primers") +
+  scale_y_continuous("In vitro Bray-Curtis dissimilarity between primers") +
+  labs(tag = "B)")+
+  theme_classic(base_size = 15, base_family = "Helvetica")

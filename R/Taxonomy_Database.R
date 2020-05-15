@@ -63,5 +63,5 @@ Unique_taxa<- as.data.frame(sapply(Taxonomy_18S, function(x) n_distinct(x, na.rm
 colnames(Unique_taxa) <- "Database"
 }
 
-rm(Taxonomy_18S, ENA_18S_db, taxID_18S, Seq_18S_names, seq_18S_db)
+rm(Taxonomy_18S, ENA_18S_db, taxID_18S, Seq_18S_names, Seq_18S_db)
 
