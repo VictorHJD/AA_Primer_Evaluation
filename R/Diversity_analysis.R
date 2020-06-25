@@ -243,6 +243,16 @@ colnames(rarecounts) <- c("Reads_rare","Primer_comb_ID")
 rarecounts <- data.frame("Primer_comb_ID" = rarecounts$Primer_comb_ID, Reads_rare = rarecounts$Reads_rare) 
 rarecounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rarecounts$Primer_comb_ID)
 
+asvcounts_rare <- as.data.frame(unlist(lapply(PS.l.rar, function(x){
+  data.frame(cbind(asvnumber=ncol((otu_table(x)))))
+})))
+
+asvcounts_rare[,2] <- rownames(asvcounts_rare)
+rownames(asvcounts_rare) <- c(1:nrow(asvcounts_rare))
+colnames(asvcounts_rare) <- c("Number_ASVs_rarefaction","Primer_comb_ID")
+asvcounts_rare <- data.frame(Primer_comb_ID = asvcounts_rare$Primer_comb_ID, Number_ASVs_rarefaction = asvcounts_rare$Number_ASVs_rarefaction) 
+asvcounts_rare$Primer_comb_ID <- gsub(".asvnumber", "\\1", asvcounts_rare$Primer_comb_ID)
+
 ##Read count samples by primer pair after rarefaction
 samplecounts<- data.frame()
 
