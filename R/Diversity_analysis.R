@@ -791,7 +791,7 @@ e18 <- ggplot(data=subset(CompPhy, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_ab
 
 ###Barplots by Phylum
 AbPhy%>%
-  select(1,2,3,4)%>%
+  select(1,2,3,4,14,19)%>%
   group_by(Phyla)%>%
   dplyr::mutate(Total_Phylum_count = sum(Read_count))%>%
   dplyr::mutate(Relative_abundance_primer= Read_count/Total_Phylum_count)%>%
@@ -799,12 +799,38 @@ AbPhy%>%
   dplyr::mutate(Primer_comb_ID= case_when(Main_primer== FALSE ~ "Primer less dominant", TRUE ~ as.character(Primer_comb_ID))) %>%
   arrange(Phyla, desc(Primer_comb_ID))-> Phylum_contribution 
 
-ggplot(data=Phylum_contribution, aes(x= Phyla, y= Relative_abundance_primer, fill= Primer_comb_ID)) +
-  scale_fill_manual(values = plasma(39))+
+library(RColorBrewer)
+fE<- ggplot(data=subset(Phylum_contribution, Phyla%in%c("Annelida", "Apicomplexa","Ascomycota", "Arthropoda","Basidiomycota",
+                                                        "Chlorophyta", "Chordata","Mucoromycota", 
+                                                        "Nematoda", "Platyhelminthes", 
+                                                        "Streptophyta")), aes(x= Phyla, y= Relative_abundance_primer, fill= Primer_comb_ID)) +
+  scale_fill_manual(values = c("#1B9E77", "#D95F02", "#8DD3C7", "#FFFFB3", "#BEBADA", "#FB8072", "#80B1D3", 
+                               "#FDB462", "#B3DE69", "#FCCDE5", "#FFED6F", "#BC80BD", "#7570B3", "#CCEBC5",
+                               "#E7298A", "#66A61E", "#E6AB02", "#A6761D", "#969696"))+
   geom_bar(aes(), stat="identity", position="fill") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
-  labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+  labs(x = "Phylum", y= "Relative abundance", tag = "A)")+
+  guides(fill= guide_legend(nrow = 8))
+
+fpara<- ggplot(data=subset(Phylum_contribution, Phyla%in%c("Apicomplexa", "Nematoda", "Platyhelminthes")), aes(x= Phyla, y= Relative_abundance_primer, fill= Primer_comb_ID)) +
+    scale_fill_manual(values = c("#8DD3C7", "#FFFFB3", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5", "#FFED6F", "#BC80BD", "#CCEBC5",
+                                 "#969696"))+
+    geom_bar(aes(), stat="identity", position="fill") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+    labs(x = "Phylum", y= "Relative abundance", tag = "B)")+
+    guides(fill= guide_legend(nrow = 8))
+
+ffungi<- ggplot(data=subset(Phylum_contribution, Phyla%in%c("Ascomycota","Basidiomycota",
+                                                            "Zygomycota", "Mucoromycota", 
+                                                            "Zoopagomycota", "Blastocladiomycota", 
+                                                            "Cryptomycota", "Microsporidia")), aes(x= Phyla, y= Relative_abundance_primer, fill= Primer_comb_ID)) +
+  scale_fill_manual(values = c("#8DD3C7", "#FFFFB3", "#80B1D3", "#FDB462", "#FCCDE5", "#FFED6F", "#7570B3", "#CCEBC5", "#969696"))+
+  geom_bar(aes(), stat="identity", position="fill") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+  labs(x = "Phylum", y= "Relative abundance", tag = "C)")+
   guides(fill= guide_legend(nrow = 8))
 
 }
@@ -867,6 +893,11 @@ dev.off()
 pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_3.pdf", width = 10, height = 15)
 grid.arrange(a18, b18, c18, d18, e18, widths = c(1, 1), layout_matrix = rbind(c(1, 2), c(3, 4), c(5, 5)))
 dev.off()
+
+pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_Primer_contribution_Phylum.pdf", width = 10, height = 15)
+grid.arrange(fE, fpara, ffungi, layout_matrix = rbind(c(1,1), c(2, 2), c(3, 3)))
+dev.off()
+
 }
 
 #####Permutation tests
