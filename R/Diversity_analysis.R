@@ -49,8 +49,8 @@ colnames(rawcounts) <- c("Reads_non_rare","Primer_comb_ID")
 rawcounts <- data.frame(Primer_comb_ID = rawcounts$Primer_comb_ID, Reads_non_rare = rawcounts$Reads_non_rare) 
 rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
 
-##Create a table with total number of ASVs per primer pair
-#write.csv(rawcounts, file = "~/AA_Primer_evaluation/ASVs_per_Primer_Pair.csv")
+##Create a table with total number of Reads per primer pair
+#write.csv(rawcounts, file = "~/AA_Primer_evaluation/Reads_per_Primer_Pair.csv")
 
 asvcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
   data.frame(cbind(asvnumber=ncol((otu_table(x)))))
@@ -62,6 +62,8 @@ colnames(asvcounts) <- c("Number_ASVs","Primer_comb_ID")
 asvcounts <- data.frame(Primer_comb_ID = asvcounts$Primer_comb_ID, Number_ASVs = asvcounts$Number_ASVs) 
 asvcounts$Primer_comb_ID <- gsub(".asvnumber", "\\1", asvcounts$Primer_comb_ID)
 
+##Create a table with total number of ASVs per primer pair
+#write.csv(rawcounts, file = "~/AA_Primer_evaluation/ASVs_per_Primer_Pair.csv")
 
 ##Extract sample counts information by primer combination 
 samplecounts<- data.frame()
