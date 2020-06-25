@@ -576,10 +576,12 @@ b<- fviz_pca_ind(foo.pca,
 
 ##Color need to be changed manually according to righ order, annoying but let's find a solution later:S 
 c<- fviz_contrib(foo.pca, choice = "ind", axes = 1:2, top = 10,
-             fill = c("pink", "pink", "pink", "#21908CFF", "pink", "pink", 
-                      "#440154FF", "#440154FF", "#440154FF", "#440154FF"), 
-             color =  c("pink", "pink", "pink", "#21908CFF", "pink", "pink", 
-                        "#440154FF", "#440154FF", "#440154FF", "#440154FF")) +
+             fill = c("#21908CFF","pink", "#21908CFF", "pink", 
+                      "pink", "#440154FF", "#440154FF", "pink", 
+                      "pink", "#440154FF"), 
+             color =  c("#21908CFF","pink", "#21908CFF", "pink", 
+                        "pink", "#440154FF", "#440154FF", "pink", 
+                        "pink", "#440154FF")) +
   labs(tag = "C)")+
   theme(axis.text.x = element_text(angle=90))
 
@@ -636,10 +638,10 @@ bE<- fviz_pca_ind(foo.euk2.pca,
   labs(tag = "B)")
 
 cE<- fviz_contrib(foo.euk2.pca, choice = "ind", axes = 1:2, top = 10,
-                 fill = c("#21908CFF", "#440154FF", "#440154FF", "#FDE725FF", "#440154FF",
-                          "#E3DAC9", "#FDE725FF","#440154FF", "#440154FF",  "#440154FF"),
-                 color = c("#21908CFF", "#440154FF", "#440154FF", "#FDE725FF", "#440154FF",
-                           "#E3DAC9", "#FDE725FF","#440154FF", "#440154FF",  "#440154FF"))+
+                 fill = c("#21908CFF", "#440154FF", "#21908CFF", "#440154FF", "#440154FF",
+                          "#440154FF", "#440154FF","#440154FF", "#440154FF",  "#440154FF"),
+                 color = c("#21908CFF", "#440154FF", "#21908CFF", "#440154FF", "#440154FF",
+                           "#440154FF", "#440154FF","#440154FF", "#440154FF",  "#440154FF"))+
   labs(tag = "C)") +
   theme(axis.text.x = element_text(angle=90))
 
@@ -753,7 +755,7 @@ if(Phylum){
   dplyr::mutate(Phyla= case_when(Main_taxa== FALSE ~ "Taxa less represented", TRUE ~ as.character(Phyla))) %>%
   arrange(Primer_comb_ID, desc(Phyla))-> CompPhy
 
-e <- ggplot(data=CompPhy, aes(x= Primer_comb_ID, y= Rel_abund_amp, fill= Phyla)) +
+e <- ggplot(data=CompPhy, aes(x= Primer_comb_ID, y= Rel_abund_rare, fill= Phyla)) +
         scale_fill_manual(values = c("#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F", "#FF7F00", 
                                      "#CAB2D6","#6A3D9A","#FFFF99","#B15928","#eddc12","#01665e","#053061","#969696"))+
         geom_bar(aes(), stat="identity", position="fill") +
@@ -786,6 +788,25 @@ e18 <- ggplot(data=subset(CompPhy, Gen=="18S"), aes(x= Primer_comb_ID, y= Rel_ab
         theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
         labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
         guides(fill= guide_legend(nrow = 8))
+
+###Barplots by Phylum
+AbPhy%>%
+  select(1,2,3,4)%>%
+  group_by(Phyla)%>%
+  dplyr::mutate(Total_Phylum_count = sum(Read_count))%>%
+  dplyr::mutate(Relative_abundance_primer= Read_count/Total_Phylum_count)%>%
+  dplyr::mutate(Main_primer= Relative_abundance_primer>= 0.05)%>%
+  dplyr::mutate(Primer_comb_ID= case_when(Main_primer== FALSE ~ "Primer less dominant", TRUE ~ as.character(Primer_comb_ID))) %>%
+  arrange(Phyla, desc(Primer_comb_ID))-> Phylum_contribution 
+
+ggplot(data=Phylum_contribution, aes(x= Phyla, y= Relative_abundance_primer, fill= Primer_comb_ID)) +
+  scale_fill_manual(values = plasma(39))+
+  geom_bar(aes(), stat="identity", position="fill") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 1)) +
+  labs(x = "Primer combination ID", y= "Relative abundance", tag = "E)")+
+  guides(fill= guide_legend(nrow = 8))
+
 }
 
 if(Genus){
