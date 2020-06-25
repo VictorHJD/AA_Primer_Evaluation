@@ -953,3 +953,32 @@ fviz_pca_ind(test_pca,
 
 test_pca_2 <- sign.pc(t(foo))##Without transmutate teh table it doesn't work. However, in our case the variables are the columns.
 
+
+
+#ampsiz1<- ggplot(foo.primer, aes(x = Expected, y = Reads_rare), geom=c("point", "smooth")) +
+#  scale_x_continuous(name = "Expected amplicon size") +
+#  scale_y_log10(name = "log10 Total sequencing reads")+ 
+#  geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
+#  theme_bw() +
+#  theme(legend.text=element_text(size=20)) +
+#  theme(legend.key.size = unit(3,"line")) +
+#  geom_smooth(method = "lm", se = FALSE, col = "red") +
+#  guides(colour = guide_legend(override.aes = list(size=10))) +
+#  theme(text = element_text(size=20),legend.position = "none")+
+# labs(tag = "A)")+
+#  stat_cor(label.x = 500, label.y = log10(3000000), aes(label= paste(..rr.label.., ..p.label.., sep= "~`,`~")))+
+#  stat_regline_equation(label.x = 500, label.y = log10(2000000))
+
+ampsize1<- ggplot(foo.primer, aes(x = Expected, y =Reads_rare, color= Gen), geom=c("point", "smooth")) +
+  scale_x_continuous(name = "Expected amplicon size") +
+  scale_y_log10(name = "log10 Total sequencing reads")+
+  scale_color_manual(values = c("#E3DAC9","pink","#440154FF", "#21908CFF", "#FDE725FF", "#C46210", "#D0FF14"))+ 
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(size= 25))+
+  theme_bw() +
+  theme(legend.text=element_text(size=20)) +
+  theme(legend.key.size = unit(2,"line")) +
+  geom_smooth(method = "lm", se = FALSE, col = "red") +
+  guides(colour = guide_legend(override.aes = list(size=10))) +
+  theme(text = element_text(size=20))+
+  labs(tag = "A)")
+
