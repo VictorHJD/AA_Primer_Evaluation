@@ -1,5 +1,5 @@
 ##Phyloseq pipeline for diversity analysis by amplicon
-
+library("lifecycle", lib.loc="/usr/local/lib/R/site-library")
 library("ggplot2")
 library("reshape")
 library("phyloseq")
@@ -51,6 +51,17 @@ rawcounts$Primer_comb_ID <- gsub(".asvCount", "\\1", rawcounts$Primer_comb_ID)
 
 ##Create a table with total number of ASVs per primer pair
 #write.csv(rawcounts, file = "~/AA_Primer_evaluation/ASVs_per_Primer_Pair.csv")
+
+asvcounts <- as.data.frame(unlist(lapply(PS.l, function(x){
+  data.frame(cbind(asvnumber=ncol((otu_table(x)))))
+})))
+
+asvcounts[,2] <- rownames(asvcounts)
+rownames(asvcounts) <- c(1:nrow(asvcounts))
+colnames(asvcounts) <- c("Number_ASVs","Primer_comb_ID")
+asvcounts <- data.frame(Primer_comb_ID = asvcounts$Primer_comb_ID, Number_ASVs = asvcounts$Number_ASVs) 
+asvcounts$Primer_comb_ID <- gsub(".asvnumber", "\\1", asvcounts$Primer_comb_ID)
+
 
 ##Extract sample counts information by primer combination 
 samplecounts<- data.frame()
