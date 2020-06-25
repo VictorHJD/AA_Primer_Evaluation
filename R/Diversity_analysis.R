@@ -107,7 +107,20 @@ rm(tmp, samplecounts)
 
 #require("ggsci")
 require("ggpubr")
-raw<- ggplot(subset(samplecounts_raw, Gen %in% "18S"), aes(x = Primer_comb_ID, y= Read_non_rare))+
+raw<- ggplot(samplecounts_raw, aes(x = Primer_comb_ID, y= Read_non_rare))+
+  #geom_boxplot(outlier.colour = "black")+
+  coord_flip()+
+  geom_jitter(shape=16, position=position_jitter(0.2), aes(color= Gen), alpha= 0.5)+
+  #scale_y_log10()+
+  labs(x="Primer combination ID", y = "Raw read counts")+
+  stat_summary(fun.data=mean_cl_normal, geom="pointrange", shape=16, size=0.5, color="black")+
+  #scale_color_npg()+
+  scale_color_manual(values = c("#E3DAC9", "pink", "#440154FF", "#21908CFF","#FDE725FF", "#C46210", "#D0FF14"))+
+  theme_minimal()+
+  labs(tag = "A)")
+
+  ###Just for 18S
+  ggplot(subset(samplecounts_raw, Gen %in% "18S"), aes(x = Primer_comb_ID, y= Read_non_rare))+
   #geom_boxplot(outlier.colour = "black")+
   coord_flip()+
   geom_jitter(shape=16, position=position_jitter(0.2), aes(color= Gen), alpha= 0.5)+
@@ -365,19 +378,19 @@ for (i in 1: length(readNumByPhylum)) ### Start a loop: fro every element in the
   }
   
   phyla[,3] <- names(readNumByPhylum)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
-  colnames(phyla) <- c("ASV_count", "Phyla", "Primer_comb_ID") ### change the names for the columns 
+  colnames(phyla) <- c("Read_count", "Phyla", "Primer_comb_ID") ### change the names for the columns 
   AbPhy <- rbind(AbPhy, phyla) ### Join all the "individual" data frames into the final data frame 
   
 }   ### close loop
 
 rownames(AbPhy) <- c(1:nrow(AbPhy)) ### change the rownames to consecutive numbers 
-AbPhy <- data.frame(Primer_comb_ID = AbPhy$Primer_comb_ID, Phyla = AbPhy$Phyla, ASV_count = AbPhy$ASV_count) ###change the order of the columns
-AbPhy$ASV_count <- as.numeric(AbPhy$ASV_count)
+AbPhy <- data.frame(Primer_comb_ID = AbPhy$Primer_comb_ID, Phyla = AbPhy$Phyla, Read_count = AbPhy$Read_count) ###change the order of the columns
+AbPhy$Read_count <- as.numeric(AbPhy$Read_count)
 
 AbPhy %>%
   group_by(Primer_comb_ID) %>% 
-  dplyr::mutate(Total_count = sum(ASV_count))%>%
-  dplyr::mutate(Relative_abundance= ASV_count/Total_count)-> AbPhy 
+  dplyr::mutate(Total_count = sum(Read_count))%>%
+  dplyr::mutate(Relative_abundance= Read_count/Total_count)-> AbPhy 
 
 ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
 ##This value represent the relative abundance respect to the total amount of reads after rarefing
@@ -389,12 +402,20 @@ AbPhy$Primer_comb_ID <- gsub(pattern = "-", replacement = "_", x = AbPhy$Primer_
 AbPhy%>%
   merge(primerInput, by= "Primer_comb_ID")%>% ###merge the selected information with the origial data frame created 
   plyr::join(rarecounts, by= "Primer_comb_ID")%>%
-  dplyr::mutate(Rel_abund_rare= ASV_count/Reads_rare)-> AbPhy 
+  dplyr::mutate(Rel_abund_rare= Read_count/Reads_rare)-> AbPhy 
 
-##Prepair matrix for PCA analysis
+##Prepair matrix for PCA analysis (with relative abundance)
 foo<- AbPhy%>%select(1,2,25)
 foo<- reshape(foo, v.names = "Rel_abund_rare", timevar = "Phyla", idvar = "Primer_comb_ID",direction = "wide")
 colnames(foo) <- gsub("Rel_abund_rare.", "\\1", colnames(foo)) ##Remove "Rel_abund_rare"
+##Transform NA to 0
+foo[is.na(foo)]<- 0
+rownames(foo)<-foo[,1]
+
+##Prepair matrix for PCA analysis (with read counts!!!)
+foo<- AbPhy%>%select(1,2,3)
+foo<- reshape(foo, v.names = "Read_count", timevar = "Phyla", idvar = "Primer_comb_ID",direction = "wide")
+colnames(foo) <- gsub("Read_count.", "\\1", colnames(foo)) ##Remove "Read_count"
 ##Transform NA to 0
 foo[is.na(foo)]<- 0
 rownames(foo)<-foo[,1]
@@ -420,19 +441,19 @@ if(Genus){
     }
     
     genus[,3] <- names(readNumByGenus)[i] ### Take the names of every list and use them to fill column 3 as many times the logitude of the column 2
-    colnames(genus) <- c("ASV_count", "Genus", "Primer_comb_ID") ### change the names for the columns 
+    colnames(genus) <- c("Read_count", "Genus", "Primer_comb_ID") ### change the names for the columns 
     AbGen <- rbind(AbGen, genus) ### Join all the "individual" data frames into the final data frame 
     
   }   ### close loop
   
   rownames(AbGen) <- c(1:nrow(AbGen)) ### change the rownames to consecutive numbers 
-  AbGen <- data.frame(Primer_comb_ID = AbGen$Primer_comb_ID, Genus = AbGen$Genus, ASV_count = AbGen$ASV_count) ###change the order of the columns
-  AbGen$ASV_count <- as.numeric(AbGen$ASV_count)
+  AbGen <- data.frame(Primer_comb_ID = AbGen$Primer_comb_ID, Genus = AbGen$Genus, Read_count = AbGen$Read_count) ###change the order of the columns
+  AbGen$Read_count <- as.numeric(AbGen$Read_count)
   
   AbGen %>%
     group_by(Primer_comb_ID) %>% 
-    dplyr::mutate(Total_count = sum(ASV_count))%>%
-    dplyr::mutate(Relative_abundance= ASV_count/Total_count)-> AbGen 
+    dplyr::mutate(Total_count = sum(Read_count))%>%
+    dplyr::mutate(Relative_abundance= Read_count/Total_count)-> AbGen 
   
   ### Add a new variable that will contain the sum of all the sequencing reads by primer pair
   ##This value represent the relative abundance respect to the total amount of reads after rarefaction
@@ -443,7 +464,7 @@ if(Genus){
   AbGen%>%
     merge(primerInput, by= "Primer_comb_ID")%>%  ###merge the selected information with the origial data frame created 
     plyr::join(rarecounts, by= "Primer_comb_ID")%>%
-    dplyr::mutate(Rel_abund_rare= ASV_count/Reads_rare)-> AbGen ##Create a REAL relative abundance value respect the total amount of reads per amplicon
+    dplyr::mutate(Rel_abund_rare= Read_count/Reads_rare)-> AbGen ##Create a REAL relative abundance value respect the total amount of reads per amplicon
   
   ##Prepair matrix for PCA analysis
   foo<- AbGen%>%select(1,2,25)
@@ -512,6 +533,10 @@ BCheatmap <- pheatmap(foo.braycurt,
                       main= "Bray-Curtis dissimilarity among primers")
 
 #pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_2.pdf", width = 10, height = 8)
+#BCheatmap
+#dev.off()
+
+#pdf(file = "~/AA_Primer_evaluation/Figures/Manuscript/Figure_2_Readcount.pdf", width = 10, height = 8)
 #BCheatmap
 #dev.off()
 
