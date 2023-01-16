@@ -6,18 +6,22 @@ library(DECIPHER)
 library(seqinr)
 library(Bios2cor)
 
-if(!exists("primerF")){
-  source("R/1_generalAA.R")
-}
 
-aln <- read.fasta("/SAN/db/RDP/Silva_123/silva.nr_v123_EUK.align")
+## Why is this needed here for the primers agains Silva?
+## if(!exists("primerF")){
+##   source("R/1_generalAA.R")
+## }
 
-test <- aln[1:3]
-e<- entropy(align)
-o<- omes(align)
-o<- o$normalized
+## had to change this path
+aln <- read.fasta("/SAN/db/RDP_Silva/Silva_123/silva.nr_v123_EUK.align")
+
+test <- aln[1:10]
+e <- entropy(test)
+o <- omes(test)
+o <- o$normalized
+
 entropy_graph(entropy = e, o, filter = NULL, elite = 25, high = 275, csv = TRUE, 
-              name = "~/AA_Primer_evaluation/Figures/test_entropy_graph.pdf")
+              name = "Figures/test_entropy_graph.pdf")
 
 keep <- !apply(aln, 2, function (x) all(x %in% c("-", ".")) )
 
