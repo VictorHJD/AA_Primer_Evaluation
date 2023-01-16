@@ -1,0 +1,3 @@
+"","taxId","gi","species","superkingdom","kingdom","phylum","class","order","family","genus","accession","product_length","mismatch_forward","mismatch_reverse","forward_start","forward_stop","reverse_start","reverse_stop","product_start","product_stop"
+"1","1109411","357363755","Tritrichomonas sp. BR-2011","Eukaryota","Unassigned","Parabasalia","Unassigned","Tritrichomonadida","Tritrichomonadidae","Tritrichomonas","JF927156.1",498,4,0,1914,1888,1417,1436,1417,1914
+"2","1144522","1527595843","Tritrichomonas foetus","Eukaryota","Unassigned","Parabasalia","Unassigned","Tritrichomonadida","Tritrichomonadidae","Tritrichomonas","MK250821.1",492,4,0,502,476,11,30,11,502

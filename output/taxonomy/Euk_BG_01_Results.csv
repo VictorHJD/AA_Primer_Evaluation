@@ -1,0 +1,5 @@
+"","taxId","gi","species","superkingdom","kingdom","phylum","class","order","family","genus","accession","product_length","mismatch_forward","mismatch_reverse","forward_start","forward_stop","reverse_start","reverse_stop","product_start","product_stop"
+"1","1394984","1780123115","Giardia intestinalis","Eukaryota","Unassigned","Fornicata","Unassigned","Diplomonadida","Hexamitidae","Giardia","LC508612.1",515,4,1,59,80,573,556,59,573
+"2","1987106","1746154629","Protoparvovirus sp.","Viruses","Unassigned","Unassigned","Unassigned","Unassigned","Parvoviridae","Protoparvovirus","MK561363.1",515,1,0,1,19,512,495,1,512
+"3","5744","9384","Giardia sp.","Eukaryota","Unassigned","Fornicata","Unassigned","Diplomonadida","Hexamitidae","Giardia","X14185.1",515,4,0,124,145,638,621,124,638
+"4","744549","293601959","Giardia sp. QE1","Eukaryota","Unassigned","Fornicata","Unassigned","Diplomonadida","Hexamitidae","Giardia","GU574799.1",511,0,2,2,23,512,495,2,512

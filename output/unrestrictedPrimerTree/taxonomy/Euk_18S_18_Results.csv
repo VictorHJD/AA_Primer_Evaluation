@@ -1,0 +1,4 @@
+"","taxId","gi","species","superkingdom","kingdom","phylum","class","order","family","genus","accession","product_length","mismatch_forward","mismatch_reverse","forward_start","forward_stop","reverse_start","reverse_stop","product_start","product_stop"
+"1","1276537","1273008344","Zymoseptoria tritici","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Mycosphaerellaceae","Zymoseptoria","LT854279.1",3866,1,1,1784254,1784274,1788119,1788099,1784254,1788119
+"2","34284","1727326099","Gossypium turneri","Eukaryota","Viridiplantae","Streptophyta","Magnoliopsida","Malvales","Malvaceae","Gossypium","CP032582.1",3757,2,2,17500689,17500709,17504445,17504425,17500689,17504445
+"3","3711","1516505974","Brassica rapa","Eukaryota","Viridiplantae","Streptophyta","Magnoliopsida","Brassicales","Brassicaceae","Brassica","LR031569.1",3562,2,2,38492052,38492072,38495613,38495593,38492052,38495613
