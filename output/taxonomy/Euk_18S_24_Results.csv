@@ -1,0 +1,9 @@
+"","taxId","gi","species","superkingdom","kingdom","phylum","class","order","family","genus","accession","product_length","mismatch_forward","mismatch_reverse","forward_start","forward_stop","reverse_start","reverse_stop","product_start","product_stop"
+"1","1226471","969813112","Entamoeba bangladeshi","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","KR025412.1",502,1,1,439,461,940,919,439,940
+"2","1769628","969813106","Entamoeba sp. RL8","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","KR025406.1",486,2,0,346,368,831,810,346,831
+"3","1960047","1147398583","Entamoeba cf. bovis","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","KY012748.1",485,0,0,459,481,943,922,459,943
+"4","359306","82698026","Entamoeba ecuadoriensis","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","DQ286373.1",502,2,1,457,479,958,937,457,958
+"5","715123","294338436","Entamoeba bovis","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","FN666252.1",484,0,0,458,480,941,920,458,941
+"6","715124","294338437","Entamoeba sp. CS-2010","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","FN666253.1",481,0,0,458,480,938,917,458,938
+"7","876272","309242437","Entamoeba sp. RL3","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","FR686358.1",485,2,0,459,481,943,922,459,943
+"8","876275","309242442","Entamoeba sp. RL2","Eukaryota","Unassigned","Evosea","Unassigned","Mastigamoebida","Entamoebidae","Entamoeba","FR686363.1",485,1,0,442,464,926,905,442,926

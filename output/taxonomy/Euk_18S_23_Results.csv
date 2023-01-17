@@ -1,0 +1,587 @@
+"","taxId","gi","species","superkingdom","kingdom","phylum","class","order","family","genus","accession","product_length","mismatch_forward","mismatch_reverse","forward_start","forward_stop","reverse_start","reverse_stop","product_start","product_stop"
+"1","1003330","329754430","Spathidium spathula","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","HM140392.1",454,1,1,54,76,507,489,54,507
+"2","1047141","1535924023","Ochroconis mirabilis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Ochroconis","NG_062997.1",503,4,2,10,32,512,494,10,512
+"3","107438","1517971697","Loxospora elatina","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Sarrameanales","Sarrameanaceae","Loxospora","MH887511.1",469,4,1,53,75,521,503,53,521
+"4","108428","296875281","Neoscytalidium dimidiatum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Botryosphaeriaceae","Neoscytalidium","GQ280420.1",501,4,2,19,41,519,501,19,519
+"5","108934","21397147","Lecanora allophana","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Lecanorales","Lecanoraceae","Lecanora","AF515608.1",501,4,2,47,69,547,529,47,547
+"6","108978","21732241","Amaurascopsis perforata","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Onygenales","Onygenaceae","Amaurascopsis","AJ315171.1",501,4,2,4,26,504,486,4,504
+"7","111012","284159076","Lecanosticta acicola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Lecanosticta","GU214663.1",501,4,2,7,29,507,489,7,507
+"8","112483","284158942","Uwebraunia dekkeri","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Dissoconiaceae","Uwebraunia","GU214529.1",501,4,2,7,29,507,489,7,507
+"9","112489","284158937","Dissoconium aciculare","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Dissoconiaceae","Dissoconium","GU214524.1",501,4,2,4,26,504,486,4,504
+"10","112493","284159020","Teratosphaeria molleriana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","GU214607.1",501,4,2,7,29,507,489,7,507
+"11","1125746","365776122","Kompsoscypha phyllogena","Eukaryota","Fungi","Ascomycota","Pezizomycetes","Pezizales","Sarcoscyphaceae","Kompsoscypha","JQ260820.1",500,4,2,16,38,515,497,16,515
+"12","1126824","363544861","Cordyceps pleuricapitata","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Cordycipitaceae","Cordyceps","JN941749.1",500,4,2,33,55,532,514,33,532
+"13","1131403","530323491","Ochroconis cordanae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Ochroconis","KF282672.1",503,4,2,15,37,517,499,15,517
+"14","1144346","902941030","Buxtonella sulcata","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Pycnotrichidae","Buxtonella","KP016717.1",455,1,1,54,76,508,490,54,508
+"15","114794","1040783176","Epispathidium amphoriforme","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Epispathidium","KT246080.1",454,1,1,3,25,456,438,3,456
+"16","114963","1547593629","Heterodermia leucomelaena","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Physciaceae","Heterodermia","MK092093.1",662,4,2,54,76,715,697,54,715
+"17","1158744","379990850","Scolecobasidium sp. NH511","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Scolecobasidium","AB701668.1",503,4,2,31,53,533,515,31,533
+"18","1158745","379990851","Scolecobasidium sp. NH652","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Scolecobasidium","AB701669.1",503,4,2,16,38,518,500,16,518
+"19","115983","14279544","Phyllosticta ampelicida","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Phyllostictaceae","Phyllosticta","AF271124.1",502,3,2,1,21,500,482,1,500
+"20","1167990","558762180","Cladosporium sp. F5","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","KF562831.1",501,3,2,1,22,500,482,1,500
+"21","116814","34221919","Physcia dimidiata","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Physciaceae","Physcia","AJ506970.2",501,4,2,1,23,501,483,1,501
+"22","1173301","388564588","Fuscheria terricola","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Acropisthiidae","Fuscheria","JQ723965.1",454,1,0,33,55,486,468,33,486
+"23","1173416","388564595","Lagynophrya acuminata","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Lagynophrya","JQ723972.1",455,1,1,33,55,487,469,33,487
+"24","1199092","648933628","Fodinomyces uranophilus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Fodinomyces","KF857169.1",501,4,2,49,71,549,531,49,549
+"25","1202531","675324087","Verticillium dahliae","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Plectosphaerellaceae","Verticillium","CP009075.1",502,3,2,40072,40050,39571,39589,39571,40072
+"26","120389","14279546","Botryosphaeria corticis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Botryosphaeriaceae","Botryosphaeria","AF271126.1",502,3,2,1,21,500,482,1,500
+"27","1206766","325485007","Apodileptus visscheri","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Apodileptus","HM581678.1",456,1,1,54,76,509,491,54,509
+"28","1208925","17426918","Lectera colletotrichoides","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Plectosphaerellaceae","Lectera","AJ301962.1",502,3,2,16,38,517,499,16,517
+"29","1209931","1714599723","Colletotrichum salicis","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Glomerellaceae","Colletotrichum","MK541032.1",501,3,2,6200,6222,6700,6682,6200,6700
+"30","121752","8926180","Lacazia loboi","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Onygenales","Unassigned","Lacazia","AF255331.1",501,4,2,35,57,535,517,35,535
+"31","122368","109289586","Cercospora beticola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Cercospora","DQ678039.1",501,4,2,18,40,518,500,18,518
+"32","1230116","403391421","Loxophyllum caudatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","JN974453.1",454,1,0,54,76,507,489,54,507
+"33","1230117","403391423","Loxophyllum chinense","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","JN974455.1",454,1,0,54,76,507,489,54,507
+"34","1230118","403391422","Loxophyllum rugosum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","JN974454.1",454,2,0,54,76,507,489,54,507
+"35","1230640","403404998","Cladosporium sp. Pt-2","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","JQ824844.1",501,4,2,35,57,535,517,35,535
+"36","1257147","1517971672","Graphis lineola","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Ostropales","Graphidaceae","Graphis","MH887486.1",470,4,1,53,75,522,504,53,522
+"37","1265393","426202576","Cladosporium sp. ARG-125-1","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","JX896661.1",501,4,2,11,33,511,493,11,511
+"38","1267453","430024691","Hypotrichia sp. I-99","Eukaryota","Unassigned","Ciliophora","Spirotrichea","Unassigned","Unassigned","Unassigned","KC287214.1",511,3,2,53,75,563,545,53,563
+"39","1276529","1200896585","Zymoseptoria tritici","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Zymoseptoria","LT882682.1",501,4,2,1655181,1655203,1655681,1655663,1655181,1655681
+"40","1283837","442798796","Sphaeroforma gastrica","Eukaryota","Unassigned","Unassigned","Ichthyosporea","Ichthyophonida","Unassigned","Sphaeroforma","JX992714.1",501,3,2,1,21,499,481,1,499
+"41","1291718","451311400","Hymenoscyphus metrosideri","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Helotiaceae","Hymenoscyphus","KC164668.1",500,4,2,35,57,534,516,35,534
+"42","129502","125698139","Coccotrema pocillarium","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Pertusariales","Coccotremataceae","Coccotrema","AF274113.2",503,4,2,43,65,545,527,43,545
+"43","129509","8926436","Coccotrema cucurbitula","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Pertusariales","Coccotremataceae","Coccotrema","AF274114.1",503,4,2,36,58,538,520,36,538
+"44","129511","8926432","Coccotrema coccophorum","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Pertusariales","Coccotremataceae","Coccotrema","AF274110.1",503,4,2,45,67,547,529,45,547
+"45","1311627","472455708","Loxophyllum meridionale","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","KC469985.1",454,1,0,54,76,507,489,54,507
+"46","1311769","474474950","Loxophyllum salinum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","KC476181.1",454,1,0,54,76,507,489,54,507
+"47","131320","283827981","Phaeoisariopsis griseola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Phaeoisariopsis","DQ289862.2",501,4,2,41,63,541,523,41,541
+"48","1314978","1653963656","Pseudocercospora griseola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Pseudocercospora","MK099430.1",501,4,2,35,57,535,517,35,535
+"49","132095","1608347044","Cercospora canescens","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Cercospora","MK757686.1",501,4,2,24,46,524,506,24,524
+"50","132179","331029817","Sarcotrochila macrospora","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cenangiaceae","Sarcotrochila","HQ634843.1",501,4,2,4,26,504,486,4,504
+"51","1323507","822599784","Ceratosporella novae-zelandiae","Eukaryota","Fungi","Ascomycota","Unassigned","Unassigned","Unassigned","Ceratosporella","HF937346.1",498,4,1,22,44,519,501,22,519
+"52","1323509","822599786","Conioscypha sp. FMR 11592","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Conioscyphales","Conioscyphaceae","Conioscypha","HF937348.1",503,3,2,21,43,523,505,21,523
+"53","13349","393395847","Arthrobotrys oligospora","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","JQ809337.1",500,4,2,35,57,534,516,35,534
+"54","1338630","283827991","Cladosporium allicinum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","AY251096.2",501,4,2,42,64,542,524,42,542
+"55","134354","16233709","Microxyphium citri","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Capnodiaceae","Microxyphium","AY016340.1",500,4,2,46,68,545,527,46,545
+"56","134357","16233795","Phaeotrichum benjaminii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Phaeotrichales","Phaeotrichaceae","Phaeotrichum","AY016348.1",501,4,2,44,66,544,526,44,544
+"57","134360","16233828","Stylodothis puccinioides","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Stylodothis","AY016353.1",501,4,2,43,65,543,525,43,543
+"58","1349405","530323497","Ochroconis verrucosa","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Ochroconis","KF282678.1",503,4,2,9,31,511,493,9,511
+"59","1356574","523713579","Fumiglobus pieridicola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Neoantennariellaceae","Fumiglobus","KC833053.1",501,4,2,17,39,517,499,17,517
+"60","1391704","697285312","Penidiella sp. T9","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Penidiella","AB845350.1",501,4,2,16,38,516,498,16,516
+"61","1423344","1005743435","Loxophyllum perihoplophorum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","KT880228.1",454,1,0,34,56,487,469,34,487
+"62","1427482","558762174","Cladosporium sp. F15","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","KF562825.1",501,4,2,16,38,516,498,16,516
+"63","1427483","558762185","Cladosporium sp. F7","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","KF562836.1",501,4,2,16,38,516,498,16,516
+"64","1431917","284158962","Paramycosphaerella marksii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Paramycosphaerella","GU214549.1",501,4,2,42,64,542,524,42,542
+"65","1431936","284158931","Neocatenulostroma germanicum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Neocatenulostroma","GU214518.1",501,4,2,30,52,530,512,30,530
+"66","1431946","284159023","Pseudoteratosphaeria ohnowa","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Pseudoteratosphaeria","GU214610.1",501,4,2,36,58,536,518,36,536
+"67","1431952","284159024","Suberoteratosphaeria pseudosuberosa","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Suberoteratosphaeria","GU214611.1",501,4,2,42,64,542,524,42,542
+"68","1470587","594191574","Ostracodinium sp. MFR-2014a","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Ostracodinium","KF981797.1",454,1,1,1,23,454,436,1,454
+"69","1470588","594191575","Ostracodinium sp. MFR-2014b","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Ostracodinium","KF981798.1",453,1,1,1,21,451,433,1,451
+"70","147560","91841282","Delphinella strobiligena","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothioraceae","Delphinella","DQ471029.1",500,4,2,94,116,593,575,94,593
+"71","147563","16233731","Dothidea ribesia","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Dothidea","AY016343.1",501,4,2,44,66,544,526,44,544
+"72","147570","16233788","Myriangium duriaei","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Myriangiales","Myriangiaceae","Myriangium","AY016347.1",501,4,2,44,66,544,526,44,544
+"73","147573","16233802","Piedraia hortae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Piedraiaceae","Piedraia","AY016349.1",501,4,2,46,68,546,528,46,546
+"74","1487712","612184815","Fuscheria uluruensis","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Acropisthiidae","Fuscheria","KF733753.1",454,1,1,33,55,486,468,33,486
+"75","1487713","612184818","Spathidium foissneri","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","KF733756.1",455,1,0,33,55,487,469,33,487
+"76","1487714","612184819","Spathidium rectitoratum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","KF733757.1",455,1,1,33,55,487,469,33,487
+"77","1487717","612184820","Acaryophrya sp. PV-2014","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Acaryophrya","KF733758.1",455,1,0,33,55,487,469,33,487
+"78","1487718","612184817","Cultellothrix coemeterii","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Cultellothrix","KF733755.1",455,1,0,33,55,487,469,33,487
+"79","148811","27656770","Septoria epambrosiae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Septoria","AF279583.1",501,4,2,36,58,536,518,36,536
+"80","1502664","645759750","Trachelophyllum brachypharynx","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Trachelophyllum","KJ680555.1",455,1,0,7,29,461,443,7,461
+"81","1502665","645759758","Acineria incurvata","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Acineria","KJ680557.1",452,1,0,3,25,454,436,3,454
+"82","150365","381216287","Acrodontium crateriforme","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Acrodontium","JF797221.1",501,4,2,35,57,535,517,35,535
+"83","1504668","1227949754","Rhizodiscina lignyota","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Aulographales","Rhizodiscinaceae","Rhizodiscina","MF599193.1",499,4,2,458,480,956,938,458,956
+"84","1507871","1632313398","Rachicladosporium inconspicuum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Rachicladosporium","NG_064942.1",501,4,2,46,68,546,528,46,546
+"85","1507872","1632313396","Rachicladosporium mcmurdoi","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Rachicladosporium","NG_064940.1",501,4,2,35,57,535,517,35,535
+"86","1507919","655435219","Thamnogalla crombiei","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cordieritidaceae","Thamnogalla","KJ559582.1",501,4,2,3,25,503,485,3,503
+"87","1508187","282848596","Meristemomyces frigidus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Meristemomyces","GU250358.1",501,4,2,44,66,544,526,44,544
+"88","1542968","681883956","Balantidium duodeni","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Balantidiidae","Balantidium","KM057846.1",456,1,1,54,76,509,491,54,509
+"89","1550782","692463213","Verticillium sp. DU18","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Plectosphaerellaceae","Verticillium","KM096533.1",502,3,2,35,57,536,518,35,536
+"90","1556157","695131936","Amphileptus dragescoi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Amphileptidae","Amphileptus","KF871282.1",454,1,0,53,75,506,488,53,506
+"91","1576337","726973464","Litonotus gracilis","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Litonotus","KP010148.1",455,2,0,56,78,510,492,56,510
+"92","1576338","726973465","Litonotus sp. WS-2014b","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Litonotus","KP010149.1",454,1,0,54,76,507,489,54,507
+"93","1577650","727364583","Balantidium polyvacuolum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Balantidiidae","Balantidium","KJ124724.1",455,1,1,54,76,508,490,54,508
+"94","1608360","752271639","Charonina ventriculi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Blepharocorythidae","Charonina","KJ870174.1",455,0,1,1,23,455,437,1,455
+"95","161661","284158961","Mycosphaerella marasasii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Mycosphaerella","GU214548.1",501,4,2,18,40,518,500,18,518
+"96","161662","284159021","Teratosphaeria nubilosa","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","GU214608.1",501,4,2,7,29,507,489,7,507
+"97","161665","284159072","Cercostigmina punctata","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Cercostigmina","GU214659.1",501,4,2,26,48,526,508,26,526
+"98","162394","254691635","Dothidea sambuci","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Dothidea","NG_012432.1",501,4,2,22,44,522,504,22,522
+"99","1629045","780956548","Sclerotiniaceae sp. LF248","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Unassigned","KM096185.1",501,3,2,1,21,499,481,1,499
+"100","162984","21630037","Macropodinium ennuensis","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Macropodiniidae","Macropodinium","AF298820.1",455,1,1,54,76,508,490,54,508
+"101","1630119","1632313520","Corynelia fructigena","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Coryneliales","Coryneliaceae","Corynelia","NG_065064.1",502,3,2,4,26,505,487,4,505
+"102","1630122","807198358","Lagenulopsis bispora","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Coryneliales","Coryneliaceae","Lagenulopsis","KP881721.1",502,4,2,4,26,505,487,4,505
+"103","163346","15088700","Amylovorax dehorityi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Amylovoracidae","Amylovorax","AF298817.1",456,1,1,54,76,509,491,54,509
+"104","163353","21630036","Polycosta roundi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Polycostidae","Polycosta","AF298819.1",455,1,1,54,76,508,490,54,508
+"105","163354","15088702","Amylovorax dogieli","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Amylovoracidae","Amylovorax","AF298825.1",455,1,1,54,76,508,490,54,508
+"106","163355","21630038","Bandia smalesae","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Amylovoracidae","Bandia","AF298822.1",455,2,1,54,76,508,490,54,508
+"107","163356","21630039","Bandia tammar","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Amylovoracidae","Bandia","AF298823.1",456,1,1,54,76,509,491,54,509
+"108","163357","21630035","Polycosta turniae","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Polycostidae","Polycosta","AF298818.1",455,1,1,54,76,508,490,54,508
+"109","163804","1052136168","Velutarina rufo-olivacea","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cenangiaceae","Velutarina","KX090877.1",501,4,2,5,27,505,487,5,505
+"110","1652544","820749020","Dimacrocaryon amphileptoides","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dimacrocaryonidae","Dimacrocaryon","KP868767.1",456,1,1,3,25,458,440,3,458
+"111","1652648","820749021","Microdileptus breviproboscis","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dimacrocaryonidae","Microdileptus","KP868768.1",456,1,1,3,25,458,440,3,458
+"112","1652649","1241841966","Rurikoplites armatus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dimacrocaryonidae","Rurikoplites","MF288145.1",456,1,1,4,26,459,441,4,459
+"113","1652650","820749023","Rurikoplites alpinus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dimacrocaryonidae","Rurikoplites","KP868770.1",456,1,1,6,28,461,443,6,461
+"114","1655010","821394132","Cavosteliaceae sp. M71","Eukaryota","Unassigned","Evosea","Variosea","Cavosteliida","Cavosteliaceae","Unassigned","KP864101.1",493,3,2,8,30,500,482,8,500
+"115","166389","34581776","Gymnoascus dankaliensis","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Onygenales","Gymnoascaceae","Gymnoascus","AY304506.1",501,4,2,4,26,504,486,4,504
+"116","1677759","21397148","Olegblumia demissa","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Teloschistales","Teloschistaceae","Olegblumia","AF515609.1",501,4,2,47,69,547,529,47,547
+"117","1683196","966204062","Didiniidae sp. aPFEU1","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Didiniidae","Unassigned","LN869950.1",457,1,0,34,56,490,472,34,490
+"118","1683253","966204104","Haptoria sp. bLaN1","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Unassigned","Unassigned","LN869992.1",455,1,1,34,56,488,470,34,488
+"119","1683256","966204166","Haptoria sp. bPFEU2","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Unassigned","Unassigned","LN870056.1",454,1,0,34,56,487,469,34,487
+"120","1683258","966204191","Haptoria sp. bTTo1","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Unassigned","Unassigned","LN870081.1",456,1,1,10,32,465,447,10,465
+"121","1683266","966204079","Lacrymariidae sp. aPFT1","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Unassigned","LN869967.1",454,1,0,34,56,487,469,34,487
+"122","1683418","966204271","Actinobolina sp. cPFT3","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Actinobolinidae","Actinobolina","LN870161.1",456,1,0,16,38,471,453,16,471
+"123","169150","18034131","Zodiomyces vorticellarius","Eukaryota","Fungi","Ascomycota","Laboulbeniomycetes","Laboulbeniales","Laboulbeniaceae","Zodiomyces","AF407577.1",501,4,2,33,55,533,515,33,533
+"124","1706303","923141705","Protolitonotus longus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Protolitonotidae","Protolitonotus","KP870181.1",453,1,0,54,76,506,488,54,506
+"125","1707699","1494640612","Cercospora sp.","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Cercospora","MK077719.1",501,4,2,53,75,553,535,53,553
+"126","1707700","1160410817","Cladosporium sp.","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","KY777588.1",501,4,2,16,38,516,498,16,516
+"127","1707701","1190246681","Phoma sp.","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Didymellaceae","Phoma","MF071325.1",501,4,2,24,46,524,506,24,524
+"128","1709381","133907727","Baudoinia panamericana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Baudoinia","EF137355.1",501,4,2,16,38,516,498,16,516
+"129","1709935","1190246680","Dothideomycetes sp.","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","MF071324.1",501,4,2,23,45,523,505,23,523
+"130","1709938","1276200286","Leotiomycetes sp.","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","MF588889.1",501,4,2,35,57,535,517,35,535
+"131","1715222","999845252","Chaetothyriales sp.","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT270762.1",499,4,2,27,49,525,507,27,525
+"132","1720511","1052136185","Chlorencoelia versiformis","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cenangiaceae","Chlorencoelia","KX090894.1",564,4,2,3,25,566,548,3,566
+"133","173141","60418335","Peziza phyllogena","Eukaryota","Fungi","Ascomycota","Pezizomycetes","Pezizales","Pezizaceae","Peziza","AY789327.1",502,4,2,44,66,545,527,44,545
+"134","1750773","949172693","Chaetothyriales sp. A1002","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263362.1",499,4,2,7,29,505,487,7,505
+"135","1750775","949172694","Chaetothyriales sp. A1004","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263363.1",499,4,2,7,29,505,487,7,505
+"136","1750776","949172695","Chaetothyriales sp. A1008","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263364.1",499,4,2,21,43,519,501,21,519
+"137","1750780","949172698","Chaetothyriales sp. A1018","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263367.1",499,4,2,7,29,505,487,7,505
+"138","1750782","949172700","Chaetothyriales sp. A1020","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263369.1",499,4,2,7,29,505,487,7,505
+"139","1750783","949172631","Chaetothyriales sp. A1022","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263058.1",499,4,2,7,29,505,487,7,505
+"140","1750785","949172702","Chaetothyriales sp. A1027","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263371.1",499,4,2,7,29,505,487,7,505
+"141","1750790","949172707","Chaetothyriales sp. A1034","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263376.1",499,4,2,21,43,519,501,21,519
+"142","1750793","949172710","Chaetothyriales sp. A1040","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263379.1",499,4,2,7,29,505,487,7,505
+"143","1750794","949172711","Chaetothyriales sp. A1041","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263380.1",499,4,2,21,43,519,501,21,519
+"144","1750797","949172713","Chaetothyriales sp. A1046","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263382.1",499,4,2,19,41,517,499,19,517
+"145","1750798","949172714","Chaetothyriales sp. A1047","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263383.1",499,4,2,24,46,522,504,24,522
+"146","1750800","949172716","Chaetothyriales sp. A1050","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263385.1",499,4,2,24,46,522,504,24,522
+"147","1750801","949172717","Chaetothyriales sp. A1051","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263386.1",499,4,2,21,43,519,501,21,519
+"148","1750802","949172718","Chaetothyriales sp. A1052","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263387.1",499,4,2,21,43,519,501,21,519
+"149","1750804","949172720","Chaetothyriales sp. A1054","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263389.1",501,4,2,19,41,519,501,19,519
+"150","1750805","949172721","Chaetothyriales sp. A1058","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263390.1",499,4,2,19,41,517,499,19,517
+"151","1750807","949172723","Chaetothyriales sp. A1060","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263392.1",499,4,2,18,40,516,498,18,516
+"152","1750864","949172629","Chaetothyriales sp. A922","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Unassigned","KT263056.1",499,4,2,7,29,505,487,7,505
+"153","1755440","1483255217","Helotiales sp.","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Unassigned","Unassigned","MH985298.1",608,3,2,1,21,606,588,1,606
+"154","1756098","1383780237","Capnodiales sp.","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Unassigned","MH259049.1",501,4,2,20,42,520,502,20,520
+"155","1779544","966204200","Haptoria sp. cAcq2","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Unassigned","Unassigned","LN870090.1",454,1,1,10,32,463,445,10,463
+"156","1790029","984687029","Capnodiales sp. My01-1","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Unassigned","KT454986.1",500,4,2,22,44,521,503,22,521
+"157","1790032","984687030","Capnodiales sp. My02-1","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Unassigned","KT454987.1",500,4,2,22,44,521,503,22,521
+"158","1790034","984687031","Capnodiales sp. My03-1","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Unassigned","KT454988.1",500,4,2,22,44,521,503,22,521
+"159","1790036","984687032","Capnodiales sp. My04-1","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Unassigned","KT454989.1",500,4,2,22,44,521,503,22,521
+"160","1792670","1052136156","Heyderia pusilla","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cenangiaceae","Heyderia","KX090865.1",501,4,2,3,25,503,485,3,503
+"161","1792672","1052136169","Pycnopeziza sejournei","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Pycnopeziza","KX090878.1",501,4,2,3,25,503,485,3,503
+"162","1792673","1052136171","Rutstroemiaceae sp. KL288","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Rutstroemiaceae","Unassigned","KX090880.1",501,4,2,5,27,505,487,5,505
+"163","1792685","1052136153","Cenangiopsis quercicola","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cenangiaceae","Cenangiopsis","KX090862.1",501,4,2,1,23,501,483,1,501
+"164","1792687","1052136170","Cenangium acuum","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cenangiaceae","Cenangium","KX090879.1",501,4,2,5,27,505,487,5,505
+"165","179342","284158982","Pseudocercospora cordiana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Pseudocercospora","GU214569.1",501,4,2,7,29,507,489,7,507
+"166","179343","1608347043","Pseudocercospora cruenta","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Pseudocercospora","MK757687.1",501,4,2,29,51,529,511,29,529
+"167","179345","284158985","Pseudocercospora macrospora","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Pseudocercospora","GU214572.1",501,4,2,6,28,506,488,6,506
+"168","1803809","1517971718","Punctelia appalachiensis","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Lecanorales","Parmeliaceae","Punctelia","MH887532.1",471,4,1,53,75,523,505,53,523
+"169","180408","21955814","Heterodermia boryi","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Physciaceae","Heterodermia","AJ421685.1",612,4,2,1,23,612,594,1,612
+"170","181972","525470527","Cantharellula umbonata","Eukaryota","Fungi","Basidiomycota","Agaricomycetes","Agaricales","Tricholomataceae","Cantharellula","KF381528.1",501,4,2,1,23,501,483,1,501
+"171","1836197","189303771","Aureobasidium lini","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Saccotheciaceae","Aureobasidium","EU707925.1",501,4,2,2,24,502,484,2,502
+"172","184062","407098176","Euplotes nobilii","Eukaryota","Unassigned","Ciliophora","Spirotrichea","Euplotida","Euplotidae","Euplotes","JQ003923.1",510,3,2,33,55,542,524,33,542
+"173","184813","123229579","Rhizosphaera oudemansii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Rhizosphaera","EF114732.1",499,4,2,4,26,502,484,4,502
+"174","1849065","189303772","Dothiora prunorum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothioraceae","Dothiora","EU707926.1",501,4,2,5,27,505,487,5,505
+"175","1853550","1720278309","Candida sp. (in: Saccharomycetales)","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Candida","MN268778.1",478,4,2,52,74,529,511,52,529
+"176","1868447","1040783177","Epispathidium sp. RV-2015","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Epispathidium","KT246081.1",455,1,0,3,25,457,439,3,457
+"177","1868449","1700451383","Epispathidium terricola","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Epispathidium","MN160224.1",456,1,0,11,33,466,448,11,466
+"178","1868450","1040783182","Spathidium claviforme","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","KT246086.1",454,1,0,14,36,467,449,14,467
+"179","1868451","1040783184","Spathidium muscicola","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","KT246088.1",454,1,1,8,30,461,443,8,461
+"180","1868452","1040783185","Spathidium simplinucleatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","KT246089.1",455,1,0,5,27,459,441,5,459
+"181","1868453","1040783180","Loxophyllum helus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","KT246084.1",454,1,0,3,25,456,438,3,456
+"182","1868455","1040783174","Bryophyllum sp. RV-2015","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Bryophyllum","KT246078.1",455,1,0,12,34,466,448,12,466
+"183","1868456","1040783172","Arcuospathidium cultriforme","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Arcuospathidium","KT246076.1",455,1,0,1,21,453,435,1,453
+"184","1868461","1040783181","Pseudoholophrya terricola","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Pseudoholophryidae","Pseudoholophrya","KT246085.1",455,1,0,3,25,457,439,3,457
+"185","1889042","1052136326","Ionomidotis fulvotingens","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cordieritidaceae","Ionomidotis","KX138403.1",502,4,2,2,24,503,485,2,503
+"186","1889043","1052136147","Ionomidotis irregularis","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cordieritidaceae","Ionomidotis","KX090856.1",501,4,2,3,25,503,485,3,503
+"187","1891160","1664596220","Pezizomycotina sp.","Eukaryota","Fungi","Ascomycota","Unassigned","Unassigned","Unassigned","Unassigned","LC474345.1",502,3,2,21,43,522,504,21,522
+"188","191104","1517971669","Fuscopannaria leucosticta","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Peltigerales","Pannariaceae","Fuscopannaria","MH887483.1",470,4,1,53,75,522,504,53,522
+"189","1912256","1678424839","Ophiocordyceps sp.","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Ophiocordycipitaceae","Ophiocordyceps","MN025409.1",500,4,2,16,38,515,497,16,515
+"190","1920980","1632313552","Ophiocordyceps nooreniae","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Ophiocordycipitaceae","Ophiocordyceps","NG_065096.1",500,4,2,15,37,514,496,15,514
+"191","1971360","1052136148","Sclerencoelia fraxinicola","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Sclerencoelia","KX090857.1",501,4,2,3,25,503,485,3,503
+"192","1973260","1700716238","Lacrymaria sp. (in: Ciliophora)","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Lacrymaria","MN165818.1",454,1,0,13,35,466,448,13,466
+"193","197897","27461248","Hemiophrys macrostoma","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Amphileptidae","Hemiophrys","AY102173.1",454,1,0,54,76,507,489,54,507
+"194","197902","27461250","Hemiophrys procera","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Amphileptidae","Hemiophrys","AY102175.1",454,1,0,54,76,507,489,54,507
+"195","1979789","404312224","Dacrymyces puniceus","Eukaryota","Fungi","Basidiomycota","Dacrymycetes","Dacrymycetales","Dacrymycetaceae","Dacrymyces","AB712491.1",501,4,2,12,34,512,494,12,512
+"196","1982018","1284809170","Starmerella sp.","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Starmerella","MG594614.1",478,4,2,19,41,496,478,19,496
+"197","1983619","1517971709","Phlyctis boliviensis","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Unassigned","Phlyctidaceae","Phlyctis","MH887523.1",471,4,1,51,73,521,503,51,521
+"198","1986133","1190246684","Lichenostigmatales sp.","Eukaryota","Fungi","Ascomycota","Arthoniomycetes","Lichenostigmatales","Unassigned","Unassigned","MF071328.1",501,4,2,21,43,521,503,21,521
+"199","1986134","1190246682","Myriangiales sp.","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Myriangiales","Unassigned","Unassigned","MF071326.1",501,4,2,20,42,520,502,20,520
+"200","2014757","89513536","Spathidium papilliferum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","DQ411858.1",455,1,0,51,73,505,487,51,505
+"201","2014759","1209331660","Enchelys megaspinata","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Enchelyidae","Enchelys","KY556648.1",454,1,0,1,23,454,436,1,454
+"202","201935","363544774","Corollospora fusca","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Microascales","Halosphaeriaceae","Corollospora","JN941662.1",562,3,2,33,55,594,576,33,594
+"203","201938","363544762","Corollospora pulchella","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Microascales","Halosphaeriaceae","Corollospora","JN941650.1",500,4,2,16,38,515,497,16,515
+"204","2020280","1174020824","Monodinium sp.","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Didiniidae","Monodinium","KY887579.1",457,1,0,53,75,509,491,53,509
+"205","2023682","1226859305","Phialina vertens","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Phialina","MF474348.1",452,1,0,33,55,484,466,33,484
+"206","2023687","1226859294","Chaenea sp. 3 FG-2017","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Chaenea","MF474337.1",453,1,1,33,55,485,467,33,485
+"207","2023689","1226859302","Lacrymaria sp. FG-2017a","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Lacrymaria","MF474345.1",454,1,0,33,55,486,468,33,486
+"208","2023693","1226859297","Foissnerides sp.","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Foissnerides","MF474340.1",455,1,0,33,55,487,469,33,487
+"209","2034303","1241841965","Dileptus jonesi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Dileptus","MF288144.1",456,1,1,2,24,457,439,2,457
+"210","2034311","1241841964","Apotrachelius multinucleatus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Tracheliidae","Apotrachelius","MF288143.1",453,0,1,1,20,450,432,1,450
+"211","2049010","1270115953","Fuscheria nodosa","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Acropisthiidae","Fuscheria","MG264143.1",454,1,1,54,76,507,489,54,507
+"212","2049012","1270115954","Fuscheriides sp.","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Acropisthiidae","Fuscheriides","MG264144.1",454,1,1,54,76,507,489,54,507
+"213","2049014","1270115957","Paraenchelys terricola","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Pseudoholophryidae","Paraenchelys","MG264147.1",454,1,0,54,76,507,489,54,507
+"214","2049015","1270115958","Litonotus muscorum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Litonotus","MG264148.1",456,1,1,54,76,509,491,54,509
+"215","205029","284158989","Pseudotaeniolina globosa","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Pseudotaeniolina","GU214576.1",501,4,2,33,55,533,515,33,533
+"216","2054620","1547601799","Phlyctis petraea","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Unassigned","Phlyctidaceae","Phlyctis","MK092330.1",555,4,2,1444,1466,1998,1980,1444,1998
+"217","205622","1547587725","Heterodermia albicans","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Physciaceae","Heterodermia","MG257791.1",502,4,2,1278,1300,1779,1761,1278,1779
+"218","205639","1517971719","Pyxine sorediata","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Caliciaceae","Pyxine","MH887533.1",471,4,1,53,75,523,505,53,523
+"219","2059763","215276674","Zasmidium cerophillum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Zasmidium","EU041798.2",501,4,2,42,64,542,524,42,542
+"220","2059809","1433537193","Devonomyces endophyticus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Devonomyces","NG_061085.1",501,4,2,41,63,541,523,41,541
+"221","2059835","284158976","Exopassalora zambiae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Exopassalora","GU214563.1",501,3,2,1,22,500,482,1,500
+"222","206008","1435110903","Panicum hallii","Eukaryota","Viridiplantae","Streptophyta","Magnoliopsida","Poales","Poaceae","Panicum","XR_003225849.1",501,4,2,54,76,554,536,54,554
+"223","2060159","123229569","Nothophaeocryptopus gaeumannii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Nothophaeocryptopus","EF114722.1",501,4,2,4,26,504,486,4,504
+"224","2060865","1314948836","Diaphoromyces zirophori","Eukaryota","Fungi","Ascomycota","Laboulbeniomycetes","Laboulbeniales","Laboulbeniaceae","Diaphoromyces","MG687392.1",498,4,2,33,55,530,512,33,530
+"225","2082605","1433537217","Brunneomyces brunnescens","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Plectosphaerellaceae","Brunneomyces","NG_061109.1",502,3,2,37,59,538,520,37,538
+"226","216834","1517971676","Heterodermia hypoleuca","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Physciaceae","Heterodermia","MH887490.1",471,4,1,53,75,523,505,53,523
+"227","220841","28412353","dothideomycete sp. G11-R40","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY190253.1",501,4,2,13,35,513,495,13,513
+"228","220842","28412354","dothideomycete sp. G11-R46","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY190254.1",501,4,2,22,44,522,504,22,522
+"229","220843","28412355","dothideomycete sp. G11-S76","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY190255.1",501,3,2,1,21,499,481,1,499
+"230","220844","28412356","dothideomycete sp. G11-S85","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY190256.1",501,4,2,25,47,525,507,25,525
+"231","220845","28412357","dothideomycete sp. G14-PU155","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY190257.1",501,4,2,8,30,508,490,8,508
+"232","220846","28412358","dothideomycete sp. G17-R295","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY190258.1",501,4,2,6,28,506,488,6,506
+"233","220847","28412359","dothideomycete sp. G17-R297","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY190259.1",501,4,2,7,29,507,489,7,507
+"234","220855","28412379","leotiomycete sp. G21-24-A14","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY190279.1",501,4,2,4,26,504,486,4,504
+"235","220858","28412376","leotiomycete sp. G21-24-KI129","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY190276.1",501,4,2,3,25,503,485,3,503
+"236","220862","28412363","leotiomycete sp. G2-5-KI367","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY190263.1",501,4,2,8,30,508,490,8,508
+"237","220863","28412364","leotiomycete sp. G2-5-PU349","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY190264.1",501,4,2,16,38,516,498,16,516
+"238","220864","28412365","leotiomycete sp. G2-5-RU342","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY190265.1",501,4,2,4,26,504,486,4,504
+"239","222513","28974780","Alatospora acuminata","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Leotiaceae","Alatospora","AY204584.1",501,4,2,21,43,521,503,21,521
+"240","2231304","1405696215","Balantidium grimi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Balantidiidae","Balantidium","MG837094.1",455,1,1,54,76,508,490,54,508
+"241","2259870","1694443905","Cladosporium endophytica","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","NG_065726.1",494,4,2,36,58,529,511,36,529
+"242","227046","345134980","Ochroconis constricta","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Ochroconis","AB564608.1",502,4,2,16,38,517,499,16,517
+"243","2283845","1597588001","Marthamyces sp.","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Rhytismatales","Rhytismataceae","Marthamyces","MK681771.1",501,4,2,35,57,535,517,35,535
+"244","228895","379990853","Ochroconis humicola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Ochroconis","AB701671.1",503,4,2,2,24,504,486,2,504
+"245","234522","46405561","Candida sp. BG01-7-23-018B-1-1","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Candida","AY520157.1",495,4,2,16,38,510,492,16,510
+"246","235993","1517971727","Xanthoparmelia mexicana","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Lecanorales","Parmeliaceae","Xanthoparmelia","MH887541.1",471,4,1,53,75,523,505,53,523
+"247","2364999","1267581077","Verruconis panacis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Verruconis","MF536879.1",498,4,2,35,57,532,514,35,532
+"248","237192","284159069","Cercospora zebrina","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Cercospora","GU214656.1",501,4,2,42,64,542,524,42,542
+"249","237593","284158930","Catenulostroma elginense","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Catenulostroma","GU214517.1",501,4,2,5,27,505,487,5,505
+"250","2448089","1511241353","Cladophialophora sp. XZL-2018c","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Herpotrichiellaceae","Cladophialophora","MG012721.1",496,4,2,17,39,512,494,17,512
+"251","245562","34880134","Acidomyces richmondensis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Acidomyces","AY374299.1",501,4,2,20,42,520,502,20,520
+"252","248017","37550807","leotiomycete sp. G2-5 IC417","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY382644.1",501,4,2,24,46,524,506,24,524
+"253","248018","37550808","leotiomycete sp. G2-5 IC403","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY382645.1",501,4,2,20,42,520,502,20,520
+"254","248019","37550809","leotiomycete sp. G2-5 IC395","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY382646.1",501,4,2,30,52,530,512,30,530
+"255","248020","37550810","leotiomycete sp. G2-5 R322","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Unassigned","AY382647.1",501,4,2,23,45,523,505,23,523
+"256","248022","37550812","dothideomycete sp. G11 IC404","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY382649.1",501,4,2,28,50,528,510,28,528
+"257","248023","37550813","dothideomycete sp. G14 IC409","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY382650.1",501,4,2,29,51,529,511,29,529
+"258","248024","37550814","dothideomycete sp. G14 IC393","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Unassigned","AY382651.1",501,4,2,10,32,510,492,10,510
+"259","2488735","1678208641","Caloplaca camptidia","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Teloschistales","Teloschistaceae","Caloplaca","MK089355.1",499,4,2,5483,5505,5981,5963,5483,5981
+"260","2488740","1517971708","Pertusaria globularis","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Pertusariales","Pertusariaceae","Pertusaria","MH887522.1",470,4,1,53,75,522,504,53,522
+"261","2509450","1571076187","Arthrobotrys sp. YYRZ-2019a","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","MH179521.1",503,4,2,26,48,528,510,26,528
+"262","2509451","1571076188","Dactylellina sp. YYRZ-2019a","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Dactylellina","MH179522.1",500,4,2,35,57,534,516,35,534
+"263","2511729","1696741371","Srinivasanomyces kangrensis","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Vibrisseaceae","Srinivasanomyces","MN121705.1",501,4,2,4,26,504,486,4,504
+"264","2530467","1585645715","Stomiopeltis sp. 1 LR-2019","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Micropeltidaceae","Stomiopeltis","MG844148.1",501,4,2,23,45,523,505,23,523
+"265","253295","38201505","Anguillospora rubescens","Eukaryota","Fungi","Ascomycota","Unassigned","Unassigned","Unassigned","Anguillospora","AY357266.1",501,4,2,23,45,523,505,23,523
+"266","253298","38201516","Goniopila monticola","Eukaryota","Fungi","Ascomycota","Unassigned","Unassigned","Unassigned","Goniopila","AY357277.1",501,4,2,16,38,516,498,16,516
+"267","2563976","1608723811","Orochernes sp. 1 ZG-2019","Eukaryota","Metazoa","Arthropoda","Arachnida","Pseudoscorpiones","Chernetidae","Orochernes","MH479137.1",501,4,2,5,27,505,487,5,505
+"268","256679","39653512","Bandia deveneyi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Unassigned","Amylovoracidae","Bandia","AY380823.1",455,1,1,54,76,508,490,54,508
+"269","2591476","1708261181","Verruconis hainanensis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Verruconis","MK248267.1",497,4,2,24,46,520,502,24,520
+"270","262103","80978912","Sclerotinia pseudotuberosa","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Sclerotinia","DQ257354.1",501,4,2,49,71,549,531,49,549
+"271","2651840","154819833","Paraisaria gracilis","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Ophiocordycipitaceae","Paraisaria","EF468956.1",500,4,2,25,47,524,506,25,524
+"272","2651844","678178096","Paraisaria amazonica","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Ophiocordycipitaceae","Paraisaria","KJ917562.1",500,4,2,17,39,516,498,17,516
+"273","2655019","1768046502","Euplotes bergeri","Eukaryota","Unassigned","Ciliophora","Spirotrichea","Euplotida","Euplotidae","Euplotes","MN593322.1",508,1,2,1,21,506,488,1,506
+"274","268505","671183991","Ophiocordyceps unilateralis","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Ophiocordycipitaceae","Ophiocordyceps","KJ769099.1",500,4,2,16,38,515,497,16,515
+"275","2691923","1275510767","Apertospathula oktemae","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Apertospathulidae","Apertospathula","MG450793.1",454,1,0,4,26,457,439,4,457
+"276","269607","284159017","Teratosphaeria mexicana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","GU214604.1",501,4,2,10,32,510,492,10,510
+"277","2710536","336181078","Furcasterigmium furcatum","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Plectosphaerellaceae","Furcasterigmium","HQ232192.1",502,3,2,37,59,538,520,37,538
+"278","271316","46405568","Metschnikowia chrysomelidarum","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Metschnikowiaceae","Metschnikowia","AY520164.1",492,4,2,16,38,507,489,16,507
+"279","271830","46411411","Punctelia hypoleucites","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Lecanorales","Parmeliaceae","Punctelia","AY584670.1",501,4,2,9,31,509,491,9,509
+"280","27357","17426618","Colletotrichum acutatum","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Glomerellaceae","Colletotrichum","AJ301914.1",501,3,2,16,38,516,498,16,516
+"281","284138","1407920036","Hormonema carpetanum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothioraceae","Hormonema","MF611879.1",501,4,2,51,73,551,533,51,551
+"282","28548","37778550","Sclerotinia trifoliorum","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Sclerotinia","AY187077.1",501,4,2,34,56,534,516,34,534
+"283","285722","50726934","Leptoxyphium sp. MUCL 43740","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Capnodiaceae","Leptoxyphium","AY628692.1",500,4,2,4,26,503,485,4,503
+"284","286564","133907730","Devriesia staurophora","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Devriesia","EF137358.1",501,4,2,16,38,516,498,16,516
+"285","286617","133722019","Schizothyrium pomi","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Schizothyriaceae","Schizothyrium","EF134949.1",500,4,2,30,52,529,511,30,529
+"286","288469","154819831","Ophiocordyceps entomorrhiza","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Ophiocordycipitaceae","Ophiocordyceps","EF468954.1",500,4,2,21,43,520,502,21,520
+"287","290209","52219442","Dacrymyces sp. FPL8953","Eukaryota","Fungi","Basidiomycota","Dacrymycetes","Dacrymycetales","Dacrymycetaceae","Dacrymyces","AY705954.1",501,4,2,41,63,541,523,41,541
+"288","290613","51340251","Endoconidioma populi","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Endoconidioma","AY604526.1",501,4,2,16,38,516,498,16,516
+"289","29886","404312227","Dacrymyces chrysospermus","Eukaryota","Fungi","Basidiomycota","Dacrymycetes","Dacrymycetales","Dacrymycetaceae","Dacrymyces","AB712494.1",501,4,2,12,34,512,494,12,512
+"290","29887","347727","Dacrymyces stillatus","Eukaryota","Fungi","Basidiomycota","Dacrymycetes","Dacrymycetales","Dacrymycetaceae","Dacrymyces","L22258.1",501,4,2,32,54,532,514,32,532
+"291","29917","259018342","Cladosporium cladosporioides","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","GQ458030.1",501,4,2,6,28,506,488,6,506
+"292","29918","1358186636","Cladosporium herbarum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","MH047193.1",501,4,2,18,40,518,500,18,518
+"293","306880","284158938","Uwebraunia communis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Dissoconiaceae","Uwebraunia","GU214525.1",501,3,2,1,22,500,482,1,500
+"294","306885","1535923814","Teratosphaeria toledana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","NG_062788.1",501,4,2,7,29,507,489,7,507
+"295","312200","110666961","Mycoblastus sanguinarius","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Lecanorales","Mycoblastaceae","Mycoblastus","DQ782879.1",501,4,2,37,59,537,519,37,537
+"296","312227","1465389947","[Candida] hispaniensis","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Candida","LS992273.1",482,4,2,890298,890320,890779,890761,890298,890779
+"297","315200","60418357","Bryoglossum gracile","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Helotiaceae","Bryoglossum","AY789419.1",501,4,2,45,67,545,527,45,545
+"298","315201","60418327","Heyderia abietis","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cenangiaceae","Heyderia","AY789288.1",501,4,2,39,61,539,521,39,539
+"299","319387","61676514","Helicoma olivaceum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Tubeufiales","Tubeufiaceae","Helicoma","AY856925.1",503,4,2,4,26,506,488,4,506
+"300","324857","269965716","Metadinium medium","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Metadinium","AB535215.1",454,1,1,33,55,486,468,33,486
+"301","329879","282848554","Cryomyces antarcticus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Cryomyces","GU250316.1",501,4,2,35,57,535,517,35,535
+"302","329884","294471001","Friedmanniomyces simplex","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Friedmanniomyces","NG_016527.1",501,4,2,35,57,535,517,35,535
+"303","329885","282848560","Friedmanniomyces endolithicus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Friedmanniomyces","GU250322.1",501,4,2,35,57,535,517,35,535
+"304","331463","66990803","Capnobotryella sp. MA 4659","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Capnobotryella","AJ972854.1",501,4,2,55,77,555,537,55,555
+"305","331466","66990806","Capnobotryella sp. MA 4625","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Capnobotryella","AJ972857.1",501,4,2,55,77,555,537,55,555
+"306","331467","66990807","Capnobotryella sp. MA 4615","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Capnobotryella","AJ972858.1",503,4,2,7,29,509,491,7,509
+"307","331469","66990815","Capnobotryella sp. MA 4775","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Capnobotryella","AJ972860.1",500,4,2,57,79,556,538,57,556
+"308","332034","284158945","Dothistroma pini","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Dothistroma","GU214532.1",501,4,2,41,63,541,523,41,541
+"309","332648","753718533","Botrytis cinerea","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Botrytis","CP009808.1",501,4,2,6662,6640,6162,6180,6162,6662
+"310","338344","219935315","Diploplastron affine","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Diploplastron","AM158457.1",454,1,1,53,75,506,488,53,506
+"311","344959","75857937","Cladoriella eucalypti","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Cladoriella","DQ195801.1",502,4,2,2,24,503,485,2,503
+"312","346240","1005743449","Loxophyllum rostratum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","KT880229.1",454,1,0,34,56,487,469,34,487
+"313","346247","76096997","Litonotus paracygnus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Litonotus","DQ190464.1",454,1,0,53,75,506,488,53,506
+"314","35110","495274","Spathidium sp.","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","Z22931.1",455,1,0,34,56,488,470,34,488
+"315","358011","219935300","Entodinium furca","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Entodinium","AM158442.1",455,1,1,53,75,507,489,53,507
+"316","358013","219935301","Entodinium dubardi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Entodinium","AM158443.1",455,1,1,53,75,507,489,53,507
+"317","358014","219935306","Entodinium bursa","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Entodinium","AM158448.1",455,1,1,53,75,507,489,53,507
+"318","358015","219935307","Entodinium nanellum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Entodinium","AM158449.1",455,1,1,53,75,507,489,53,507
+"319","358017","219935318","Ostracodinium dentatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Ostracodinium","AM158460.1",453,1,1,53,75,505,487,53,505
+"320","358019","219935319","Enoploplastron triloricatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Enoploplastron","AM158461.1",453,1,1,53,75,505,487,53,505
+"321","358020","219935323","Epidinium ecaudatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Epidinium","AM158465.1",453,0,1,52,74,504,486,52,504
+"322","358021","219935325","Ophryoscolex caudatus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Ophryoscolex","AM158467.1",454,1,1,52,74,505,487,52,505
+"323","358022","219935326","Ostracodinium gracile","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Ostracodinium","AM158468.1",454,1,1,53,75,506,488,53,506
+"324","358025","219935327","Eremoplastron rostratum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Eremoplastron","AM158469.1",454,2,1,53,75,506,488,53,506
+"325","358028","219935298","Anoplodinium denticulatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Anoplodinium","AM158440.1",454,1,1,53,75,506,488,53,506
+"326","358030","219935330","Eremoplastron dilobum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Eremoplastron","AM158472.1",454,1,1,53,75,506,488,53,506
+"327","358031","219935331","Eremoplastron neglectum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Eremoplastron","AM158473.1",454,1,1,53,75,506,488,53,506
+"328","360896","284158988","Pseudocercospora sp. CPC 11592","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Pseudocercospora","GU214575.1",501,4,2,36,58,536,518,36,536
+"329","361445","530323501","Verruconis verruculosa","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Verruconis","KF282682.1",503,4,2,15,37,517,499,15,517
+"330","365009","1517971675","Heterodermia casarettiana","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Physciaceae","Heterodermia","MH887489.1",471,4,1,53,75,523,505,53,523
+"331","372056","88659165","Trichodelitschia munkii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Phaeotrichales","Phaeotrichaceae","Trichodelitschia","DQ384070.1",501,4,2,5,27,505,487,5,505
+"332","375580","89513539","Enchelys polynucleata","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Enchelyidae","Enchelys","DQ411861.1",454,1,0,54,76,507,489,54,507
+"333","375585","1040783173","Arcuospathidium muscorum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Arcuospathidium","KT246077.1",454,1,1,10,32,463,445,10,463
+"334","375587","1176734418","Spathidium stammeri","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","KY922825.1",456,1,0,54,76,509,491,54,509
+"335","380014","91841423","Caliciopsis orientalis","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Coryneliales","Coryneliaceae","Caliciopsis","DQ471039.1",502,4,2,20,42,521,503,20,521
+"336","380015","91841278","Coccomyces strobi","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Rhytismatales","Rhytismataceae","Coccomyces","DQ471027.1",501,4,2,55,77,555,537,55,555
+"337","382701","197114641","Dileptus sp. HCB-2005","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Dileptus","DQ487195.2",456,1,1,54,76,509,491,54,509
+"338","382710","94494527","Monodinium sp. HCB-2005","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Didiniidae","Monodinium","DQ487196.1",459,1,0,54,76,512,494,54,512
+"339","38448","45775653","Monilinia fructicola","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Monilinia","AY544724.1",501,4,2,21,43,521,503,21,521
+"340","38464","91841294","Lambertella subrenispora","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Rutstroemiaceae","Lambertella","DQ471030.1",501,4,2,45,67,545,527,45,545
+"341","390890","16233723","Columnosphaeria fagi","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Saccotheciaceae","Columnosphaeria","AY016342.1",501,4,2,46,68,546,528,46,546
+"342","392269","1167602156","Hyalorbilia inflatula","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Hyalorbilia","KY419193.1",500,4,2,4,26,503,485,4,503
+"343","39459","762827","Loxophyllum utriculariae","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","L26448.1",452,1,0,54,76,505,487,54,505
+"344","39461","1226859299","Homalozoon vermiculare","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Homalozoonidae","Homalozoon","MF474342.1",455,1,0,33,55,487,469,33,487
+"345","394801","1226859300","Lacrymaria marina","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Lacrymaria","MF474343.1",454,1,0,33,55,486,468,33,486
+"346","395010","294471010","Zasmidium cellare","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Zasmidium","NG_016540.1",501,4,2,16,38,516,498,16,516
+"347","40658","6606309","Plectosphaerella cucumerina","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Plectosphaerellaceae","Plectosphaerella","AF176951.1",502,3,2,17,39,518,500,17,518
+"348","40806","2547276","Dasytricha ruminantium","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Isotrichidae","Dasytricha","U57769.1",454,1,1,54,76,507,489,54,507
+"349","40807","219935324","Entodinium simplex","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Entodinium","AM158466.1",457,1,1,53,75,509,491,53,509
+"350","408822","117415065","Cladophialophora minutissima","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Herpotrichiellaceae","Cladophialophora","EF016374.1",499,3,2,1,22,498,480,1,498
+"351","409370","57864405","Blastobotrys adeninivorans","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Trichomonascaceae","Blastobotrys","AB018123.2",499,4,2,33,55,531,513,33,531
+"352","411580","1517971659","Buellia stillingiana","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Caliciaceae","Buellia","MH887473.1",471,4,1,53,75,523,505,53,523
+"353","415588","123229571","Phaeocryptopus nudus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Phaeocryptopus","EF114724.1",499,4,2,4,26,502,484,4,502
+"354","415591","123229576","Rasutoria pseudotsugae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Euantennariaceae","Rasutoria","EF114729.1",501,4,2,4,26,504,486,4,504
+"355","415592","123229581","Sthughesia juniperi","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Sthughesia","EF114734.1",501,4,2,4,26,504,486,4,504
+"356","415594","123229588","Xenomeris raetica","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Xenomeris","EF114741.1",501,4,2,4,26,504,486,4,504
+"357","416803","158104799","Loxophyllum jini","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","EF123708.2",454,1,0,54,76,507,489,54,507
+"358","418781","284159115","Teratosphaeria destructans","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","GU214702.1",501,4,2,31,53,531,513,31,531
+"359","420612","123229582","Stomiopeltis sp. stomlm-2007a","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Micropeltidaceae","Stomiopeltis","EF114735.1",501,4,2,4,26,504,486,4,504
+"360","430998","133907726","Baudoinia compniacensis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Baudoinia","EF137354.1",501,4,2,16,38,516,498,16,516
+"361","43215","283827984","Ramularia endophylla","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Ramularia","AY490775.2",501,4,2,4,26,504,486,4,504
+"362","433964","404312240","Dacrymyces subalpinus","Eukaryota","Fungi","Basidiomycota","Dacrymycetes","Dacrymycetales","Dacrymycetaceae","Dacrymyces","AB712507.1",501,4,2,12,34,512,494,12,512
+"363","438341","284159067","Cercospora capsici","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Cercospora","GU214654.1",501,4,2,31,53,531,513,31,531
+"364","438356","1580990126","Cercospora sojina","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Cercospora","CP036216.1",501,4,2,2038740,2038762,2039240,2039222,2038740,2039240
+"365","438378","284159107","Ramularia uredinicola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Ramularia","GU214694.1",501,4,2,5,27,505,487,5,505
+"366","439838","152002175","Scolecobasidiella avellanea","Eukaryota","Fungi","Ascomycota","Unassigned","Unassigned","Unassigned","Scolecobasidiella","EF204520.1",503,4,2,16,38,518,500,16,518
+"367","447493","148745935","Capnobotryella sp. MA 3615","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Capnobotryella","AM746203.1",501,4,2,16,38,516,498,16,516
+"368","450181","363902054","Cladosporium bruhnei","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","JN397376.1",501,4,2,30,52,530,512,30,530
+"369","45097","79102375","Dothidea insculpta","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Dothidea","DQ247810.1",501,4,2,38,60,538,520,38,538
+"370","452153","154819853","Cordyceps sp. OSC 110997","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Cordycipitaceae","Cordyceps","EF468976.1",500,4,2,30,52,529,511,30,529
+"371","45547","1545773500","Starmerella etchellsii","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Starmerella","NG_063427.1",463,4,2,32,54,494,476,32,494
+"372","45550","1545773501","Starmerella floricola","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Starmerella","NG_063428.1",478,4,2,32,54,509,491,32,509
+"373","45555","1694443660","Starmerella gropengiesseri","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Starmerella","NG_065481.1",463,4,1,32,54,494,476,32,494
+"374","45562","1545773502","Starmerella lactis-condensi","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Starmerella","NG_063429.1",480,4,2,32,54,511,493,32,511
+"375","46634","152926316","Aureobasidium melanogenum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Saccotheciaceae","Aureobasidium","EU009479.1",501,4,2,35,57,535,517,35,535
+"376","470082","284158990","Ramichloridium musae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Dissoconiaceae","Ramichloridium","GU214577.1",501,3,2,1,22,500,482,1,500
+"377","470132","284158929","Catenulostroma chromoblastomycosum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Catenulostroma","GU214516.1",501,4,2,42,64,542,524,42,542
+"378","470140","1433537197","Penidiella columbiana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Penidiella","NG_061089.1",501,4,2,42,64,542,524,42,542
+"379","470161","284159012","Teratosphaeria aff. nubilosa CBS 114419","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","GU214599.1",501,4,2,7,29,507,489,7,507
+"380","47233","1571076194","Arthrobotrys vermicola","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","MH179528.1",500,4,2,38,60,537,519,38,537
+"381","47236","1571076208","Arthrobotrys musiformis","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","MH179542.1",500,4,2,23,45,522,504,23,522
+"382","47237","2959721","Arthrobotrys superba","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","AJ001989.1",499,4,2,8,30,506,488,8,506
+"383","47238","1571076181","Drechslerella brochopaga","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Drechslerella","MH179515.1",500,4,2,23,45,522,504,23,522
+"384","47270","2959852","Arthrobotrys gephyropaga","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","AJ001996.1",500,4,2,8,30,507,489,8,507
+"385","47273","2959854","Monacrosporium psychrophilum","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Monacrosporium","AJ001998.1",500,4,2,8,30,507,489,8,507
+"386","47294","1571076183","Arthrobotrys cladodes","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","MH179517.1",500,4,2,22,44,521,503,22,521
+"387","47296","2959850","Monacrosporium doedycoides","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Monacrosporium","AJ001994.1",500,4,2,8,30,507,489,8,507
+"388","474922","979513061","Colletotrichum gloeosporioides","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Glomerellaceae","Colletotrichum","KT454403.1",501,3,2,35,57,535,517,35,535
+"389","47887","219935332","Epidinium caudatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Epidinium","AM158474.1",454,1,1,52,74,505,487,52,505
+"390","47889","2547269","Diplodinium dentatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Diplodinium","U57764.1",454,1,1,54,76,507,489,54,507
+"391","47892","2547272","Eudiplodinium maggii","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Eudiplodinium","U57766.1",453,1,1,54,76,506,488,54,506
+"392","47894","219935316","Polyplastron multivesiculatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Polyplastron","AM158458.1",454,1,1,53,75,506,488,53,506
+"393","47896","2547273","Ophryoscolex purkynjei","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Ophryoscolex","U57768.1",454,1,1,53,75,506,488,53,506
+"394","47897","219935311","Isotricha intestinalis","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Isotrichidae","Isotricha","AM158453.1",452,1,1,53,75,504,486,53,504
+"395","47911","219935302","Entodinium caudatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Entodinium","AM158444.1",458,1,1,53,75,510,492,53,510
+"396","480486","158937752","Cordierites guianensis","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Cordieritidaceae","Cordierites","EU107262.1",503,4,2,35,57,537,519,35,537
+"397","480503","158937754","Lambertella corni-maris","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Rutstroemiaceae","Lambertella","EU107264.1",501,4,2,33,55,533,515,33,533
+"398","482403","188593538","Troglodytella abrassarti","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Troglodytellidae","Troglodytella","AB437346.1",454,1,1,28,50,481,463,28,481
+"399","491259","164453838","Starmerella sp. 16S1","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Starmerella","AM931021.1",478,4,2,32,54,509,491,32,509
+"400","4932","344915433","Saccharomyces cerevisiae","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetaceae","Saccharomyces","JN387604.1",423,3,2,37,59,459,441,37,459
+"401","4952","656182675","Yarrowia lipolytica","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Dipodascaceae","Yarrowia","LK391636.1",460,3,2,27,49,486,468,27,486
+"402","497729","329754429","Phialina salinarum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Phialina","HM140391.1",452,1,0,54,76,505,487,54,505
+"403","497731","166064922","Amphileptus aeschtae","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Amphileptidae","Amphileptus","EU242510.1",453,1,0,54,76,506,488,54,506
+"404","497732","166064923","Loxophyllum sp. GD-070419","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","EU242511.1",454,1,0,54,76,507,489,54,507
+"405","502744","294470998","Endosporium aviarium","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Myriangiales","Unassigned","Endosporium","NG_016524.1",501,4,2,2,24,502,484,2,502
+"406","50936","4731133","Physcia aipolia","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Physciaceae","Physcia","AF088243.1",503,4,2,54,76,556,538,54,556
+"407","5180","979513027","Sclerotinia sclerotiorum","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Sclerotinia","KT454401.1",501,4,2,35,57,535,517,35,535
+"408","520529","185179532","Pezizomycotina sp. CMCA22","Eukaryota","Fungi","Ascomycota","Unassigned","Unassigned","Unassigned","Unassigned","EU594360.1",501,4,2,8,30,508,490,8,508
+"409","531876","57546887","Coniozyma leucospermi","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Coniozyma","AY720711.1",501,4,2,4,26,504,486,4,504
+"410","53381","91841138","Orbilia auricolor","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Orbilia","DQ471001.1",500,4,2,36,58,535,517,36,535
+"411","53383","5869991","Orbilia fimicola","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Orbilia","AF006307.1",500,4,2,41,63,540,522,41,540
+"412","54530","3779186","Coccodinium bartschii","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Coccodiniaceae","Coccodinium","U77668.1",501,4,2,4,26,504,486,4,504
+"413","54678","1052136188","Dumontinia tuberosa","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Dumontinia","KX090897.1",501,4,2,3,25,503,485,3,503
+"414","54680","1376614573","Sclerencoelia fascicularis","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Sclerencoelia","MH194576.1",501,4,2,60,82,560,542,60,560
+"415","5474","1050768864","Leptoxyphium fumago","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Capnodiaceae","Leptoxyphium","KX289331.1",500,4,2,62,84,561,543,62,561
+"416","550466","194686108","Blepharocorys sp. NM-2008","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Blepharocorythidae","Blepharocorys","FM201780.1",456,1,1,1589,1567,1134,1152,1134,1589
+"417","550467","194686109","Spirodinium equi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Spirodiniidae","Spirodinium","FM201781.1",454,1,1,54,76,507,489,54,507
+"418","550469","194686110","Triadinium caudatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ditoxidae","Triadinium","FM201782.1",458,1,1,54,76,511,493,54,511
+"419","55196","3293218","Enchelyodon sp.","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Enchelyodon","U80313.1",454,2,1,54,76,507,489,54,507
+"420","5570","38570335","Cenococcum geophilum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Gloniaceae","Cenococcum","L76614.1",501,3,2,1,22,500,482,1,500
+"421","5580","94450026","Aureobasidium pullulans","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Saccotheciaceae","Aureobasidium","DQ486709.1",501,4,2,29,51,529,511,29,529
+"422","561978","206597944","Arthrobotrys elegans","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","FJ176810.1",500,4,2,94,116,593,575,94,593
+"423","56762","3885424","Cyanodermella viridula","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Ostropales","Stictidaceae","Cyanodermella","U86583.1",500,4,2,4,26,503,485,4,503
+"424","57088","2804614","Cyphelium inquinans","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Caliciaceae","Cyphelium","U86695.1",502,4,2,51,73,552,534,51,552
+"425","57090","2804619","Texosporium sancti-jacobi","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Caliciaceae","Texosporium","U86696.1",501,4,2,51,73,551,533,51,551
+"426","57092","2804618","Thelomma mammosum","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Caliciales","Caliciaceae","Thelomma","U86697.1",501,4,2,51,73,551,533,51,551
+"427","574655","282848591","Elasticomyces elasticus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Elasticomyces","GU250353.1",501,4,2,35,57,535,517,35,535
+"428","57485","123229578","Rhizosphaera kalkhoffii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Rhizosphaera","EF114731.1",499,4,2,4,26,502,484,4,502
+"429","576872","239606185","Scolecobasidium sp. GMG_C5","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Scolecobasidium","FJ439579.2",503,4,2,16,38,518,500,16,518
+"430","58331","1344049688","Quercus suber","Eukaryota","Viridiplantae","Streptophyta","Magnoliopsida","Fagales","Fagaceae","Quercus","XR_002883370.1",501,4,2,54,76,554,536,54,554
+"431","58908","60418354","Scleromitrula shiraiana","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Scleromitrula","AY789406.1",501,4,2,3,25,503,485,3,503
+"432","5938","1780224039","Euplotes raikovi","Eukaryota","Unassigned","Ciliophora","Spirotrichea","Euplotida","Euplotidae","Euplotes","MN783334.1",508,3,2,51,73,558,540,51,558
+"433","5987","219935313","Isotricha prostoma","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Isotrichidae","Isotricha","AM158455.1",454,1,1,53,75,506,488,53,506
+"434","5992","1226859295","Chaenea vorax","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Chaenea","MF474338.1",454,2,1,33,55,486,468,33,486
+"435","5997","2547275","Didinium nasutum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Didiniidae","Didinium","U57771.1",457,1,0,54,76,510,492,54,510
+"436","601995","255957521","Entodinium longinucleatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Entodinium","AB481099.1",455,1,1,33,55,487,469,33,487
+"437","61296","1720278307","Aureobasidium sp.","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Saccotheciaceae","Aureobasidium","MN268776.1",501,4,2,52,74,552,534,52,552
+"438","61488","5869996","Kompsoscypha chudei","Eukaryota","Fungi","Ascomycota","Pezizomycetes","Pezizales","Sarcoscyphaceae","Kompsoscypha","AF006312.1",500,4,2,35,57,534,516,35,534
+"439","62075","3036899","Sarcinomyces crustaceus","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Unassigned","Sarcinomyces","Y11355.1",501,4,2,19,41,519,501,19,519
+"440","62132","133907732","Capnobotryella renispora","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Capnobotryella","EF137360.1",501,4,2,16,38,516,498,16,516
+"441","622355","224831281","Cladosporium sp. 15F","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ716252.1",501,5,2,1,23,501,483,1,501
+"442","630509","284158979","Phaeophleospora eugeniicola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Phaeophleospora","GU214566.1",501,4,2,2,24,502,484,2,502
+"443","631197","226350499","Neopeckia asperulispora","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Unassigned","Neopeckia","FJ215708.1",499,4,2,35,57,533,515,35,533
+"444","631198","226350500","Plowrightia periclymeni","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothioraceae","Plowrightia","FJ215709.1",499,4,2,35,57,533,515,35,533
+"445","634893","226525187","Cladosporium sp. 5121","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235517.1",501,4,2,51,73,551,533,51,551
+"446","634894","226525188","Cladosporium sp. 6005","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235518.1",501,4,2,51,73,551,533,51,551
+"447","634895","226525189","Cladosporium sp. 6008","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235519.1",501,4,2,51,73,551,533,51,551
+"448","634896","226525190","Cladosporium sp. 6014","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235520.1",501,4,2,51,73,551,533,51,551
+"449","634899","226525193","Cladosporium sp. 6023","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235523.1",501,4,2,51,73,551,533,51,551
+"450","634900","226525194","Cladosporium sp. 6026","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235524.1",501,4,2,51,73,551,533,51,551
+"451","634902","226525185","Cladosporium sp. zhi1","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235515.1",501,4,2,51,73,551,533,51,551
+"452","634903","226525186","Cladosporium sp. zhi2","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","FJ235516.1",501,4,2,51,73,551,533,51,551
+"453","635205","227460823","Pseudorobillarda siamensis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Unassigned","Pseudorobillarda","FJ825365.1",501,4,2,34,56,534,516,34,534
+"454","635207","227460825","Pseudorobillarda texana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Unassigned","Pseudorobillarda","FJ825367.1",501,4,2,34,56,534,516,34,534
+"455","64355","645930552","Cyclaneusma minus","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Unassigned","Cyclaneusma","KJ606669.1",501,4,2,26,48,526,508,26,526
+"456","64363","123229568","Dothistroma septosporum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Dothistroma","EF114721.1",501,4,2,4,26,504,486,4,504
+"457","64367","123229580","Rhizosphaera pini","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothideaceae","Rhizosphaera","EF114733.1",501,4,2,4,26,504,486,4,504
+"458","64499","45775647","Sydowia polyspora","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothioraceae","Sydowia","AY544718.1",499,4,2,21,43,519,501,21,519
+"459","651689","284159008","Zasmidium anthuriicola","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Zasmidium","GU214595.1",501,4,2,42,64,542,524,42,542
+"460","652932","241992653","Trachelotractus entzi","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Unassigned","Trachelotractus","FJ463745.1",456,3,0,54,76,509,491,54,509
+"461","662362","255689286","Claviradulomyces dabeicola","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Ostropales","Odontotremataceae","Claviradulomyces","GQ337900.1",500,4,2,35,57,534,516,35,534
+"462","66274","3462458","Meliolina sydowiana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Meliolinaceae","Meliolina","AF021795.1",501,4,2,28,50,528,510,28,528
+"463","665062","357593638","Teratosphaeria angophorae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","JN938699.1",501,4,2,16,38,516,498,16,516
+"464","665100","255733409","Litonotus pictus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Litonotus","GQ351699.1",454,1,0,52,74,505,487,52,505
+"465","66513","331029792","Meria laricis","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Rhytismatales","Rhytismataceae","Meria","HQ634818.1",503,4,2,4,26,506,488,4,506
+"466","668368","260909295","Protostelium nocturnum","Eukaryota","Unassigned","Evosea","Variosea","Protosteliida","Protosteliaceae","Protostelium","FJ766481.1",480,4,2,24,46,503,485,24,503
+"467","685502","284159088","Pseudocercospora fuligena","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Pseudocercospora","GU214675.1",501,4,2,42,64,542,524,42,542
+"468","686991","262225691","Blepharocorys uncinata","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Blepharocorythidae","Blepharocorys","AB530162.1",456,1,1,54,76,509,491,54,509
+"469","686995","262225693","Parentodinium sp. YM2009","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Parentodiniidae","Parentodinium","AB530164.1",453,1,1,55,77,507,489,55,507
+"470","686996","262225694","Cycloposthium bipalmatum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Cycloposthiidae","Cycloposthium","AB530165.1",454,1,1,55,77,508,490,55,508
+"471","687952","284158969","Passalora bellynckii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Passalora","GU214556.1",501,4,2,7,29,507,489,7,507
+"472","687957","284159081","Passalora sp. CPC 12319","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Passalora","GU214668.1",501,4,2,42,64,542,524,42,542
+"473","687958","284158974","Passalora vaginae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Passalora","GU214561.1",501,4,2,42,64,542,524,42,542
+"474","692885","269114771","Triplumaria selenica","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Cycloposthiidae","Triplumaria","AB533538.1",454,1,1,55,77,508,490,55,508
+"475","693234","1435074155","Hypoderma rubi","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Rhytismatales","Rhytismataceae","Hypoderma","MH682224.1",501,4,2,26,48,526,508,26,526
+"476","693421","269246307","Raabena bella","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Blepharocorythidae","Raabena","AB534183.1",454,1,1,52,74,505,487,52,505
+"477","693422","269246308","Blepharocorys curvigula","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Blepharocorythidae","Blepharocorys","AB534184.1",455,1,1,55,77,509,491,55,509
+"478","693917","270047897","Phialina sp. FXP2008111802","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Phialina","FJ870088.1",452,1,0,54,76,505,487,54,505
+"479","693927","270047895","Amphileptus sp. PHB08122401","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Amphileptidae","Amphileptus","FJ870086.1",454,1,0,54,76,507,489,54,507
+"480","696076","270052206","Litonotus sp. LXF08110005","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Litonotus","FJ875146.1",454,1,0,54,76,507,489,54,507
+"481","696077","270052209","Litonotus sp. SZ08112701","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Litonotus","FJ875149.1",454,1,0,54,76,507,489,54,507
+"482","696078","270052203","Loxophyllum sp. DJ08110901","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","FJ875143.1",453,1,0,54,76,506,488,54,506
+"483","696079","270052207","Loxophyllum sp. DJ08111004","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","FJ875147.1",454,1,0,54,76,507,489,54,507
+"484","696080","270052205","Loxophyllum sp. LXF08111006","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","FJ875145.1",454,1,0,54,76,507,489,54,507
+"485","696081","270052208","Loxophyllum sp. SZ08110101-FW","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","FJ875148.1",454,1,0,54,76,507,489,54,507
+"486","696093","1198272599","Amphileptus litonotiformis","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Amphileptidae","Amphileptus","KX581241.1",453,1,0,34,56,486,468,34,486
+"487","696095","282167323","Chaenea sp. FXP07122006","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Chaenea","FJ876970.1",453,2,1,54,76,506,488,54,506
+"488","696096","282167334","Euplotes cf. charon","Eukaryota","Unassigned","Ciliophora","Spirotrichea","Euplotida","Euplotidae","Euplotes","FJ876981.1",508,3,2,53,75,560,542,53,560
+"489","696180","282167325","Phialina sp. LWW07110808","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Lacrymariidae","Phialina","FJ876972.1",452,1,0,54,76,505,487,54,505
+"490","696972","270265570","Eudiplodinium rostratum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Eudiplodinium","AB536716.1",454,1,1,33,55,486,468,33,486
+"491","696973","270265569","Ostracodinium clipeolum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Ophryoscolecidae","Ostracodinium","AB536717.1",454,1,1,33,55,486,468,33,486
+"492","700543","308072502","Acidomyces acidothermus","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Acidomyces","AB537896.1",501,4,2,40,62,540,522,40,540
+"493","702000","282848581","Davidiellaceae sp. CCFEE 5414","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Unassigned","GU250343.1",501,4,2,36,58,536,518,36,536
+"494","702002","282848585","Rachicladosporium paucitum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Rachicladosporium","GU250347.1",501,4,2,26,48,526,508,26,526
+"495","702003","282848556","Teratosphaeriaceae sp. CCFEE 502","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Unassigned","GU250318.1",501,4,2,35,57,535,517,35,535
+"496","702006","282848589","Teratosphaeriaceae sp. CCFEE 5467","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Unassigned","GU250351.1",501,4,2,46,68,546,528,46,546
+"497","702008","282848594","Teratosphaeriaceae sp. CCFEE 5501","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Unassigned","GU250356.1",501,4,2,52,74,552,534,52,552
+"498","702010","282848597","Teratosphaeriaceae sp. D007_09","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Unassigned","GU250359.1",501,4,2,28,50,528,510,28,528
+"499","702013","282848572","Capnodiales sp. CCFEE 5322","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Unassigned","GU250334.1",501,4,2,26,48,526,508,26,526
+"500","702016","282848586","Vermiconia foris","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Extremaceae","Vermiconia","GU250348.1",501,4,2,14,36,514,496,14,514
+"501","702018","282848595","Capnodiales sp. CCFEE 5502","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Unassigned","GU250357.1",501,4,2,48,70,548,530,48,548
+"502","702019","1433537203","Arthrocatena tenebrio","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Unassigned","Arthrocatena","NG_061095.1",501,4,2,13,35,513,495,13,513
+"503","702024","282848563","cf. Arthoniales sp. CCFEE 5176","Eukaryota","Fungi","Ascomycota","Arthoniomycetes","Arthoniales","Unassigned","Unassigned","GU250325.1",501,4,2,35,57,535,517,35,535
+"504","702025","282848568","Phaeococcomycetaceae sp. CCFEE 5284","Eukaryota","Fungi","Ascomycota","Arthoniomycetes","Lichenostigmatales","Phaeococcomycetaceae","Unassigned","GU250330.1",501,4,2,35,57,535,517,35,535
+"505","705847","1535923853","Rachicladosporium cboliae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Rachicladosporium","NG_062827.1",501,4,2,16,38,516,498,16,516
+"506","705918","284159092","Pseudocercospora opuntiae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Pseudocercospora","GU214679.1",501,4,2,36,58,536,518,36,536
+"507","705922","123229567","Ramularia grevilleana","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Ramularia","EF114720.1",501,4,2,4,26,504,486,4,504
+"508","705924","284159112","Septoria dysentericae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Septoria","GU214699.1",501,4,2,42,64,542,524,42,542
+"509","706140","284158965","Mycosphaerella sp. CBS 111166","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Mycosphaerella","GU214552.1",501,4,2,31,53,531,513,31,531
+"510","706147","284159013","Teratosphaeria aff. nubilosa CBS 116283","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","GU214600.1",501,4,2,3,25,503,485,3,503
+"511","706165","284158977","cf. Passalora sp. CPC 11876","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Passalora","GU214564.1",501,4,2,42,64,542,524,42,542
+"512","706170","284159113","Stigmina sp. CPC 11721","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Unassigned","Stigmina","GU214700.1",501,4,2,42,64,542,524,42,542
+"513","706171","284159116","Mycosphaerellaceae sp. CPC 12304","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Unassigned","GU214703.1",501,4,2,31,53,531,513,31,531
+"514","706561","357593642","Hortaea thailandica","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Hortaea","JN938703.1",501,4,2,15,37,515,497,15,515
+"515","713897","284158927","Teratosphaeria alcornii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Teratosphaeria","GU214514.1",501,4,2,7,29,507,489,7,507
+"516","71585","1621051621","Balantioides coli","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Balantidiidae","Balantioides","MK801497.1",455,1,1,41,63,495,477,41,495
+"517","71588","10440891","Dileptus sp.","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Dileptus","AF029764.1",456,1,1,54,76,509,491,54,509
+"518","71591","6649955","Cycloposthium sp.","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Cycloposthiidae","Cycloposthium","AF042485.1",455,1,1,54,76,508,490,54,508
+"519","71594","6649956","Macropodinium yalabense","Eukaryota","Unassigned","Ciliophora","Litostomatea","Entodiniomorphida","Macropodiniidae","Macropodinium","AF042486.1",455,1,1,54,76,508,490,54,508
+"520","71600","1547590441","Graphis scripta","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Ostropales","Graphidaceae","Graphis","MK092086.1",500,4,2,1420,1442,1919,1901,1420,1919
+"521","71661","2765123","Phaeosclera dematioides","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Unassigned","Unassigned","Phaeosclera","Y11716.1",500,4,2,47,69,546,528,47,546
+"522","72562","115361565","Thecaphora saponariae","Eukaryota","Fungi","Basidiomycota","Ustilaginomycetes","Urocystidales","Glomosporiaceae","Thecaphora","DQ875382.1",501,4,2,1,23,501,483,1,501
+"523","74381","436905884","Undaria pinnatifida","Eukaryota","Unassigned","Unassigned","Phaeophyceae","Laminariales","Alariaceae","Undaria","JQ936016.1",501,4,2,35,57,535,517,35,535
+"524","74496","2959723","Dactylella oxyspora","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Dactylella","AJ001993.1",501,4,2,8,30,508,490,8,508
+"525","74497","2959722","Dactylella rhopalota","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Dactylella","AJ001992.1",500,4,2,8,30,507,489,8,507
+"526","74498","2959713","Arthrobotrys conoides","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","AJ001983.1",500,4,2,8,30,507,489,8,507
+"527","74499","2959853","Drechslerella dactyloides","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Drechslerella","AJ001997.1",500,4,2,8,30,507,489,8,507
+"528","74500","2959720","Arthrobotrys robusta","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","AJ001988.1",500,4,2,8,30,507,489,8,507
+"529","756024","296875283","Xylogone sphaerospora","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Xylogone","GQ280422.1",501,4,2,20,42,520,502,20,520
+"530","756027","296875258","Xylogone ganodermophthora","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Unassigned","Unassigned","Xylogone","GQ280397.1",501,4,2,18,40,518,500,18,518
+"531","75736","390195184","Starmerella bombicola","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Starmerella","JQ698924.1",478,4,2,18,40,495,477,18,495
+"532","758568","295147950","Pelagodileptus trachelioides","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Pelagodileptus","AB558117.1",456,1,1,41,63,496,478,41,496
+"533","758569","295147951","Didinium sp. KFS-B","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Didiniidae","Didinium","AB558118.1",457,1,0,37,59,493,475,37,493
+"534","795314","345134970","Scolecobasidium sp. NA-2010","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Scolecobasidium","AB564598.1",503,4,2,16,38,518,500,16,518
+"535","795329","345134978","Scolecobasidium sp. NH503","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Venturiales","Sympoventuriaceae","Scolecobasidium","AB564606.1",503,4,2,16,38,518,500,16,518
+"536","83480","7144613","Thamnolia vermicularis","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Pertusariales","Icmadophilaceae","Thamnolia","AF085472.1",501,4,2,31,53,531,513,31,531
+"537","858607","299831753","Candida sp. Y13 EG-2010","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Candida","HM161750.1",504,4,2,51,73,554,536,51,554
+"538","858609","299831756","Candida sp. Y15 EG-2010","Eukaryota","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Unassigned","Candida","HM161753.1",504,4,2,51,73,554,536,51,554
+"539","85929","14279550","Sphaerulina musiva","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Sphaerulina","AF271130.1",501,4,2,3,25,503,485,3,503
+"540","86046","56603511","Berlesiella nigerrima","Eukaryota","Fungi","Ascomycota","Eurotiomycetes","Chaetothyriales","Herpotrichiellaceae","Berlesiella","AY541478.1",551,4,2,40,62,590,572,40,590
+"541","860607","300079156","Loxophyllum spirellum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Pleurostomatida","Litonotidae","Loxophyllum","GU574810.1",454,1,0,54,76,507,489,54,507
+"542","88036","1376991981","Selaginella moellendorffii","Eukaryota","Viridiplantae","Streptophyta","Lycopodiopsida","Selaginellales","Selaginellaceae","Selaginella","XR_002991501.1",501,4,2,54,76,554,536,54,554
+"543","90408","1517971681","Icmadophila ericetorum","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Pertusariales","Icmadophilaceae","Icmadophila","MH887495.1",471,4,1,45,67,515,497,45,515
+"544","909204","309751841","Balantidium ctenopharyngodoni","Eukaryota","Unassigned","Ciliophora","Litostomatea","Vestibuliferida","Balantidiidae","Balantidium","GU480804.1",455,1,1,54,76,508,490,54,508
+"545","909484","3885423","Stictis populorum","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Ostropales","Stictidaceae","Stictis","U86582.1",500,4,2,4,26,503,485,4,503
+"546","914045","311701395","Astrosphaeriella lophiostomopsis","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Astrosphaeriellaceae","Astrosphaeriella","GU205232.1",500,4,2,9,31,508,490,9,508
+"547","914054","311701406","Keissleriella ocellata","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Lentitheciaceae","Keissleriella","GU205243.1",500,4,2,7,29,506,488,7,506
+"548","914056","311701407","Melomastia mastoidea","Eukaryota","Fungi","Ascomycota","Sordariomycetes","Unassigned","Unassigned","Melomastia","GU205244.1",500,4,2,5,27,504,486,5,504
+"549","914068","311701415","Patellariales sp. JF 06051","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Patellariales","Unassigned","Unassigned","GU205252.1",500,4,2,1,23,500,482,1,500
+"550","91807","7105701","Trapelia involuta","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Trapeliales","Trapeliaceae","Trapelia","AF119499.2",501,4,2,46,68,546,528,46,546
+"551","91808","7105702","Trapelia placodioides","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Trapeliales","Trapeliaceae","Trapelia","AF119500.2",501,4,2,45,67,545,527,45,545
+"552","91943","367464896","Hortaea werneckii","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Teratosphaeriaceae","Hortaea","JN546122.1",501,4,2,37,59,537,519,37,537
+"553","92950","358001660","Cladosporium sphaerospermum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","JN939024.1",501,4,2,2,24,502,484,2,502
+"554","93116","9828147","Lecania cyrtella","Eukaryota","Fungi","Ascomycota","Lecanoromycetes","Lecanorales","Ramalinaceae","Lecania","AF091589.1",500,4,2,24,46,523,505,24,523
+"555","931466","645930554","Coccomyces lauraceus","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Rhytismatales","Rhytismataceae","Coccomyces","KJ606671.1",501,4,2,26,48,526,508,26,526
+"556","931590","645930551","Propolis farinosa","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Rhytismatales","Rhytismataceae","Propolis","KJ606668.1",502,4,2,26,48,527,509,26,527
+"557","93473","1694443991","Phaeotheca fissurella","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Phaeothecales","Phaeothecaceae","Phaeotheca","NG_065804.1",501,4,2,15,37,515,497,15,515
+"558","93487","109289545","Capnodium salicinum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Capnodiaceae","Capnodium","DQ677997.1",501,0,2,5,27,505,487,5,505
+"559","93488","358001659","Cladosporium macrocarpum","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","JN939023.1",501,4,2,2,24,502,484,2,502
+"560","93490","1535923722","Dothiora cannabinae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Dothideales","Dothioraceae","Dothiora","NG_062696.1",501,4,2,18,40,518,500,18,518
+"561","93495","79102373","Capnodium coffeae","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Capnodiaceae","Capnodium","DQ247808.1",501,4,2,72,94,572,554,72,572
+"562","97331","2950225","Arthrobotrys flagrans","Eukaryota","Fungi","Ascomycota","Orbiliomycetes","Orbiliales","Orbiliaceae","Arthrobotrys","AJ001895.1",499,4,2,8,30,506,488,8,506
+"563","97700","1757500079","Quercus lobata","Eukaryota","Viridiplantae","Streptophyta","Magnoliopsida","Fagales","Fagaceae","Quercus","XR_004087788.1",501,4,2,54,76,554,536,54,554
+"564","98374","20136508","Euplotes rariseta","Eukaryota","Unassigned","Ciliophora","Spirotrichea","Euplotida","Euplotidae","Euplotes","AF492706.1",510,3,2,53,75,562,544,53,562
+"565","986871","780956541","Cladosporium sp. LF063","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","KM096178.1",501,5,2,1,23,501,483,1,501
+"566","986889","780956547","Cladosporium sp. LF244","Eukaryota","Fungi","Ascomycota","Dothideomycetes","Cladosporiales","Cladosporiaceae","Cladosporium","KM096184.1",501,5,2,1,23,501,483,1,501
+"567","989644","324499382","Arcuospathidium namibiense","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Arcuospathidium","JF263442.1",455,1,0,54,76,508,490,54,508
+"568","989645","324499387","Enchelys gasterosteus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Enchelyidae","Enchelys","JF263447.1",455,1,1,54,76,508,490,54,508
+"569","990148","324499383","Arcuospathidium sp. VBOEF-2011","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Arcuospathidium","JF263443.1",454,1,0,54,76,507,489,54,507
+"570","990149","324499386","Enchelyodon sp. 2 VBOEF-2011","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Enchelyodon","JF263446.1",455,1,0,54,76,508,490,54,508
+"571","990150","324499391","Spathidium sp. 2 VBOEF-2011","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Spathidium","JF263451.1",455,1,0,54,76,508,490,54,508
+"572","990153","324499392","Trachelophyllum sp. VBOEF-2011","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Trachelophyllidae","Trachelophyllum","JF263452.1",455,1,0,54,76,508,490,54,508
+"573","990175","324499388","Fuscheria sp. VBOEF-2011","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Acropisthiidae","Fuscheria","JF263448.1",454,1,1,54,76,507,489,54,507
+"574","990178","324499389","Protospathidium muscicola","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Protospathidium","JF263449.1",454,1,0,54,76,507,489,54,507
+"575","990189","324499384","Balantidion pellucidum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Balantidion","JF263444.1",455,1,1,54,76,508,490,54,508
+"576","990195","324499390","Semispathidium sp. VBOEF-2011","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Semispathidium","JF263450.1",455,1,0,54,76,508,490,54,508
+"577","990234","324499385","Cultellothrix lionotiformis","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Cultellothrix","JF263445.1",455,1,0,53,75,507,489,53,507
+"578","990236","324499381","Apobryophyllum schmidingeri","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Spathidiidae","Apobryophyllum","JF263441.1",455,1,0,54,76,508,490,54,508
+"579","991780","325112629","Calycellinopsis xishuangbanna","Eukaryota","Fungi","Ascomycota","Leotiomycetes","Helotiales","Dermateaceae","Calycellinopsis","GU936124.1",501,4,2,16,38,516,498,16,516
+"580","993358","820749018","Dileptus costaricanus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Dileptus","KP868765.1",456,1,1,3,25,458,440,3,458
+"581","993360","1214998196","Rimaleptus binucleatus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dimacrocaryonidae","Rimaleptus","MF449476.1",456,1,1,54,76,509,491,54,509
+"582","993361","325485006","Dileptus microstoma","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Dileptus","HM581676.1",460,1,1,54,76,513,495,54,513
+"583","993383","1241841968","Trachelius ovum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Tracheliidae","Trachelius","MF288147.1",453,1,1,3,25,455,437,3,455
+"584","993384","325516199","Dileptus mucronatus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Dileptus","HM581675.1",456,1,1,54,76,509,491,54,509
+"585","993385","325516198","Dileptus terrenus","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Dileptus","HM581674.1",456,1,1,54,76,509,491,54,509
+"586","994391","325516200","Pseudomonilicaryon fraterculum","Eukaryota","Unassigned","Ciliophora","Litostomatea","Haptorida","Dileptidae","Pseudomonilicaryon","HM581677.1",456,1,1,54,76,509,491,54,509

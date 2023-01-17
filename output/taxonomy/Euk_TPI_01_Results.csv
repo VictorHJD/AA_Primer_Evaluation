@@ -1,0 +1,4 @@
+"","taxId","gi","species","superkingdom","kingdom","phylum","class","order","family","genus","accession","product_length","mismatch_forward","mismatch_reverse","forward_start","forward_stop","reverse_start","reverse_stop","product_start","product_stop"
+"1","1394984","1773131204","Giardia intestinalis","Eukaryota","Unassigned","Fornicata","Unassigned","Diplomonadida","Hexamitidae","Giardia","LC507465.1",530,2,1,7,26,536,517,7,536
+"2","299321","1591613394","Denticeps clupeoides","Eukaryota","Metazoa","Chordata","Actinopteri","Clupeiformes","Denticipitidae","Denticeps","LR535814.1",437,2,2,35506842,35506861,35507278,35507259,35506842,35507278
+"3","61965","37961379","Giardia microti","Eukaryota","Unassigned","Fornicata","Unassigned","Diplomonadida","Hexamitidae","Giardia","AY228649.1",530,1,1,3,22,532,513,3,532
